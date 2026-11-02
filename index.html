@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f4f3f0">
-
+  <meta name="theme-color" content="#e8ddca">
   <title>Abdullah Rayees</title>
 
   <style>
+    :root {
+      --champagne: #e8ddca;
+      --champagne-light: #f6f2ea;
+      --navy: #07192b;
+      --midnight: #102c46;
+      --gold: #b89558;
+      --pale-gold: #d8c39a;
+    }
 
     * {
       box-sizing: border-box;
@@ -19,261 +26,316 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
       overflow-x: hidden;
-
-      color: #171719;
-      background: #f4f3f0;
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-
+      background: var(--champagne-light);
+      color: var(--navy);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
-
-    /* ========================================
+    /* =========================================================
        BACKGROUND
-    ======================================== */
+    ========================================================= */
 
-    .atmosphere {
+    .world {
       position: fixed;
       inset: 0;
-
-      z-index: -10;
-
+      z-index: -20;
       overflow: hidden;
 
       background:
         linear-gradient(
           145deg,
-          #f8f7f3 0%,
-          #f0f2f3 47%,
-          #f7f5f1 100%
+          #f6f2ea 0%,
+          #e8ddca 55%,
+          #ddd0b9 100%
         );
+
+      transition: background .1s linear;
     }
 
-
-    /* ========================================
-       AMBIENT LIGHT
-    ======================================== */
-
-    .light {
+    .navy-layer {
       position: absolute;
+      inset: -5%;
 
-      width: 780px;
-      height: 440px;
+      opacity: 0;
 
+      background:
+        radial-gradient(
+          circle at 25% 20%,
+          #163956 0%,
+          #0c263d 32%,
+          #07192b 72%
+        );
+
+      will-change: opacity;
+    }
+
+    /* =========================================================
+       AMBIENT COLOR
+    ========================================================= */
+
+    .glow {
+      position: absolute;
       border-radius: 50%;
-
-      filter: blur(90px);
-
-      opacity: 0.28;
-
-      will-change: transform;
+      filter: blur(100px);
+      pointer-events: none;
+      will-change: transform, opacity;
     }
 
+    .glow-blue {
+      width: 700px;
+      height: 600px;
 
-    .ice {
-      left: -260px;
-      top: 70px;
+      left: -300px;
+      top: -160px;
 
-      background:
-        rgba(155, 204, 230, 0.52);
+      background: rgba(44, 91, 130, .32);
 
       animation:
-        iceMovement
-        19s
+        driftBlue
+        20s
         ease-in-out
         infinite alternate;
     }
 
+    .glow-gold {
+      width: 650px;
+      height: 500px;
 
-    .violet {
-      right: -290px;
-      top: 180px;
+      right: -260px;
+      top: 30%;
 
-      background:
-        rgba(192, 174, 210, 0.42);
+      background: rgba(184, 149, 88, .25);
 
       animation:
-        violetMovement
-        24s
+        driftGold
+        25s
         ease-in-out
         infinite alternate;
     }
 
+    .glow-champagne {
+      width: 650px;
+      height: 500px;
 
-    .champagne {
-      left: 25%;
-      bottom: -100px;
+      left: 30%;
+      bottom: -260px;
 
-      background:
-        rgba(221, 205, 169, 0.34);
+      background: rgba(216, 195, 154, .25);
 
       animation:
-        champagneMovement
-        27s
+        driftChampagne
+        28s
         ease-in-out
         infinite alternate;
     }
 
+    /* =========================================================
+       ABSTRACT LUXURY FORMS
+    ========================================================= */
 
-
-    /* ========================================
-       LARGE PEARL GLASS
-    ======================================== */
-
-    .pearl {
+    .form {
       position: absolute;
-
-      width: 820px;
-      height: 820px;
-
-      left: 50%;
-      top: 380px;
-
-      transform:
-        translateX(-50%);
-
-      border-radius:
-        48% 52% 57% 43% /
-        51% 43% 57% 49%;
-
-      background:
-        linear-gradient(
-          125deg,
-
-          rgba(255,255,255,.72),
-
-          rgba(206,220,229,.25)
-          30%,
-
-          rgba(221,210,231,.22)
-          54%,
-
-          rgba(226,218,196,.18)
-          72%,
-
-          rgba(255,255,255,.58)
-        );
 
       border:
         1px solid
-        rgba(255,255,255,.75);
+        rgba(255,255,255,.24);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.15),
+          rgba(255,255,255,.015)
+        );
 
       box-shadow:
+        inset 35px 30px 80px
+        rgba(255,255,255,.12),
 
-        inset 45px 35px 90px
-        rgba(255,255,255,.70),
-
-        inset -40px -35px 100px
-        rgba(140,155,170,.07),
-
-        0 60px 130px
-        rgba(65,70,80,.06);
+        inset -30px -40px 100px
+        rgba(7,25,43,.12);
 
       backdrop-filter:
-        blur(26px)
+        blur(22px)
         saturate(125%);
 
       -webkit-backdrop-filter:
-        blur(26px)
+        blur(22px)
         saturate(125%);
-
-      animation:
-        pearlMorph
-        21s
-        ease-in-out
-        infinite alternate;
 
       will-change:
         transform,
         border-radius;
     }
 
+    .form-one {
+      width: 650px;
+      height: 650px;
 
+      left: -300px;
+      top: 18%;
 
-    /* ========================================
-       VERY SUBTLE GRAIN
-    ======================================== */
+      border-radius:
+        58% 42% 62% 38% /
+        45% 61% 39% 55%;
+
+      animation:
+        morphOne
+        22s
+        ease-in-out
+        infinite alternate;
+    }
+
+    .form-two {
+      width: 780px;
+      height: 780px;
+
+      right: -390px;
+      top: 43%;
+
+      border-radius:
+        39% 61% 46% 54% /
+        62% 38% 60% 40%;
+
+      animation:
+        morphTwo
+        27s
+        ease-in-out
+        infinite alternate;
+    }
+
+    /* =========================================================
+       GOLD REFLECTION
+    ========================================================= */
+
+    .gold-line {
+      position: absolute;
+
+      width: 1200px;
+      height: 2px;
+
+      left: 50%;
+      top: 50%;
+
+      opacity: 0;
+
+      transform:
+        translateX(-50%)
+        rotate(-11deg);
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(184,149,88,0),
+          rgba(216,195,154,.9),
+          rgba(184,149,88,.55),
+          transparent
+        );
+
+      box-shadow:
+        0 0 30px
+        rgba(216,195,154,.4);
+
+      will-change:
+        transform,
+        opacity;
+    }
+
+    .gold-haze {
+      position: absolute;
+
+      width: 1100px;
+      height: 140px;
+
+      left: 50%;
+      top: 48%;
+
+      opacity: 0;
+
+      transform:
+        translateX(-50%)
+        rotate(-11deg);
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(216,195,154,.12),
+          transparent
+        );
+
+      filter:
+        blur(35px);
+    }
+
+    /* =========================================================
+       GRAIN
+    ========================================================= */
 
     .grain {
       position: absolute;
       inset: 0;
 
-      opacity: 0.11;
+      opacity: .06;
+
+      pointer-events: none;
 
       background-image:
         radial-gradient(
-          rgba(30,30,32,.12)
+          rgba(20,20,22,.22)
           .45px,
           transparent .55px
         );
 
       background-size:
         5px 5px;
-
-      pointer-events: none;
     }
 
-
-
-    /* ========================================
-       MAIN SCROLL EXPERIENCE
-    ======================================== */
+    /* =========================================================
+       SCROLL STORY
+    ========================================================= */
 
     .story {
       position: relative;
-
-      height: 260vh;
+      height: 330vh;
     }
-
 
     .stage {
       position: sticky;
-
       top: 0;
 
       height: 100vh;
+      min-height: 560px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
       overflow: hidden;
 
       padding:
-        40px
+        30px
         24px
-        140px;
+        90px;
     }
 
-
-
-    /* ========================================
-       PREMIUM TYPOGRAPHY
-    ======================================== */
+    /* =========================================================
+       TYPOGRAPHY
+    ========================================================= */
 
     .name {
       position: relative;
+      z-index: 10;
 
-      z-index: 5;
+      width: 100%;
 
       text-align: center;
 
       will-change:
-        transform,
-        opacity,
-        filter;
+        transform;
     }
-
 
     h1 {
       margin: 0;
@@ -281,31 +343,29 @@
       padding:
         .12em
         .16em
-        .22em;
+        .23em;
 
       font-family:
         "Iowan Old Style",
         "Baskerville",
+        "Baskerville Old Face",
         "Times New Roman",
         serif;
 
       font-size:
         clamp(
           72px,
-          11.5vw,
+          11vw,
           158px
         );
 
-      line-height:
-        .94;
+      line-height: .98;
+
+      font-weight: 400;
 
       letter-spacing:
-        -.065em;
-
-      font-weight:
-        400;
+        -.055em;
     }
-
 
     h1 span {
       display: block;
@@ -313,436 +373,436 @@
       will-change:
         transform,
         opacity,
-        filter;
+        filter,
+        color;
     }
-
 
     .first-name {
-      opacity: .08;
+      opacity: .03;
 
       filter:
-        blur(15px);
+        blur(20px);
 
       transform:
-        translateY(40px);
-    }
+        translateY(55px);
 
+      color:
+        var(--navy);
+    }
 
     .last-name {
       opacity: 0;
 
       filter:
-        blur(18px);
+        blur(24px);
 
       transform:
-        translateY(60px);
+        translateY(85px);
 
-      color: transparent;
-
-      background:
-        linear-gradient(
-          105deg,
-
-          #171719 8%,
-
-          #35383d 48%,
-
-          #69616d 78%,
-
-          #464441
-        );
-
-      background-clip:
-        text;
-
-      -webkit-background-clip:
-        text;
+      color:
+        var(--navy);
     }
 
+    /* =========================================================
+       FLOATING SOCIALS
+    ========================================================= */
 
-
-    /* ========================================
-       SOCIAL GLASS CAPSULE
-    ======================================== */
-
-    .social-capsule {
+    .socials {
       position: fixed;
 
-      z-index: 50;
+      z-index: 100;
 
       left: 50%;
-      bottom: 28px;
-
-      transform:
-        translateX(-50%);
+      bottom: 26px;
 
       display: flex;
 
-      align-items: center;
+      gap: 13px;
 
-      gap: 9px;
+      transform:
+        translateX(-50%)
+        translateY(30px);
 
-      padding:
-        9px;
+      opacity: 0;
 
-      border-radius:
-        24px;
+      pointer-events: none;
 
-      border:
-        1px solid
-        rgba(255,255,255,.72);
+      transition:
+        opacity .8s
+        cubic-bezier(.16,1,.3,1),
 
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,255,255,.52),
-          rgba(255,255,255,.25)
-        );
-
-      box-shadow:
-
-        0 18px 60px
-        rgba(45,50,58,.10),
-
-        inset 0 1px 0
-        rgba(255,255,255,.95),
-
-        inset 0 -1px 0
-        rgba(255,255,255,.28);
-
-      backdrop-filter:
-        blur(30px)
-        saturate(145%);
-
-      -webkit-backdrop-filter:
-        blur(30px)
-        saturate(145%);
-
-      animation:
-        capsuleFloat
-        7s
-        ease-in-out
-        infinite alternate;
+        transform .8s
+        cubic-bezier(.16,1,.3,1);
     }
 
+    .socials.visible {
+      opacity: 1;
 
+      transform:
+        translateX(-50%)
+        translateY(0);
 
-    /* ========================================
-       SOCIAL ICON BUTTONS
-    ======================================== */
+      pointer-events: auto;
+    }
 
-    .social-link {
-      width: 48px;
-      height: 48px;
+    .social {
+      width: 49px;
+      height: 49px;
 
       display: grid;
-
       place-items: center;
 
-      position: relative;
+      border-radius: 50%;
 
-      border-radius: 17px;
-
-      color: #242426;
+      color: var(--navy);
 
       text-decoration: none;
 
-      background:
-        rgba(255,255,255,.34);
-
       border:
         1px solid
-        rgba(255,255,255,.52);
+        rgba(255,255,255,.48);
+
+      background:
+        rgba(246,242,234,.38);
 
       box-shadow:
-
         inset 0 1px 0
-        rgba(255,255,255,.9),
+        rgba(255,255,255,.7),
 
-        0 7px 20px
-        rgba(50,55,65,.05);
+        0 12px 35px
+        rgba(0,0,0,.09);
+
+      backdrop-filter:
+        blur(22px)
+        saturate(130%);
+
+      -webkit-backdrop-filter:
+        blur(22px)
+        saturate(130%);
 
       transition:
-        background .3s ease,
-        transform .3s ease,
-        box-shadow .3s ease;
+        color .5s ease,
+        background .5s ease,
+        border .5s ease;
     }
 
-
-    .social-link svg {
-      width: 21px;
-      height: 21px;
+    .social svg {
+      width: 20px;
+      height: 20px;
 
       fill: currentColor;
     }
 
-
-
-    /* Each icon floats independently */
-
     .instagram {
       animation:
-        instagramFloat
-        5.8s
+        socialOne
+        6.4s
         ease-in-out
         infinite alternate;
     }
-
 
     .linkedin {
       animation:
-        linkedinFloat
-        6.6s
+        socialTwo
+        7.3s
         ease-in-out
         infinite alternate;
     }
 
+    .social.dark {
+      color:
+        var(--champagne-light);
 
-
-    .social-link:hover {
       background:
-        rgba(255,255,255,.68);
+        rgba(255,255,255,.08);
 
-      box-shadow:
-
-        inset 0 1px 0
-        rgba(255,255,255,1),
-
-        0 10px 28px
-        rgba(50,55,65,.09);
+      border-color:
+        rgba(216,195,154,.25);
     }
 
+    @media
+    (hover:hover)
+    and
+    (pointer:fine) {
 
+      .social:hover {
+        background:
+          rgba(216,195,154,.30);
+      }
 
-    /* ========================================
-       AMBIENT MOTION
-    ======================================== */
+    }
 
-    @keyframes pearlMorph {
+    /* =========================================================
+       AMBIENT ANIMATIONS
+    ========================================================= */
+
+    @keyframes driftBlue {
+
+      from {
+        transform:
+          translate(0,0)
+          scale(1);
+      }
+
+      to {
+        transform:
+          translate(220px,160px)
+          scale(1.15,.88);
+      }
+
+    }
+
+    @keyframes driftGold {
+
+      from {
+        transform:
+          translate(0,0);
+      }
+
+      to {
+        transform:
+          translate(-200px,120px)
+          scale(.9,1.15);
+      }
+
+    }
+
+    @keyframes driftChampagne {
+
+      from {
+        transform:
+          translate(0,0);
+      }
+
+      to {
+        transform:
+          translate(100px,-170px)
+          scale(1.15,.9);
+      }
+
+    }
+
+    @keyframes morphOne {
 
       0% {
-
         transform:
-          translateX(-50%)
-          rotate(-5deg)
-          scale(.96,1.03);
+          translate(0,0)
+          rotate(-7deg)
+          scale(1);
 
         border-radius:
-          48% 52% 57% 43% /
-          51% 43% 57% 49%;
+          58% 42% 62% 38% /
+          45% 61% 39% 55%;
       }
-
-
-      50% {
-
-        transform:
-          translateX(-47%)
-          rotate(7deg)
-          scale(1.07,.94);
-
-        border-radius:
-          57% 43% 45% 55% /
-          43% 59% 41% 57%;
-      }
-
 
       100% {
-
         transform:
-          translateX(-53%)
-          rotate(-3deg)
-          scale(.98,1.05);
+          translate(210px,120px)
+          rotate(21deg)
+          scale(1.15,.88);
 
         border-radius:
-          42% 58% 54% 46% /
-          58% 42% 55% 45%;
+          40% 60% 47% 53% /
+          62% 38% 58% 42%;
       }
 
     }
 
-
-
-    @keyframes iceMovement {
-
-      from {
-        transform:
-          translate(0,0)
-          scale(1);
-      }
-
-      to {
-        transform:
-          translate(180px,110px)
-          scale(1.18,.88);
-      }
-
-    }
-
-
-    @keyframes violetMovement {
-
-      from {
-        transform:
-          translate(0,0)
-          scale(1);
-      }
-
-      to {
-        transform:
-          translate(-180px,120px)
-          scale(.90,1.15);
-      }
-
-    }
-
-
-    @keyframes champagneMovement {
-
-      from {
-        transform:
-          translate(0,0)
-          scale(1);
-      }
-
-      to {
-        transform:
-          translate(90px,-150px)
-          scale(1.15,.92);
-      }
-
-    }
-
-
-
-    /* ========================================
-       SOCIAL FLOATING
-    ======================================== */
-
-    @keyframes capsuleFloat {
-
-      from {
-        transform:
-          translateX(-50%)
-          translateY(0px);
-      }
-
-      to {
-        transform:
-          translateX(-50%)
-          translateY(-5px);
-      }
-
-    }
-
-
-    @keyframes instagramFloat {
+    @keyframes morphTwo {
 
       0% {
         transform:
-          translateY(1px)
+          translate(0,0)
+          rotate(7deg);
+      }
+
+      100% {
+        transform:
+          translate(-220px,-100px)
+          rotate(-19deg)
+          scale(.9,1.12);
+
+        border-radius:
+          62% 38% 57% 43% /
+          42% 61% 39% 58%;
+      }
+
+    }
+
+    @keyframes socialOne {
+
+      from {
+        transform:
+          translateY(3px)
           rotate(-1deg);
       }
 
-      100% {
+      to {
         transform:
-          translateY(-3px)
-          rotate(1deg);
+          translateY(-5px)
+          rotate(.8deg);
       }
 
     }
 
+    @keyframes socialTwo {
 
-    @keyframes linkedinFloat {
-
-      0% {
+      from {
         transform:
-          translateY(-2px)
-          rotate(.8deg);
+          translateY(-4px)
+          rotate(.7deg);
       }
 
-      100% {
+      to {
         transform:
-          translateY(2px)
+          translateY(4px)
           rotate(-.8deg);
       }
 
     }
 
-
-
-    /* ========================================
+    /* =========================================================
        MOBILE
-    ======================================== */
+    ========================================================= */
 
-    @media (max-width: 650px) {
+    @media (max-width: 700px) {
+
+      .story {
+        height:
+          285vh;
+      }
+
+      .stage {
+        padding:
+          20px
+          12px
+          90px;
+      }
 
       h1 {
-
         font-size:
           clamp(
-            64px,
-            20vw,
-            100px
+            58px,
+            19vw,
+            94px
           );
 
+        line-height:
+          1;
+
         letter-spacing:
-          -.055em;
+          -.05em;
       }
 
-
-      .pearl {
-
+      .form-one {
         width:
-          620px;
+          420px;
 
         height:
-          620px;
+          420px;
 
-        top:
-          300px;
+        left:
+          -290px;
       }
 
+      .form-two {
+        width:
+          520px;
 
-      .social-capsule {
+        height:
+          520px;
 
+        right:
+          -360px;
+      }
+
+      .glow-blue {
+        width:
+          500px;
+
+        height:
+          450px;
+
+        left:
+          -330px;
+      }
+
+      .glow-gold {
+        width:
+          500px;
+
+        height:
+          420px;
+
+        right:
+          -340px;
+      }
+
+      .glow-champagne {
+        width:
+          480px;
+
+        height:
+          400px;
+      }
+
+      .socials {
         bottom:
-          18px;
+          max(
+            18px,
+            env(safe-area-inset-bottom)
+          );
       }
 
-
-      .social-link {
-
+      .social {
         width:
-          46px;
+          48px;
 
         height:
-          46px;
+          48px;
+      }
+
+      .gold-line {
+        width:
+          700px;
+      }
+
+      .gold-haze {
+        width:
+          700px;
       }
 
     }
 
+    @media (max-width: 380px) {
 
+      h1 {
+        font-size:
+          clamp(
+            52px,
+            18vw,
+            72px
+          );
+      }
 
-    /* ========================================
+    }
+
+    /* =========================================================
        REDUCED MOTION
-    ======================================== */
+    ========================================================= */
 
     @media
     (prefers-reduced-motion: reduce) {
 
-      .pearl,
-      .light,
-      .social-capsule,
-      .social-link {
-
+      .glow,
+      .form,
+      .social {
         animation:
           none !important;
       }
 
-
       .first-name,
       .last-name {
-
         opacity:
           1 !important;
 
@@ -758,35 +818,50 @@
   </style>
 </head>
 
-
-
 <body>
 
+  <!-- BACKGROUND -->
 
-  <!-- ======================================
-       BACKGROUND
-  ======================================= -->
-
-  <div class="atmosphere">
+  <div class="world">
 
     <div
-      class="light ice"
-      id="ice"
+      class="navy-layer"
+      id="navyLayer"
     ></div>
 
     <div
-      class="light violet"
-      id="violet"
+      class="glow glow-blue"
+      id="blueGlow"
     ></div>
 
     <div
-      class="light champagne"
-      id="champagne"
+      class="glow glow-gold"
+      id="goldGlow"
     ></div>
 
     <div
-      class="pearl"
-      id="pearl"
+      class="glow glow-champagne"
+      id="champagneGlow"
+    ></div>
+
+    <div
+      class="form form-one"
+      id="formOne"
+    ></div>
+
+    <div
+      class="form form-two"
+      id="formTwo"
+    ></div>
+
+    <div
+      class="gold-haze"
+      id="goldHaze"
+    ></div>
+
+    <div
+      class="gold-line"
+      id="goldLine"
     ></div>
 
     <div class="grain"></div>
@@ -794,10 +869,7 @@
   </div>
 
 
-
-  <!-- ======================================
-       NAME
-  ======================================= -->
+  <!-- MAIN -->
 
   <section
     class="story"
@@ -820,7 +892,6 @@
             Abdullah
           </span>
 
-
           <span
             class="last-name"
             id="lastName"
@@ -837,21 +908,17 @@
   </section>
 
 
-
-  <!-- ======================================
-       FLOATING SOCIAL GLASS
-  ======================================= -->
+  <!-- SOCIALS -->
 
   <div
-    class="social-capsule"
+    class="socials"
+    id="socials"
     aria-label="Social profiles"
   >
 
-
-    <!-- INSTAGRAM -->
-
     <a
-      class="social-link instagram"
+      class="social instagram"
+      id="instagram"
       href="https://www.instagram.com/aaabdxllah/"
       target="_blank"
       rel="noopener noreferrer"
@@ -862,21 +929,16 @@
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
-
         <path
           d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5ZM17.5 5.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
         />
-
       </svg>
 
     </a>
 
-
-
-    <!-- LINKEDIN -->
-
     <a
-      class="social-link linkedin"
+      class="social linkedin"
+      id="linkedin"
       href="https://www.linkedin.com/in/arayees/"
       target="_blank"
       rel="noopener noreferrer"
@@ -887,22 +949,15 @@
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
-
         <path
           d="M5.34 3.5A2.34 2.34 0 1 1 5.34 8.18 2.34 2.34 0 0 1 5.34 3.5ZM3.32 9.75h4.04V21H3.32V9.75Zm6.55 0h3.87v1.54h.05c.54-1.02 1.86-2.1 3.83-2.1 4.1 0 4.86 2.7 4.86 6.21V21h-4.03v-4.96c0-1.18-.02-2.71-1.65-2.71-1.66 0-1.91 1.29-1.91 2.62V21h-4.02V9.75Z"
         />
-
       </svg>
 
     </a>
 
   </div>
 
-
-
-  <!-- ======================================
-       SCROLL ANIMATION
-  ======================================= -->
 
   <script>
 
@@ -918,39 +973,55 @@
     const lastName =
       document.getElementById("lastName");
 
-    const pearl =
-      document.getElementById("pearl");
+    const socials =
+      document.getElementById("socials");
 
-    const ice =
-      document.getElementById("ice");
+    const instagram =
+      document.getElementById("instagram");
 
-    const violet =
-      document.getElementById("violet");
+    const linkedin =
+      document.getElementById("linkedin");
 
-    const champagne =
-      document.getElementById("champagne");
+    const navyLayer =
+      document.getElementById("navyLayer");
 
+    const blueGlow =
+      document.getElementById("blueGlow");
+
+    const goldGlow =
+      document.getElementById("goldGlow");
+
+    const champagneGlow =
+      document.getElementById("champagneGlow");
+
+    const formOne =
+      document.getElementById("formOne");
+
+    const formTwo =
+      document.getElementById("formTwo");
+
+    const goldLine =
+      document.getElementById("goldLine");
+
+    const goldHaze =
+      document.getElementById("goldHaze");
 
 
     function clamp(
       value,
-      minimum,
-      maximum
+      min,
+      max
     ) {
 
       return Math.min(
-        Math.max(
-          value,
-          minimum
-        ),
-        maximum
+        Math.max(value, min),
+        max
       );
 
     }
 
 
-
-    function easeOutCubic(t) {
+    function ease(t) {
 
       return (
         1 -
@@ -963,38 +1034,34 @@
     }
 
 
-
-    function updateAnimation() {
+    function update() {
 
       const rect =
         story.getBoundingClientRect();
 
 
-      const scrollDistance =
+      const distance =
         story.offsetHeight -
         window.innerHeight;
 
 
       const progress =
         clamp(
-
-          -rect.top /
-          scrollDistance,
-
+          -rect.top / distance,
           0,
           1
-
         );
 
 
+      /* ====================================
+         ABDULLAH REVEAL
+      ==================================== */
 
-      /* ABDULLAH */
-
-      const firstProgress =
-        easeOutCubic(
+      const first =
+        ease(
 
           clamp(
-            progress / .40,
+            progress / .26,
             0,
             1
           )
@@ -1003,14 +1070,14 @@
 
 
       firstName.style.opacity =
-        .08 +
-        (.92 * firstProgress);
+        .03 +
+        (.97 * first);
 
 
       firstName.style.filter =
         `
           blur(
-            ${15 * (1 - firstProgress)}px
+            ${20 * (1 - first)}px
           )
         `;
 
@@ -1018,21 +1085,21 @@
       firstName.style.transform =
         `
           translateY(
-            ${40 * (1 - firstProgress)}px
+            ${55 * (1 - first)}px
           )
         `;
 
 
 
-      /* RAYEES */
+      /* ====================================
+         RAYEES REVEAL
+      ==================================== */
 
-      const lastProgress =
-        easeOutCubic(
+      const last =
+        ease(
 
           clamp(
-            (progress - .12) /
-            .42,
-
+            (progress - .08) / .28,
             0,
             1
           )
@@ -1041,13 +1108,13 @@
 
 
       lastName.style.opacity =
-        lastProgress;
+        last;
 
 
       lastName.style.filter =
         `
           blur(
-            ${18 * (1 - lastProgress)}px
+            ${24 * (1 - last)}px
           )
         `;
 
@@ -1055,21 +1122,23 @@
       lastName.style.transform =
         `
           translateY(
-            ${60 * (1 - lastProgress)}px
+            ${85 * (1 - last)}px
           )
         `;
 
 
 
-      /* NAME SETTLE */
+      /* ====================================
+         TYPOGRAPHY SEPARATION
 
-      const settle =
-        easeOutCubic(
+         Very restrained.
+      ==================================== */
+
+      const separate =
+        ease(
 
           clamp(
-            (progress - .48) /
-            .52,
-
+            (progress - .34) / .32,
             0,
             1
           )
@@ -1077,72 +1146,250 @@
         );
 
 
+      firstName.style.translate =
+        `
+          ${-22 * separate}px
+          0
+        `;
+
+
+      lastName.style.translate =
+        `
+          ${22 * separate}px
+          0
+        `;
+
+
+
+      /* ====================================
+         DARK TRANSITION
+      ==================================== */
+
+      const dark =
+        ease(
+
+          clamp(
+            (progress - .38) / .34,
+            0,
+            1
+          )
+
+        );
+
+
+      navyLayer.style.opacity =
+        dark;
+
+
       /*
-       Only 4% scale increase.
-       Keeps it restrained.
+       Text transitions from navy
+       to champagne.
       */
 
-      const nameScale =
-        1 +
-        (.04 * settle);
+      const lightness =
+        Math.round(
+          23 +
+          (220 * dark)
+        );
 
 
-      const nameY =
-        -14 * settle;
+      firstName.style.color =
+        `
+          rgb(
+            ${lightness},
+            ${lightness},
+            ${Math.min(
+              255,
+              lightness + 4
+            )}
+          )
+        `;
+
+
+      lastName.style.color =
+        `
+          rgb(
+            ${lightness},
+            ${lightness},
+            ${Math.min(
+              255,
+              lightness + 4
+            )}
+          )
+        `;
+
+
+
+      /* ====================================
+         GOLD REFLECTION
+      ==================================== */
+
+      const reflection =
+        1 -
+        Math.abs(
+          progress - .66
+        ) / .18;
+
+
+      const reflectionOpacity =
+        clamp(
+          reflection,
+          0,
+          1
+        );
+
+
+      goldLine.style.opacity =
+        reflectionOpacity * .8;
+
+
+      goldHaze.style.opacity =
+        reflectionOpacity * .65;
+
+
+      goldLine.style.transform =
+        `
+          translateX(
+            ${-65 + progress * 30}%
+          )
+
+          rotate(-11deg)
+        `;
+
+
+      goldHaze.style.transform =
+        `
+          translateX(
+            ${-65 + progress * 30}%
+          )
+
+          rotate(-11deg)
+        `;
+
+
+
+      /* ====================================
+         NAME SETTLE
+
+         No giant zoom.
+      ==================================== */
+
+      const settle =
+        ease(
+
+          clamp(
+            (progress - .65) / .35,
+            0,
+            1
+          )
+
+        );
 
 
       name.style.transform =
         `
           translateY(
-            ${nameY}px
+            ${-12 * settle}px
           )
 
           scale(
-            ${nameScale}
+            ${1 + (.025 * settle)}
           )
         `;
 
 
 
-      /* PEARL SCROLL MOTION */
+      /* ====================================
+         SOCIAL REVEAL
+      ==================================== */
 
-      pearl.style.translate =
+      if (progress > .70) {
+
+        socials.classList.add(
+          "visible"
+        );
+
+      }
+
+      else {
+
+        socials.classList.remove(
+          "visible"
+        );
+
+      }
+
+
+      if (dark > .55) {
+
+        instagram.classList.add(
+          "dark"
+        );
+
+        linkedin.classList.add(
+          "dark"
+        );
+
+      }
+
+      else {
+
+        instagram.classList.remove(
+          "dark"
+        );
+
+        linkedin.classList.remove(
+          "dark"
+        );
+
+      }
+
+
+
+      /* ====================================
+         SCROLL PARALLAX
+      ==================================== */
+
+      blueGlow.style.translate =
         `
-          ${(progress - .5) * 30}px
-          ${progress * -48}px
+          ${progress * 100}px
+          ${progress * 70}px
         `;
 
 
-
-      /* AMBIENT PARALLAX */
-
-      ice.style.translate =
+      goldGlow.style.translate =
         `
-          ${progress * 48}px
-          ${progress * 24}px
+          ${progress * -120}px
+          ${progress * 50}px
         `;
 
 
-      violet.style.translate =
+      champagneGlow.style.translate =
         `
-          ${progress * -58}px
-          ${progress * 32}px
+          ${progress * 50}px
+          ${progress * -100}px
         `;
 
 
-      champagne.style.translate =
+      formOne.style.translate =
         `
-          ${progress * 22}px
-          ${progress * -48}px
+          ${progress * 85}px
+          ${progress * -55}px
+        `;
+
+
+      formTwo.style.translate =
+        `
+          ${progress * -95}px
+          ${progress * -70}px
         `;
 
     }
 
 
-
     window.addEventListener(
       "scroll",
-      updateAnimation,
+      update,
       {
         passive: true
       }
@@ -1151,14 +1398,13 @@
 
     window.addEventListener(
       "resize",
-      updateAnimation
+      update
     );
 
 
-    updateAnimation();
+    update();
 
   </script>
-
 
 </body>
 </html>
