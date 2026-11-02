@@ -1,1 +1,401 @@
-<h1>Hello!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f7">
+
+  <title>Abdullah Rayees</title>
+
+  <style>
+    :root {
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --glass: rgba(255, 255, 255, 0.55);
+      --border: rgba(255, 255, 255, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(178, 218, 255, 0.55),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 25%,
+          rgba(224, 198, 255, 0.45),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 55% 90%,
+          rgba(190, 235, 225, 0.5),
+          transparent 32%
+        ),
+        #f5f5f7;
+
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      width: min(1100px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      padding-top: 20px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 10px 12px 10px 20px;
+
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      background: rgba(255, 255, 255, 0.45);
+
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+
+      box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      padding: 10px 13px;
+      border-radius: 13px;
+
+      color: var(--text);
+      text-decoration: none;
+
+      font-size: 14px;
+      font-weight: 500;
+
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.65);
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+
+    main {
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      padding: 80px 0;
+    }
+
+    .hero {
+      max-width: 950px;
+    }
+
+    .eyebrow {
+      margin: 0 0 20px;
+
+      color: var(--muted);
+
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      margin: 0;
+
+      font-size: clamp(64px, 10vw, 120px);
+      line-height: 0.92;
+
+      font-weight: 680;
+      letter-spacing: -0.075em;
+    }
+
+    .last-name {
+      display: block;
+
+      color: transparent;
+
+      background:
+        linear-gradient(
+          100deg,
+          #1d1d1f 5%,
+          #5d6673 50%,
+          #8c79a9 100%
+        );
+
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    /* SOCIAL LINKS */
+
+    .socials {
+      display: flex;
+      gap: 12px;
+
+      margin-top: 48px;
+    }
+
+    .social {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      padding: 14px 18px;
+
+      color: var(--text);
+      text-decoration: none;
+
+      font-size: 15px;
+      font-weight: 550;
+
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+
+      background: rgba(255, 255, 255, 0.5);
+
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+
+      box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .social:hover {
+      transform: translateY(-3px);
+
+      background: rgba(255, 255, 255, 0.7);
+
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+
+      width: 30px;
+      height: 30px;
+
+      border-radius: 9px;
+
+      background: rgba(255, 255, 255, 0.7);
+
+      font-weight: 700;
+    }
+
+    .arrow {
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+
+      padding: 25px 0;
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+
+      .page {
+        width: calc(100% - 24px);
+      }
+
+      nav {
+        padding-top: 12px;
+      }
+
+      .nav {
+        padding-left: 15px;
+      }
+
+      .nav-links a {
+        padding: 9px;
+        font-size: 13px;
+      }
+
+      main {
+        padding: 60px 5px;
+      }
+
+      h1 {
+        font-size: clamp(58px, 18vw, 85px);
+      }
+
+      .socials {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .social {
+        justify-content: space-between;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <nav>
+      <div class="nav">
+
+        <div class="name">
+          Abdullah Rayees
+        </div>
+
+        <div class="nav-links">
+
+          <a
+            href="https://www.linkedin.com/in/arayees/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
+
+          <a
+            href="https://www.instagram.com/aaabdxllah/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Instagram
+          </a>
+
+        </div>
+
+      </div>
+    </nav>
+
+
+    <main>
+
+      <section class="hero">
+
+        <p class="eyebrow">
+          Finance · Technology · Ideas
+        </p>
+
+        <h1>
+          Abdullah
+          <span class="last-name">Rayees.</span>
+        </h1>
+
+        <div class="socials">
+
+          <a
+            class="social"
+            href="https://www.linkedin.com/in/arayees/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            <span class="icon">in</span>
+
+            <span>LinkedIn</span>
+
+            <span class="arrow">↗</span>
+
+          </a>
+
+
+          <a
+            class="social"
+            href="https://www.instagram.com/aaabdxllah/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            <span class="icon">◎</span>
+
+            <span>Instagram</span>
+
+            <span class="arrow">↗</span>
+
+          </a>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <footer>
+
+      <span>© 2026 Abdullah Rayees</span>
+
+      <span>San José, California</span>
+
+    </footer>
+
+  </div>
+
+</body>
+</html>
