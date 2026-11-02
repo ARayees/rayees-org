@@ -8,50 +8,40 @@
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
 
-  <meta name="theme-color" content="#e8ddca">
+  <meta name="theme-color" content="#eee6d8">
 
   <title>Abdullah Rayees</title>
 
   <style>
-
     :root {
-      --champagne: #e8ddca;
-      --ivory: #f6f2ea;
+      --ivory: #f8f5ef;
+      --champagne: #eee4d2;
       --navy: #07192b;
-      --midnight: #102c46;
+      --navy-soft: #12344f;
       --gold: #b89558;
-      --pale-gold: #d8c39a;
+      --gold-light: #ddc89f;
     }
-
 
     * {
       box-sizing: border-box;
     }
 
-
-    html {
-      margin: 0;
-      padding: 0;
-
-      width: 100%;
-
-      background: var(--champagne);
-
-      -webkit-text-size-adjust: 100%;
-    }
-
-
+    html,
     body {
       margin: 0;
       padding: 0;
-
       width: 100%;
-      min-height: 100%;
+    }
 
+    html {
+      background: var(--champagne);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
       overflow-x: hidden;
 
       color: var(--navy);
-
       background: var(--champagne);
 
       font-family:
@@ -62,340 +52,555 @@
         sans-serif;
 
       -webkit-font-smoothing: antialiased;
-
       overscroll-behavior-x: none;
     }
 
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
 
 
-    /* ========================================
-       FIXED BACKGROUND
-    ======================================== */
+    /* =========================================================
+       ATMOSPHERE
+    ========================================================= */
 
     .world {
       position: fixed;
-
       inset: 0;
 
-      width: 100%;
-      height: 100%;
-
-      z-index: -10;
+      z-index: 0;
 
       overflow: hidden;
-
       pointer-events: none;
 
       background:
         linear-gradient(
           145deg,
-          #f8f5ed 0%,
-          #e8ddca 55%,
-          #ddd0b9 100%
+          #faf7f1 0%,
+          #eee5d6 46%,
+          #dfd0b8 100%
         );
 
-      transform:
-        translateZ(0);
+      transform: translateZ(0);
     }
 
 
-    .navy-layer {
-      position: absolute;
+    /* =========================================================
+       DIFFUSED LIGHT SOURCES
 
-      inset: -10%;
+       These are intentionally enormous.
+       Their edges should never read as visible objects.
+    ========================================================= */
 
-      opacity: 0;
-
-      background:
-        radial-gradient(
-          circle at 28% 18%,
-          #183c59 0%,
-          #0d2941 31%,
-          #07192b 72%
-        );
-
-      will-change:
-        opacity;
-    }
-
-
-
-    /* ========================================
-       COLOR LIGHT
-    ======================================== */
-
-    .glow {
+    .light {
       position: absolute;
 
       border-radius: 50%;
 
-      filter:
-        blur(85px);
+      opacity: .78;
 
-      opacity: .32;
-
-      will-change:
-        transform;
+      will-change: transform;
     }
 
 
-    .blue-glow {
-      width: 700px;
-      height: 560px;
+    /* =========================================================
+       STRONGER NAVY OPENING
+    ========================================================= */
 
-      left: -280px;
-      top: -120px;
+    .navy-light {
+      width: 110vw;
+      height: 95vw;
 
-      background:
-        rgba(51, 103, 145, .44);
+      min-width: 950px;
+      min-height: 800px;
 
-      animation:
-        blueAmbient
-        21s
-        ease-in-out
-        infinite alternate;
-    }
-
-
-    .gold-glow {
-      width: 650px;
-      height: 520px;
-
-      right: -280px;
-      top: 30%;
+      left: -52vw;
+      top: -40vw;
 
       background:
-        rgba(190, 153, 87, .32);
+        radial-gradient(
+          ellipse at center,
+
+          rgba(5,25,45,.68) 0%,
+
+          rgba(13,48,77,.42) 24%,
+
+          rgba(32,82,116,.20) 46%,
+
+          rgba(46,96,130,.07) 60%,
+
+          transparent 76%
+        );
+
+      filter: blur(58px);
 
       animation:
-        goldAmbient
+        navyDrift
         25s
         ease-in-out
         infinite alternate;
     }
 
 
-    .champagne-glow {
-      width: 650px;
-      height: 500px;
+    /* =========================================================
+       STEEL BLUE REFLECTION
+    ========================================================= */
 
-      left: 22%;
-      bottom: -230px;
+    .blue-light {
+      width: 95vw;
+      height: 85vw;
+
+      min-width: 800px;
+      min-height: 700px;
+
+      right: -52vw;
+      top: -18vw;
 
       background:
-        rgba(224, 204, 164, .32);
+        radial-gradient(
+          ellipse at center,
+
+          rgba(64,117,156,.34),
+
+          rgba(78,128,164,.16) 40%,
+
+          rgba(105,148,176,.05) 58%,
+
+          transparent 74%
+        );
+
+      filter: blur(72px);
 
       animation:
-        champagneAmbient
-        28s
+        blueDrift
+        30s
         ease-in-out
         infinite alternate;
     }
 
 
+    /* =========================================================
+       CHAMPAGNE LIGHT
+    ========================================================= */
 
-    /* ========================================
-       LIQUID GLASS
-    ======================================== */
+    .champagne-light {
+      width: 105vw;
+      height: 80vw;
 
-    .glass {
+      min-width: 900px;
+      min-height: 700px;
+
+      left: 0;
+      bottom: -55vw;
+
+      background:
+        radial-gradient(
+          ellipse at center,
+
+          rgba(232,211,172,.58),
+
+          rgba(211,181,127,.22) 38%,
+
+          transparent 72%
+        );
+
+      filter: blur(65px);
+
+      animation:
+        champagneDrift
+        32s
+        ease-in-out
+        infinite alternate;
+    }
+
+
+    /* =========================================================
+       GOLD ILLUMINATION
+    ========================================================= */
+
+    .gold-light {
+      width: 75vw;
+      height: 60vw;
+
+      min-width: 650px;
+      min-height: 520px;
+
+      right: -40vw;
+      bottom: -18vw;
+
+      background:
+        radial-gradient(
+          ellipse at center,
+
+          rgba(181,137,70,.30),
+
+          rgba(199,163,101,.11) 40%,
+
+          transparent 72%
+        );
+
+      filter: blur(80px);
+
+      animation:
+        goldDrift
+        27s
+        ease-in-out
+        infinite alternate;
+    }
+
+
+    /* =========================================================
+       FROSTED GLASS VEIL
+
+       All color sits behind this layer.
+    ========================================================= */
+
+    .glass-veil {
       position: absolute;
+      inset: 0;
 
-      border:
-        1px solid
-        rgba(255,255,255,.30);
+      z-index: 4;
 
       background:
         linear-gradient(
           135deg,
-          rgba(255,255,255,.18),
-          rgba(255,255,255,.025)
+
+          rgba(255,255,255,.35),
+
+          rgba(255,255,255,.19) 35%,
+
+          rgba(246,242,234,.25) 65%,
+
+          rgba(255,255,255,.33)
         );
 
-      box-shadow:
-
-        inset 30px 25px 80px
-        rgba(255,255,255,.16),
-
-        inset -35px -35px 100px
-        rgba(7,25,43,.09),
-
-        0 40px 100px
-        rgba(20,30,45,.06);
-
       -webkit-backdrop-filter:
-        blur(18px)
-        saturate(120%);
+        blur(36px)
+        saturate(118%);
 
       backdrop-filter:
-        blur(18px)
-        saturate(120%);
+        blur(36px)
+        saturate(118%);
 
-      will-change:
-        transform,
-        border-radius;
+      box-shadow:
+        inset 0 0 160px
+        rgba(255,255,255,.18);
+
+      pointer-events: none;
     }
 
 
-    .glass-one {
-      width: 620px;
-      height: 620px;
+    /* =========================================================
+       PEARL SHEEN
+    ========================================================= */
 
-      left: -310px;
-      top: 18%;
+    .glass-sheen {
+      position: absolute;
+      inset: 0;
 
-      border-radius:
-        58% 42% 62% 38% /
-        45% 61% 39% 55%;
+      z-index: 5;
+
+      opacity: .32;
+
+      background:
+        linear-gradient(
+          115deg,
+
+          rgba(255,255,255,.18) 0%,
+
+          transparent 28%,
+
+          rgba(218,200,164,.08) 50%,
+
+          transparent 70%,
+
+          rgba(255,255,255,.12) 100%
+        );
+
+      pointer-events: none;
+    }
+
+
+    /* =========================================================
+       MIDNIGHT WORLD
+    ========================================================= */
+
+    .midnight {
+      position: absolute;
+      inset: 0;
+
+      z-index: 6;
+
+      opacity: 0;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          145deg,
+
+          #123957 0%,
+
+          #0a2943 34%,
+
+          #071d32 65%,
+
+          #051524 100%
+        );
+
+      will-change: opacity;
+    }
+
+
+    /* =========================================================
+       MIDNIGHT BLUE ILLUMINATION
+    ========================================================= */
+
+    .midnight::before {
+      content: "";
+
+      position: absolute;
+
+      width: 95vw;
+      height: 80vw;
+
+      left: -52vw;
+      top: -38vw;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          ellipse,
+
+          rgba(66,126,166,.32),
+
+          rgba(32,79,112,.13) 42%,
+
+          transparent 72%
+        );
+
+      filter: blur(65px);
 
       animation:
-        glassOneAmbient
-        24s
+        midnightBlue
+        27s
         ease-in-out
         infinite alternate;
     }
 
 
-    .glass-two {
-      width: 720px;
-      height: 720px;
+    /* =========================================================
+       STRONGER CHAMPAGNE ENDING
+    ========================================================= */
 
-      right: -360px;
-      top: 47%;
+    .midnight::after {
+      content: "";
 
-      border-radius:
-        39% 61% 46% 54% /
-        62% 38% 60% 40%;
+      position: absolute;
+
+      width: 95vw;
+      height: 80vw;
+
+      right: -45vw;
+      bottom: -42vw;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          ellipse,
+
+          rgba(238,220,184,.38) 0%,
+
+          rgba(216,195,154,.24) 25%,
+
+          rgba(193,153,86,.10) 48%,
+
+          transparent 74%
+        );
+
+      filter: blur(72px);
 
       animation:
-        glassTwoAmbient
-        29s
+        midnightGold
+        31s
         ease-in-out
         infinite alternate;
     }
 
 
+    /* =========================================================
+       FROSTED MIDNIGHT GLASS
+    ========================================================= */
 
-    /* ========================================
-       GOLD LIGHT SWEEP
-    ======================================== */
+    .midnight-glass {
+      position: absolute;
+      inset: 0;
+
+      z-index: 7;
+
+      opacity: 0;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.018),
+          rgba(6,24,42,.07),
+          rgba(221,200,159,.015)
+        );
+
+      -webkit-backdrop-filter:
+        blur(27px)
+        saturate(118%);
+
+      backdrop-filter:
+        blur(27px)
+        saturate(118%);
+
+      pointer-events: none;
+
+      will-change: opacity;
+    }
+
+
+    /* =========================================================
+       GOLD REFLECTION
+    ========================================================= */
 
     .gold-sweep {
       position: absolute;
 
-      width: 150%;
-      height: 180px;
+      z-index: 8;
 
-      left: -25%;
-      top: 48%;
+      width: 190%;
+      height: 150px;
+
+      left: -45%;
+      top: 49%;
 
       opacity: 0;
-
-      transform:
-        rotate(-10deg)
-        translate3d(-20%,0,0);
 
       background:
         linear-gradient(
           90deg,
-          transparent 0%,
-          transparent 30%,
-          rgba(216,195,154,.04) 40%,
-          rgba(216,195,154,.32) 50%,
-          rgba(184,149,88,.10) 60%,
-          transparent 72%
+
+          transparent 25%,
+
+          rgba(221,200,159,0) 36%,
+
+          rgba(221,200,159,.09) 44%,
+
+          rgba(221,200,159,.38) 50%,
+
+          rgba(184,149,88,.12) 57%,
+
+          transparent 70%
         );
 
-      filter:
-        blur(32px);
+      filter: blur(28px);
+
+      transform:
+        rotate(-9deg)
+        translate3d(-20%,0,0);
 
       will-change:
-        transform,
-        opacity;
+        opacity,
+        transform;
     }
 
 
     .gold-line {
       position: absolute;
 
-      width: 150%;
+      z-index: 9;
+
+      width: 190%;
       height: 1px;
 
-      left: -25%;
+      left: -45%;
       top: 50%;
 
       opacity: 0;
 
-      transform:
-        rotate(-10deg)
-        translate3d(-20%,0,0);
-
       background:
         linear-gradient(
           90deg,
+
           transparent,
-          rgba(216,195,154,.10),
-          rgba(216,195,154,.85),
-          rgba(184,149,88,.30),
+
+          rgba(221,200,159,.10),
+
+          rgba(235,214,174,.92),
+
+          rgba(184,149,88,.28),
+
           transparent
         );
 
       box-shadow:
-        0 0 24px
-        rgba(216,195,154,.25);
+        0 0 30px
+        rgba(221,200,159,.30);
+
+      transform:
+        rotate(-9deg)
+        translate3d(-20%,0,0);
 
       will-change:
-        transform,
-        opacity;
+        opacity,
+        transform;
     }
 
 
-
-    /* ========================================
-       TEXTURE
-    ======================================== */
+    /* =========================================================
+       GRAIN
+    ========================================================= */
 
     .grain {
       position: absolute;
-
       inset: 0;
 
-      opacity: .045;
+      z-index: 10;
+
+      opacity: .035;
 
       background-image:
         radial-gradient(
-          rgba(20,20,22,.28)
+          rgba(20,20,22,.30)
           .4px,
           transparent .5px
         );
 
       background-size:
         5px 5px;
+
+      pointer-events: none;
     }
 
 
+    /* =========================================================
+       SCROLL EXPERIENCE
+    ========================================================= */
 
-    /* ========================================
-       SCROLL AREA
-    ======================================== */
-
-    .story {
+    .experience {
       position: relative;
 
-      height: 300vh;
-      height: 300svh;
+      z-index: 20;
+
+      height: 320vh;
+      height: 320svh;
     }
 
 
     .stage {
       position: sticky;
-
       top: 0;
 
       width: 100%;
 
       height: 100vh;
       height: 100svh;
+      height: 100dvh;
 
       min-height: 520px;
 
@@ -408,30 +613,28 @@
 
       padding:
         max(20px, env(safe-area-inset-top))
-        20px
-        max(100px, calc(env(safe-area-inset-bottom) + 80px));
+        18px
+        max(
+          90px,
+          calc(env(safe-area-inset-bottom) + 70px)
+        );
     }
 
 
-
-    /* ========================================
+    /* =========================================================
        NAME
-    ======================================== */
+    ========================================================= */
 
     .name {
       position: relative;
 
-      z-index: 10;
+      z-index: 30;
 
       width: 100%;
 
       text-align: center;
 
-      transform:
-        translate3d(0,0,0);
-
-      will-change:
-        transform;
+      will-change: transform;
     }
 
 
@@ -442,7 +645,7 @@
 
       padding:
         .12em
-        .15em
+        .12em
         .28em;
 
       font-family:
@@ -455,19 +658,18 @@
 
       font-size:
         clamp(
-          70px,
-          11vw,
-          156px
+          72px,
+          11.2vw,
+          160px
         );
 
-      line-height:
-        1;
+      line-height: .99;
 
-      letter-spacing:
-        -.055em;
+      font-weight: 400;
 
-      font-weight:
-        400;
+      letter-spacing: -.055em;
+
+      font-kerning: normal;
     }
 
 
@@ -477,44 +679,46 @@
       will-change:
         transform,
         opacity,
-        filter;
+        filter,
+        color;
     }
 
 
     .first-name {
       opacity: .03;
 
-      filter:
-        blur(18px);
+      filter: blur(18px);
 
       transform:
         translate3d(
           0,
-          50px,
+          52px,
           0
         );
+
+      color: var(--navy);
     }
 
 
     .last-name {
       opacity: 0;
 
-      filter:
-        blur(20px);
+      filter: blur(20px);
 
       transform:
         translate3d(
           0,
-          70px,
+          72px,
           0
         );
+
+      color: var(--navy);
     }
 
 
-
-    /* ========================================
+    /* =========================================================
        SOCIALS
-    ======================================== */
+    ========================================================= */
 
     .socials {
       position: fixed;
@@ -525,15 +729,15 @@
 
       bottom:
         max(
-          20px,
-          calc(env(safe-area-inset-bottom) + 12px)
+          22px,
+          calc(env(safe-area-inset-bottom) + 14px)
         );
 
       display: flex;
 
       align-items: center;
 
-      gap: 13px;
+      gap: 14px;
 
       opacity: 0;
 
@@ -542,15 +746,15 @@
       transform:
         translate3d(
           -50%,
-          24px,
+          28px,
           0
         );
 
       transition:
-        opacity .7s
+        opacity .8s
         cubic-bezier(.16,1,.3,1),
 
-        transform .7s
+        transform .8s
         cubic-bezier(.16,1,.3,1);
     }
 
@@ -581,52 +785,55 @@
 
       border-radius: 50%;
 
-      color:
-        var(--navy);
+      color: #eee5d5;
 
       text-decoration: none;
 
-      -webkit-tap-highlight-color:
-        transparent;
-
       border:
         1px solid
-        rgba(255,255,255,.58);
+        rgba(221,200,159,.28);
 
       background:
-        rgba(246,242,234,.44);
+        linear-gradient(
+          145deg,
+
+          rgba(255,255,255,.13),
+
+          rgba(255,255,255,.04)
+        );
 
       box-shadow:
-
         inset 0 1px 0
-        rgba(255,255,255,.8),
+        rgba(255,255,255,.22),
 
-        0 10px 30px
-        rgba(0,0,0,.10);
+        0 12px 38px
+        rgba(0,0,0,.16);
 
       -webkit-backdrop-filter:
-        blur(18px)
-        saturate(125%);
+        blur(16px)
+        saturate(120%);
 
       backdrop-filter:
-        blur(18px)
-        saturate(125%);
+        blur(16px)
+        saturate(120%);
+
+      -webkit-tap-highlight-color:
+        transparent;
     }
 
 
     .social svg {
-      width: 21px;
-      height: 21px;
+      width: 20px;
+      height: 20px;
 
-      fill:
-        currentColor;
+      fill: currentColor;
     }
 
 
     .instagram {
       animation:
-        socialOne
-        6.5s
+        instagramFloat
+        6.7s
         ease-in-out
         infinite alternate;
     }
@@ -634,132 +841,131 @@
 
     .linkedin {
       animation:
-        socialTwo
-        7.5s
+        linkedinFloat
+        7.6s
         ease-in-out
         infinite alternate;
     }
 
 
-    .social.dark {
-      color:
-        var(--ivory);
+    @media
+    (hover:hover)
+    and
+    (pointer:fine) {
 
-      border-color:
-        rgba(216,195,154,.28);
+      .social:hover {
+        border-color:
+          rgba(221,200,159,.58);
 
-      background:
-        rgba(255,255,255,.075);
+        background:
+          rgba(221,200,159,.14);
+      }
+
     }
 
 
+    /* =========================================================
+       AMBIENT MOVEMENT
+    ========================================================= */
 
-    /* ========================================
-       DESKTOP AMBIENT ANIMATIONS
-    ======================================== */
-
-    @keyframes blueAmbient {
+    @keyframes navyDrift {
 
       from {
         transform:
-          translate3d(0,0,0)
+          translate3d(-4%,-2%,0)
           scale(1);
       }
 
       to {
         transform:
-          translate3d(190px,130px,0)
-          scale(1.12,.90);
+          translate3d(10%,8%,0)
+          scale(1.08);
       }
 
     }
 
 
-    @keyframes goldAmbient {
+    @keyframes blueDrift {
 
       from {
         transform:
-          translate3d(0,0,0);
+          translate3d(3%,-3%,0);
       }
 
       to {
         transform:
-          translate3d(-180px,110px,0)
-          scale(.92,1.12);
+          translate3d(-12%,10%,0)
+          scale(1.07);
       }
 
     }
 
 
-    @keyframes champagneAmbient {
+    @keyframes champagneDrift {
 
       from {
         transform:
-          translate3d(0,0,0);
+          translate3d(-3%,4%,0);
       }
 
       to {
         transform:
-          translate3d(100px,-150px,0)
-          scale(1.12,.92);
+          translate3d(8%,-10%,0)
+          scale(1.08);
       }
 
     }
 
 
-    @keyframes glassOneAmbient {
+    @keyframes goldDrift {
 
       from {
-
         transform:
-          translate3d(0,0,0)
-          rotate(-6deg);
-
+          translate3d(3%,3%,0);
       }
 
       to {
-
         transform:
-          translate3d(170px,90px,0)
-          rotate(18deg)
-          scale(1.12,.9);
-
-        border-radius:
-          40% 60% 48% 52% /
-          62% 38% 58% 42%;
-
+          translate3d(-10%,-8%,0)
+          scale(1.06);
       }
 
     }
 
 
-    @keyframes glassTwoAmbient {
+    @keyframes midnightBlue {
 
       from {
-
         transform:
-          translate3d(0,0,0)
-          rotate(5deg);
-
+          translate3d(-3%,-2%,0);
       }
 
       to {
-
         transform:
-          translate3d(-180px,-80px,0)
-          rotate(-17deg)
-          scale(.92,1.10);
-
-        border-radius:
-          62% 38% 56% 44% /
-          42% 60% 40% 58%;
-
+          translate3d(12%,8%,0)
+          scale(1.08);
       }
 
     }
 
 
-    @keyframes socialOne {
+    @keyframes midnightGold {
+
+      from {
+        transform:
+          translate3d(3%,3%,0);
+      }
+
+      to {
+        transform:
+          translate3d(-12%,-10%,0)
+          scale(1.08);
+      }
+
+    }
+
+
+    @keyframes instagramFloat {
 
       from {
         transform:
@@ -776,7 +982,7 @@
     }
 
 
-    @keyframes socialTwo {
+    @keyframes linkedinFloat {
 
       from {
         transform:
@@ -793,113 +999,195 @@
     }
 
 
-
-    /* ========================================
+    /* =========================================================
        MOBILE
-    ======================================== */
+    ========================================================= */
 
     @media (max-width: 700px) {
 
-      /*
-       Shorter scroll journey on phones.
-      */
-
-      .story {
-        height: 250vh;
-        height: 250svh;
+      .experience {
+        height: 270vh;
+        height: 270svh;
       }
 
 
       .stage {
-        height: 100vh;
-        height: 100svh;
+        min-height: 500px;
 
-        min-height: 480px;
-
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: 10px;
+        padding-right: 10px;
 
         padding-bottom:
           max(
-            90px,
-            calc(
-              env(safe-area-inset-bottom)
-              + 72px
-            )
+            86px,
+            calc(env(safe-area-inset-bottom) + 68px)
           );
       }
 
 
       h1 {
-        max-width: 100%;
-
         font-size:
           clamp(
-            54px,
+            56px,
             18.5vw,
             92px
           );
 
-        line-height:
-          1.02;
+        line-height: 1.02;
 
-        letter-spacing:
-          -.05em;
+        letter-spacing: -.05em;
 
-        padding-left:
-          .06em;
+        padding-left: .05em;
+        padding-right: .05em;
+        padding-bottom: .3em;
+      }
 
-        padding-right:
-          .06em;
 
-        padding-bottom:
-          .30em;
+      .navy-light {
+        width: 195vw;
+        height: 165vw;
+
+        min-width: 0;
+        min-height: 0;
+
+        left: -128vw;
+        top: -65vw;
+
+        filter: blur(43px);
+      }
+
+
+      .blue-light {
+        width: 175vw;
+        height: 150vw;
+
+        min-width: 0;
+        min-height: 0;
+
+        right: -120vw;
+        top: 3vh;
+
+        filter: blur(48px);
+      }
+
+
+      .champagne-light {
+        width: 200vw;
+        height: 160vw;
+
+        min-width: 0;
+        min-height: 0;
+
+        left: -45vw;
+        bottom: -95vw;
+
+        filter: blur(48px);
+      }
+
+
+      .gold-light {
+        width: 150vw;
+        height: 125vw;
+
+        min-width: 0;
+        min-height: 0;
+
+        right: -105vw;
+        bottom: 0;
+
+        filter: blur(52px);
       }
 
 
       /*
-       Reduce blur complexity on mobile Safari.
+         Slightly less blur on mobile for performance,
+         while preserving the glass treatment.
       */
 
-      .glow {
-        filter:
-          blur(65px);
+      .glass-veil {
+        background:
+          rgba(248,245,239,.28);
+
+        -webkit-backdrop-filter:
+          blur(21px)
+          saturate(112%);
+
+        backdrop-filter:
+          blur(21px)
+          saturate(112%);
       }
 
 
-      .blue-glow {
-        width: 430px;
-        height: 400px;
+      .midnight-glass {
+        -webkit-backdrop-filter:
+          blur(18px)
+          saturate(112%);
 
-        left: -260px;
-        top: -70px;
+        backdrop-filter:
+          blur(18px)
+          saturate(112%);
       }
 
 
-      .gold-glow {
-        width: 420px;
-        height: 380px;
+      .midnight::before {
+        width: 185vw;
+        height: 155vw;
 
-        right: -270px;
-        top: 33%;
-      }
+        left: -125vw;
+        top: -62vw;
 
-
-      .champagne-glow {
-        width: 420px;
-        height: 380px;
-
-        left: 10%;
-        bottom: -180px;
+        filter: blur(43px);
       }
 
 
       /*
-       Smaller glass elements = substantially
-       better Safari performance.
+         Stronger champagne presence on mobile too.
       */
 
-      .glass {
+      .midnight::after {
+        width: 175vw;
+        height: 145vw;
+
+        right: -110vw;
+        bottom: -62vw;
+
+        filter: blur(48px);
+
+        background:
+          radial-gradient(
+            ellipse,
+
+            rgba(238,220,184,.42) 0%,
+
+            rgba(216,195,154,.27) 27%,
+
+            rgba(193,153,86,.11) 48%,
+
+            transparent 74%
+          );
+      }
+
+
+      .gold-sweep {
+        width: 230%;
+        left: -65%;
+
+        height: 110px;
+
+        filter: blur(21px);
+      }
+
+
+      .gold-line {
+        width: 230%;
+        left: -65%;
+      }
+
+
+      .social {
+        width: 48px;
+        height: 48px;
+
         -webkit-backdrop-filter:
           blur(10px);
 
@@ -907,60 +1195,12 @@
           blur(10px);
       }
 
-
-      .glass-one {
-        width: 350px;
-        height: 350px;
-
-        left: -230px;
-        top: 18%;
-      }
-
-
-      .glass-two {
-        width: 410px;
-        height: 410px;
-
-        right: -280px;
-        top: 53%;
-      }
-
-
-      .gold-sweep {
-        width: 190%;
-        left: -45%;
-
-        height: 130px;
-
-        filter:
-          blur(25px);
-      }
-
-
-      .gold-line {
-        width: 190%;
-        left: -45%;
-      }
-
-
-      .social {
-        width: 48px;
-        height: 48px;
-      }
-
-
-      .social svg {
-        width: 20px;
-        height: 20px;
-      }
-
     }
 
 
-
-    /* ========================================
-       VERY SMALL PHONES
-    ======================================== */
+    /* =========================================================
+       SMALL MOBILE
+    ========================================================= */
 
     @media (max-width: 380px) {
 
@@ -969,11 +1209,8 @@
           clamp(
             50px,
             17.5vw,
-            68px
+            69px
           );
-
-        letter-spacing:
-          -.045em;
       }
 
 
@@ -985,83 +1222,75 @@
     }
 
 
-
-    /* ========================================
+    /* =========================================================
        LANDSCAPE PHONE
-    ======================================== */
+    ========================================================= */
 
     @media
-    (max-height: 500px)
+    (max-height: 520px)
     and
     (orientation: landscape) {
+
+      .experience {
+        height: 290vh;
+      }
+
 
       .stage {
         min-height: 100vh;
 
-        padding-top:
-          20px;
-
-        padding-bottom:
-          60px;
+        padding-top: 15px;
+        padding-bottom: 55px;
       }
 
 
       h1 {
         font-size:
           clamp(
-            48px,
-            11vw,
+            47px,
+            10vw,
             76px
           );
 
-        line-height:
-          .92;
+        line-height: .94;
       }
 
 
       .socials {
-        bottom:
-          10px;
+        bottom: 10px;
       }
 
 
       .social {
-        width:
-          42px;
-
-        height:
-          42px;
+        width: 42px;
+        height: 42px;
       }
 
     }
 
 
-
-    /* ========================================
+    /* =========================================================
        REDUCED MOTION
-    ======================================== */
+    ========================================================= */
 
     @media
     (prefers-reduced-motion: reduce) {
 
-      .glow,
-      .glass,
+      .light,
+      .midnight::before,
+      .midnight::after,
       .social {
-        animation:
-          none !important;
+        animation: none !important;
       }
 
 
       .first-name,
       .last-name {
-        opacity:
-          1 !important;
+        opacity: 1 !important;
 
-        filter:
-          none !important;
+        filter: none !important;
 
-        transform:
-          none !important;
+        transform: none !important;
       }
 
     }
@@ -1073,51 +1302,52 @@
 <body>
 
 
-  <!-- BACKGROUND -->
+  <!-- =======================================================
+       FROSTED ENVIRONMENT
+  ======================================================== -->
 
-  <div class="world">
+  <div
+    class="world"
+    aria-hidden="true"
+  >
+
+    <!-- Diffused color behind glass -->
+
+    <div class="light navy-light"></div>
+
+    <div class="light blue-light"></div>
+
+    <div class="light champagne-light"></div>
+
+    <div class="light gold-light"></div>
+
+
+    <!-- Frosted surface -->
+
+    <div class="glass-veil"></div>
+
+    <div class="glass-sheen"></div>
+
+
+    <!-- Midnight environment -->
 
     <div
-      class="navy-layer"
-      id="navyLayer"
+      class="midnight"
+      id="midnight"
+    ></div>
+
+    <div
+      class="midnight-glass"
+      id="midnightGlass"
     ></div>
 
 
-    <div
-      class="glow blue-glow"
-      id="blueGlow"
-    ></div>
-
-
-    <div
-      class="glow gold-glow"
-      id="goldGlow"
-    ></div>
-
-
-    <div
-      class="glow champagne-glow"
-      id="champagneGlow"
-    ></div>
-
-
-    <div
-      class="glass glass-one"
-      id="glassOne"
-    ></div>
-
-
-    <div
-      class="glass glass-two"
-      id="glassTwo"
-    ></div>
-
+    <!-- Gold transition -->
 
     <div
       class="gold-sweep"
       id="goldSweep"
     ></div>
-
 
     <div
       class="gold-line"
@@ -1125,20 +1355,24 @@
     ></div>
 
 
+    <!-- Fine texture -->
+
     <div class="grain"></div>
 
   </div>
 
 
 
-  <!-- SCROLL STORY -->
+  <!-- =======================================================
+       MAIN EXPERIENCE
+  ======================================================== -->
 
-  <section
-    class="story"
-    id="story"
+  <main
+    class="experience"
+    id="experience"
   >
 
-    <div class="stage">
+    <section class="stage">
 
       <div
         class="name"
@@ -1166,26 +1400,27 @@
 
       </div>
 
-    </div>
+    </section>
 
-  </section>
+  </main>
 
 
 
-  <!-- FLOATING SOCIALS -->
+  <!-- =======================================================
+       SOCIAL LINKS
+  ======================================================== -->
 
-  <div
+  <nav
     class="socials"
     id="socials"
     aria-label="Social profiles"
   >
 
 
-    <!-- INSTAGRAM -->
+    <!-- Instagram -->
 
     <a
       class="social instagram"
-      id="instagram"
       href="https://www.instagram.com/aaabdxllah/"
       target="_blank"
       rel="noopener noreferrer"
@@ -1206,12 +1441,10 @@
     </a>
 
 
-
-    <!-- LINKEDIN -->
+    <!-- LinkedIn -->
 
     <a
       class="social linkedin"
-      id="linkedin"
       href="https://www.linkedin.com/in/arayees/"
       target="_blank"
       rel="noopener noreferrer"
@@ -1231,564 +1464,597 @@
 
     </a>
 
-  </div>
+  </nav>
 
 
+
+  <!-- =======================================================
+       MOTION
+  ======================================================== -->
 
   <script>
 
-    const story =
-      document.getElementById("story");
+    (() => {
 
-    const name =
-      document.getElementById("name");
+      const experience =
+        document.getElementById(
+          "experience"
+        );
 
-    const firstName =
-      document.getElementById("firstName");
+      const name =
+        document.getElementById(
+          "name"
+        );
 
-    const lastName =
-      document.getElementById("lastName");
+      const firstName =
+        document.getElementById(
+          "firstName"
+        );
 
-    const socials =
-      document.getElementById("socials");
+      const lastName =
+        document.getElementById(
+          "lastName"
+        );
 
-    const instagram =
-      document.getElementById("instagram");
+      const midnight =
+        document.getElementById(
+          "midnight"
+        );
 
-    const linkedin =
-      document.getElementById("linkedin");
+      const midnightGlass =
+        document.getElementById(
+          "midnightGlass"
+        );
 
-    const navyLayer =
-      document.getElementById("navyLayer");
+      const goldSweep =
+        document.getElementById(
+          "goldSweep"
+        );
 
-    const blueGlow =
-      document.getElementById("blueGlow");
+      const goldLine =
+        document.getElementById(
+          "goldLine"
+        );
 
-    const goldGlow =
-      document.getElementById("goldGlow");
+      const socials =
+        document.getElementById(
+          "socials"
+        );
 
-    const champagneGlow =
-      document.getElementById(
-        "champagneGlow"
-      );
-
-    const glassOne =
-      document.getElementById("glassOne");
-
-    const glassTwo =
-      document.getElementById("glassTwo");
-
-    const goldSweep =
-      document.getElementById("goldSweep");
-
-    const goldLine =
-      document.getElementById("goldLine");
-
-
-    let ticking = false;
-
-
-
-    function clamp(
-      value,
-      min,
-      max
-    ) {
-
-      return Math.min(
-        Math.max(
-          value,
-          min
-        ),
-        max
-      );
-
-    }
-
-
-
-    function ease(t) {
-
-      return (
-        1 -
-        Math.pow(
-          1 - t,
-          3
-        )
-      );
-
-    }
-
-
-
-    function render() {
-
-      ticking = false;
-
-
-      const rect =
-        story.getBoundingClientRect();
-
-
-      const viewportHeight =
-        window.innerHeight;
-
-
-      const distance =
-        Math.max(
-          1,
-          story.offsetHeight -
-          viewportHeight
+      const themeColor =
+        document.querySelector(
+          'meta[name="theme-color"]'
         );
 
 
-      const progress =
-        clamp(
-          -rect.top / distance,
-          0,
-          1
+      let ticking = false;
+
+
+
+      function clamp(
+        value,
+        minimum,
+        maximum
+      ) {
+
+        return Math.min(
+          Math.max(
+            value,
+            minimum
+          ),
+          maximum
         );
 
+      }
 
 
-      /* =================================
-         ABDULLAH
-      ================================= */
 
-      const first =
-        ease(
+      function ease(t) {
 
+        return (
+          1 -
+          Math.pow(
+            1 - t,
+            3
+          )
+        );
+
+      }
+
+
+
+      function mix(
+        start,
+        end,
+        amount
+      ) {
+
+        return (
+          start +
+          (
+            end -
+            start
+          ) *
+          amount
+        );
+
+      }
+
+
+
+      function render() {
+
+        ticking = false;
+
+
+        const rect =
+          experience
+            .getBoundingClientRect();
+
+
+        const viewportHeight =
+          window.innerHeight;
+
+
+        const scrollDistance =
+          Math.max(
+            1,
+            experience.offsetHeight -
+            viewportHeight
+          );
+
+
+        const progress =
           clamp(
-            progress / .27,
+            -rect.top /
+            scrollDistance,
             0,
             1
-          )
-
-        );
+          );
 
 
-      firstName.style.opacity =
-        .03 +
-        (.97 * first);
-
-
-      firstName.style.filter =
-        `blur(${18 * (1 - first)}px)`;
-
-
-      const firstY =
-        50 *
-        (1 - first);
+        const mobile =
+          window.innerWidth <= 700;
 
 
 
-      /* =================================
-         RAYEES
-      ================================= */
+        /* =====================================
+           ABDULLAH
+        ====================================== */
 
-      const last =
-        ease(
+        const firstProgress =
+          ease(
 
-          clamp(
-            (progress - .08) /
-            .29,
+            clamp(
+              progress / .23,
+              0,
+              1
+            )
 
-            0,
-            1
-          )
-
-        );
+          );
 
 
-      lastName.style.opacity =
-        last;
+        firstName.style.opacity =
+          .03 +
+          (
+            .97 *
+            firstProgress
+          );
 
 
-      lastName.style.filter =
-        `blur(${20 * (1 - last)}px)`;
-
-
-      const lastY =
-        70 *
-        (1 - last);
-
-
-
-      /* =================================
-         TEXT SEPARATION
-      ================================= */
-
-      const separate =
-        ease(
-
-          clamp(
-            (progress - .34) /
-            .32,
-
-            0,
-            1
-          )
-
-        );
-
-
-      /*
-       Smaller separation on phones.
-      */
-
-      const mobile =
-        window.innerWidth <= 700;
-
-
-      const separationAmount =
-        mobile
-          ? 8
-          : 20;
-
-
-      firstName.style.transform =
-        `
-          translate3d(
-            ${-separationAmount * separate}px,
-            ${firstY}px,
-            0
-          )
-        `;
-
-
-      lastName.style.transform =
-        `
-          translate3d(
-            ${separationAmount * separate}px,
-            ${lastY}px,
-            0
-          )
-        `;
+        firstName.style.filter =
+          `blur(${
+            18 *
+            (
+              1 -
+              firstProgress
+            )
+          }px)`;
 
 
 
-      /* =================================
-         NAVY TRANSITION
-      ================================= */
+        /* =====================================
+           RAYEES
+        ====================================== */
 
-      const dark =
-        ease(
+        const lastProgress =
+          ease(
 
-          clamp(
-            (progress - .38) /
-            .34,
+            clamp(
+              (
+                progress -
+                .07
+              ) /
+              .25,
 
-            0,
-            1
-          )
+              0,
+              1
+            )
 
-        );
-
-
-      navyLayer.style.opacity =
-        dark;
-
+          );
 
 
-      /* =================================
-         TEXT COLOR
+        lastName.style.opacity =
+          lastProgress;
 
-         Navy -> warm ivory
-      ================================= */
 
-      const start =
-        {
+        lastName.style.filter =
+          `blur(${
+            20 *
+            (
+              1 -
+              lastProgress
+            )
+          }px)`;
+
+
+
+        /* =====================================
+           SUBTLE NAME SEPARATION
+        ====================================== */
+
+        const separation =
+          ease(
+
+            clamp(
+              (
+                progress -
+                .29
+              ) /
+              .28,
+
+              0,
+              1
+            )
+
+          );
+
+
+        const separationDistance =
+          mobile
+            ? 7
+            : 19;
+
+
+        const firstX =
+          -separationDistance *
+          separation;
+
+
+        const lastX =
+          separationDistance *
+          separation;
+
+
+        const firstY =
+          52 *
+          (
+            1 -
+            firstProgress
+          );
+
+
+        const lastY =
+          72 *
+          (
+            1 -
+            lastProgress
+          );
+
+
+        firstName.style.transform =
+          `
+            translate3d(
+              ${firstX}px,
+              ${firstY}px,
+              0
+            )
+          `;
+
+
+        lastName.style.transform =
+          `
+            translate3d(
+              ${lastX}px,
+              ${lastY}px,
+              0
+            )
+          `;
+
+
+
+        /* =====================================
+           CHAMPAGNE -> MIDNIGHT
+        ====================================== */
+
+        const darkProgress =
+          ease(
+
+            clamp(
+              (
+                progress -
+                .38
+              ) /
+              .31,
+
+              0,
+              1
+            )
+
+          );
+
+
+        midnight.style.opacity =
+          darkProgress;
+
+
+        midnightGlass.style.opacity =
+          darkProgress;
+
+
+
+        /* =====================================
+           NAVY TEXT -> CHAMPAGNE TEXT
+        ====================================== */
+
+        const start = {
           r: 7,
           g: 25,
           b: 43
         };
 
 
-      const end =
-        {
-          r: 236,
-          g: 226,
-          b: 207
+        const end = {
+          r: 238,
+          g: 229,
+          b: 213
         };
 
 
-      const r =
-        Math.round(
-          start.r +
-          (
-            end.r -
-            start.r
-          ) * dark
-        );
+        const red =
+          Math.round(
+            mix(
+              start.r,
+              end.r,
+              darkProgress
+            )
+          );
 
 
-      const g =
-        Math.round(
-          start.g +
-          (
-            end.g -
-            start.g
-          ) * dark
-        );
+        const green =
+          Math.round(
+            mix(
+              start.g,
+              end.g,
+              darkProgress
+            )
+          );
 
 
-      const b =
-        Math.round(
-          start.b +
-          (
-            end.b -
-            start.b
-          ) * dark
-        );
+        const blue =
+          Math.round(
+            mix(
+              start.b,
+              end.b,
+              darkProgress
+            )
+          );
 
 
-      const textColor =
-        `rgb(${r},${g},${b})`;
+        const textColor =
+          `rgb(
+            ${red},
+            ${green},
+            ${blue}
+          )`;
 
 
-      firstName.style.color =
-        textColor;
+        firstName.style.color =
+          textColor;
 
 
-      lastName.style.color =
-        textColor;
-
-
-
-      /* =================================
-         GOLD REFLECTION
-      ================================= */
-
-      const reflection =
-        clamp(
-          1 -
-          Math.abs(
-            progress - .65
-          ) / .17,
-
-          0,
-          1
-        );
-
-
-      goldLine.style.opacity =
-        reflection * .75;
-
-
-      goldSweep.style.opacity =
-        reflection * .72;
-
-
-      const sweepX =
-        -25 +
-        (progress * 45);
-
-
-      goldLine.style.transform =
-        `
-          rotate(-10deg)
-          translate3d(
-            ${sweepX}%,
-            0,
-            0
-          )
-        `;
-
-
-      goldSweep.style.transform =
-        `
-          rotate(-10deg)
-          translate3d(
-            ${sweepX}%,
-            0,
-            0
-          )
-        `;
+        lastName.style.color =
+          textColor;
 
 
 
-      /* =================================
-         NAME SETTLE
+        /* =====================================
+           GOLD REFLECTION
+        ====================================== */
 
-         Maximum scale = 2%.
-      ================================= */
-
-      const settle =
-        ease(
-
+        const reflection =
           clamp(
-            (progress - .65) /
-            .35,
+
+            1 -
+            (
+              Math.abs(
+                progress -
+                .63
+              ) /
+              .15
+            ),
 
             0,
             1
-          )
 
-        );
-
-
-      name.style.transform =
-        `
-          translate3d(
-            0,
-            ${-10 * settle}px,
-            0
-          )
-
-          scale(
-            ${1 + (.02 * settle)}
-          )
-        `;
+          );
 
 
-
-      /* =================================
-         SOCIALS
-      ================================= */
-
-      if (
-        progress >
-        .69
-      ) {
-
-        socials.classList.add(
-          "visible"
-        );
-
-      }
-
-      else {
-
-        socials.classList.remove(
-          "visible"
-        );
-
-      }
+        goldSweep.style.opacity =
+          reflection * .82;
 
 
-      if (
-        dark >
-        .55
-      ) {
+        goldLine.style.opacity =
+          reflection * .88;
 
-        instagram.classList.add(
-          "dark"
-        );
 
-        linkedin.classList.add(
-          "dark"
-        );
+        const sweepPosition =
+          -20 +
+          (
+            progress *
+            40
+          );
 
-      }
 
-      else {
+        const sweepTransform =
+          `
+            rotate(-9deg)
 
-        instagram.classList.remove(
-          "dark"
-        );
+            translate3d(
+              ${sweepPosition}%,
+              0,
+              0
+            )
+          `;
 
-        linkedin.classList.remove(
-          "dark"
-        );
 
-      }
+        goldSweep.style.transform =
+          sweepTransform;
+
+
+        goldLine.style.transform =
+          sweepTransform;
 
 
 
-      /* =================================
-         SCROLL PARALLAX
+        /* =====================================
+           FINAL NAME SETTLE
 
-         transform is used instead of
-         CSS translate for Safari.
-      ================================= */
+           Maximum scale: 1.5%
+        ====================================== */
 
-      const mobileFactor =
-        mobile
-          ? .45
-          : 1;
+        const settle =
+          ease(
 
+            clamp(
+              (
+                progress -
+                .63
+              ) /
+              .37,
 
-      blueGlow.style.transform =
-        `
-          translate3d(
-            ${progress * 70 * mobileFactor}px,
-            ${progress * 40 * mobileFactor}px,
-            0
-          )
-        `;
+              0,
+              1
+            )
 
-
-      goldGlow.style.transform =
-        `
-          translate3d(
-            ${progress * -80 * mobileFactor}px,
-            ${progress * 40 * mobileFactor}px,
-            0
-          )
-        `;
+          );
 
 
-      champagneGlow.style.transform =
-        `
-          translate3d(
-            ${progress * 40 * mobileFactor}px,
-            ${progress * -70 * mobileFactor}px,
-            0
-          )
-        `;
+        name.style.transform =
+          `
+            translate3d(
+              0,
+              ${-8 * settle}px,
+              0
+            )
 
-
-      /*
-       We intentionally do not overwrite
-       the animated transform of the glass
-       shapes here.
-
-       This fixes the animation conflict
-       from the previous version.
-      */
-
-    }
+            scale(
+              ${
+                1 +
+                (
+                  .015 *
+                  settle
+                )
+              }
+            )
+          `;
 
 
 
-    function requestRender() {
+        /* =====================================
+           SOCIAL REVEAL
+        ====================================== */
 
-      if (!ticking) {
+        if (
+          progress >
+          .72
+        ) {
 
-        ticking = true;
+          socials.classList.add(
+            "visible"
+          );
 
-        requestAnimationFrame(
-          render
-        );
+        }
+
+        else {
+
+          socials.classList.remove(
+            "visible"
+          );
+
+        }
+
+
+
+        /* =====================================
+           MOBILE BROWSER COLOR
+        ====================================== */
+
+        if (
+          darkProgress >
+          .55
+        ) {
+
+          themeColor.setAttribute(
+            "content",
+            "#07192b"
+          );
+
+        }
+
+        else {
+
+          themeColor.setAttribute(
+            "content",
+            "#eee6d8"
+          );
+
+        }
 
       }
 
-    }
 
 
+      function requestRender() {
 
-    window.addEventListener(
-      "scroll",
-      requestRender,
-      {
-        passive: true
+        if (!ticking) {
+
+          ticking = true;
+
+          requestAnimationFrame(
+            render
+          );
+
+        }
+
       }
-    );
 
 
-    window.addEventListener(
-      "resize",
-      requestRender
-    );
+
+      window.addEventListener(
+        "scroll",
+        requestRender,
+        {
+          passive: true
+        }
+      );
 
 
-    window.addEventListener(
-      "orientationchange",
-      requestRender
-    );
+      window.addEventListener(
+        "resize",
+        requestRender
+      );
 
 
-    requestRender();
+      window.addEventListener(
+        "orientationchange",
+        requestRender
+      );
+
+
+      requestRender();
+
+    })();
 
   </script>
 
