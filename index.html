@@ -12,39 +12,59 @@
 
   <title>Abdullah Rayees</title>
 
+  <!-- FAVICON -->
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="AR_mark_navy_1024.png">
 
   <style>
+
+    /* =========================================================
+       DESIGN SYSTEM
+    ========================================================= */
+
     :root {
       --ivory: #f8f5ef;
+
       --champagne: #eee4d2;
+      --champagne-light: #f8f3e9;
+      --champagne-mid: #dcc8a4;
+
       --navy: #07192b;
+      --navy-deep: #06182a;
+      --navy-mid: #0b2943;
       --navy-soft: #12344f;
+
       --gold: #b89558;
       --gold-light: #ddc89f;
     }
+
 
     * {
       box-sizing: border-box;
     }
 
+
     html,
     body {
       margin: 0;
       padding: 0;
+
       width: 100%;
     }
 
+
     html {
       background: var(--champagne);
+
       -webkit-text-size-adjust: 100%;
     }
+
 
     body {
       overflow-x: hidden;
 
       color: var(--navy);
+
       background: var(--champagne);
 
       font-family:
@@ -55,25 +75,30 @@
         sans-serif;
 
       -webkit-font-smoothing: antialiased;
+
       overscroll-behavior-x: none;
     }
+
 
     a {
       -webkit-tap-highlight-color: transparent;
     }
 
 
+
     /* =========================================================
-       ATMOSPHERE
+       WORLD
     ========================================================= */
 
     .world {
       position: fixed;
+
       inset: 0;
 
       z-index: 0;
 
       overflow: hidden;
+
       pointer-events: none;
 
       background:
@@ -88,11 +113,9 @@
     }
 
 
-    /* =========================================================
-       DIFFUSED LIGHT SOURCES
 
-       These are intentionally enormous.
-       Their edges should never read as visible objects.
+    /* =========================================================
+       DIFFUSED LIGHT
     ========================================================= */
 
     .light {
@@ -106,8 +129,9 @@
     }
 
 
+
     /* =========================================================
-       STRONGER NAVY OPENING
+       NAVY OPENING LIGHT
     ========================================================= */
 
     .navy-light {
@@ -143,6 +167,7 @@
         ease-in-out
         infinite alternate;
     }
+
 
 
     /* =========================================================
@@ -182,6 +207,7 @@
     }
 
 
+
     /* =========================================================
        CHAMPAGNE LIGHT
     ========================================================= */
@@ -217,8 +243,9 @@
     }
 
 
+
     /* =========================================================
-       GOLD ILLUMINATION
+       GOLD LIGHT
     ========================================================= */
 
     .gold-light {
@@ -252,14 +279,178 @@
     }
 
 
+
+    /* =========================================================
+       LIQUID GLASS DRIFT
+    ========================================================= */
+
+    .liquid-glass {
+      position: absolute;
+
+      z-index: 3;
+
+      border:
+        1px solid
+        rgba(255,255,255,.26);
+
+      background:
+        linear-gradient(
+          135deg,
+
+          rgba(255,255,255,.14),
+
+          rgba(255,255,255,.045) 38%,
+
+          rgba(221,200,159,.025) 65%,
+
+          rgba(255,255,255,.09)
+        );
+
+      box-shadow:
+
+        inset 30px 24px 70px
+        rgba(255,255,255,.12),
+
+        inset -28px -24px 70px
+        rgba(7,25,43,.035),
+
+        0 35px 90px
+        rgba(6,24,42,.035);
+
+      -webkit-backdrop-filter:
+        blur(17px)
+        saturate(125%);
+
+      backdrop-filter:
+        blur(17px)
+        saturate(125%);
+
+      will-change:
+        transform,
+        border-radius;
+    }
+
+
+    .liquid-glass::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 4%;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          130deg,
+
+          rgba(255,255,255,.15),
+
+          transparent 27%,
+
+          transparent 70%,
+
+          rgba(255,255,255,.03)
+        );
+    }
+
+
+    .liquid-glass::after {
+      content: "";
+
+      position: absolute;
+
+      width: 48%;
+      height: 28%;
+
+      left: 15%;
+      top: 12%;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          ellipse,
+
+          rgba(255,255,255,.13),
+
+          transparent 70%
+        );
+
+      filter: blur(12px);
+
+      transform:
+        rotate(-18deg);
+    }
+
+
+    .glass-one {
+      width: 570px;
+      height: 570px;
+
+      left: -170px;
+      top: 19%;
+
+      border-radius:
+        58% 42% 61% 39% /
+        45% 59% 41% 55%;
+
+      animation:
+        glassOneDrift
+        21s
+        cubic-bezier(.45,.05,.25,1)
+        infinite alternate;
+    }
+
+
+    .glass-two {
+      width: 720px;
+      height: 720px;
+
+      right: -260px;
+      top: 42%;
+
+      border-radius:
+        39% 61% 46% 54% /
+        62% 38% 58% 42%;
+
+      animation:
+        glassTwoDrift
+        27s
+        cubic-bezier(.45,.05,.25,1)
+        infinite alternate;
+    }
+
+
+    .glass-three {
+      width: 330px;
+      height: 330px;
+
+      left: 43%;
+      bottom: -80px;
+
+      border-radius:
+        52% 48% 43% 57% /
+        58% 42% 56% 44%;
+
+      opacity: .72;
+
+      animation:
+        glassThreeDrift
+        18s
+        cubic-bezier(.45,.05,.25,1)
+        infinite alternate;
+    }
+
+
+
     /* =========================================================
        FROSTED GLASS VEIL
-
-       All color sits behind this layer.
     ========================================================= */
 
     .glass-veil {
       position: absolute;
+
       inset: 0;
 
       z-index: 4;
@@ -268,29 +459,30 @@
         linear-gradient(
           135deg,
 
-          rgba(255,255,255,.35),
+          rgba(255,255,255,.31),
 
-          rgba(255,255,255,.19) 35%,
+          rgba(255,255,255,.16) 35%,
 
-          rgba(246,242,234,.25) 65%,
+          rgba(246,242,234,.21) 65%,
 
-          rgba(255,255,255,.33)
+          rgba(255,255,255,.29)
         );
 
       -webkit-backdrop-filter:
-        blur(36px)
-        saturate(118%);
+        blur(29px)
+        saturate(116%);
 
       backdrop-filter:
-        blur(36px)
-        saturate(118%);
+        blur(29px)
+        saturate(116%);
 
       box-shadow:
         inset 0 0 160px
-        rgba(255,255,255,.18);
+        rgba(255,255,255,.16);
 
       pointer-events: none;
     }
+
 
 
     /* =========================================================
@@ -299,11 +491,12 @@
 
     .glass-sheen {
       position: absolute;
+
       inset: 0;
 
       z-index: 5;
 
-      opacity: .32;
+      opacity: .30;
 
       background:
         linear-gradient(
@@ -324,12 +517,14 @@
     }
 
 
+
     /* =========================================================
        MIDNIGHT WORLD
     ========================================================= */
 
     .midnight {
       position: absolute;
+
       inset: 0;
 
       z-index: 6;
@@ -354,10 +549,6 @@
       will-change: opacity;
     }
 
-
-    /* =========================================================
-       MIDNIGHT BLUE ILLUMINATION
-    ========================================================= */
 
     .midnight::before {
       content: "";
@@ -392,10 +583,6 @@
         infinite alternate;
     }
 
-
-    /* =========================================================
-       STRONGER CHAMPAGNE ENDING
-    ========================================================= */
 
     .midnight::after {
       content: "";
@@ -433,12 +620,14 @@
     }
 
 
+
     /* =========================================================
-       FROSTED MIDNIGHT GLASS
+       MIDNIGHT GLASS
     ========================================================= */
 
     .midnight-glass {
       position: absolute;
+
       inset: 0;
 
       z-index: 7;
@@ -448,8 +637,11 @@
       background:
         linear-gradient(
           135deg,
+
           rgba(255,255,255,.018),
+
           rgba(6,24,42,.07),
+
           rgba(221,200,159,.015)
         );
 
@@ -467,8 +659,9 @@
     }
 
 
+
     /* =========================================================
-       GOLD REFLECTION
+       GOLD TRANSITION
     ========================================================= */
 
     .gold-sweep {
@@ -555,12 +748,14 @@
     }
 
 
+
     /* =========================================================
        GRAIN
     ========================================================= */
 
     .grain {
       position: absolute;
+
       inset: 0;
 
       z-index: 10;
@@ -574,15 +769,82 @@
           transparent .5px
         );
 
-      background-size:
-        5px 5px;
+      background-size: 5px 5px;
 
       pointer-events: none;
     }
 
 
+
     /* =========================================================
-       SCROLL EXPERIENCE
+       BRAND MARK
+    ========================================================= */
+
+    .brand-mark {
+      position: fixed;
+
+      z-index: 200;
+
+      top:
+        max(
+          24px,
+          calc(env(safe-area-inset-top) + 16px)
+        );
+
+      left:
+        max(
+          28px,
+          calc(env(safe-area-inset-left) + 20px)
+        );
+
+      width: 54px;
+      height: 54px;
+
+      display: block;
+
+      background:
+        rgb(
+          var(--logo-r),
+          var(--logo-g),
+          var(--logo-b)
+        );
+
+      --logo-r: 7;
+      --logo-g: 25;
+      --logo-b: 43;
+
+      -webkit-mask:
+        url("AR_mark_navy.svg")
+        center / contain
+        no-repeat;
+
+      mask:
+        url("AR_mark_navy.svg")
+        center / contain
+        no-repeat;
+
+      transition:
+        opacity .3s ease;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+
+    @media
+    (hover:hover)
+    and
+    (pointer:fine) {
+
+      .brand-mark:hover {
+        opacity: .68;
+      }
+
+    }
+
+
+
+    /* =========================================================
+       EXPERIENCE
     ========================================================= */
 
     .experience {
@@ -597,6 +859,7 @@
 
     .stage {
       position: sticky;
+
       top: 0;
 
       width: 100%;
@@ -622,6 +885,7 @@
           calc(env(safe-area-inset-bottom) + 70px)
         );
     }
+
 
 
     /* =========================================================
@@ -719,6 +983,136 @@
     }
 
 
+
+    /* =========================================================
+       SCROLL CUE
+    ========================================================= */
+
+    .scroll-cue {
+      position: absolute;
+
+      z-index: 50;
+
+      left: 50%;
+
+      bottom:
+        max(
+          34px,
+          calc(env(safe-area-inset-bottom) + 24px)
+        );
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 12px;
+
+      transform:
+        translate3d(-50%,0,0);
+
+      pointer-events: none;
+
+      will-change:
+        opacity,
+        transform,
+        filter;
+    }
+
+
+
+    /* Fancy editorial "Scroll" */
+
+    .scroll-label {
+      color:
+        rgba(7,25,43,.76);
+
+      font-family:
+        "Iowan Old Style",
+        "Baskerville",
+        "Baskerville Old Face",
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 14px;
+
+      font-style: italic;
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      letter-spacing: .07em;
+    }
+
+
+
+    /* Vertical scroll line */
+
+    .scroll-track {
+      position: relative;
+
+      display: block;
+
+      width: 1px;
+      height: 56px;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          to bottom,
+
+          rgba(7,25,43,.38),
+
+          rgba(7,25,43,.07)
+        );
+
+      transform-origin:
+        center bottom;
+
+      will-change:
+        transform,
+        opacity;
+    }
+
+
+
+    /* Moving gold/champagne reflection */
+
+    .scroll-energy {
+      position: absolute;
+
+      top: -40%;
+      left: 0;
+
+      width: 1px;
+      height: 45%;
+
+      background:
+        linear-gradient(
+          to bottom,
+
+          transparent,
+
+          rgba(184,149,88,.95),
+
+          rgba(221,200,159,.92),
+
+          transparent
+        );
+
+      animation:
+        scrollEnergy
+        2.8s
+        cubic-bezier(.45,.05,.3,1)
+        infinite;
+    }
+
+
+
     /* =========================================================
        SOCIALS
     ========================================================= */
@@ -806,6 +1200,7 @@
         );
 
       box-shadow:
+
         inset 0 1px 0
         rgba(255,255,255,.22),
 
@@ -820,8 +1215,7 @@
         blur(16px)
         saturate(120%);
 
-      -webkit-tap-highlight-color:
-        transparent;
+      -webkit-tap-highlight-color: transparent;
     }
 
 
@@ -851,25 +1245,40 @@
     }
 
 
-    @media
-    (hover:hover)
-    and
-    (pointer:fine) {
 
-      .social:hover {
-        border-color:
-          rgba(221,200,159,.58);
+    /* =========================================================
+       ANIMATIONS
+    ========================================================= */
 
-        background:
-          rgba(221,200,159,.14);
+    @keyframes scrollEnergy {
+
+      0% {
+        transform:
+          translate3d(0,-120%,0);
+
+        opacity: 0;
+      }
+
+
+      18% {
+        opacity: 1;
+      }
+
+
+      75% {
+        opacity: .9;
+      }
+
+
+      100% {
+        transform:
+          translate3d(0,330%,0);
+
+        opacity: 0;
       }
 
     }
 
-
-    /* =========================================================
-       AMBIENT MOVEMENT
-    ========================================================= */
 
     @keyframes navyDrift {
 
@@ -968,6 +1377,106 @@
     }
 
 
+    @keyframes glassOneDrift {
+
+      0% {
+        transform:
+          translate3d(-20px,-15px,0)
+          rotate(-7deg)
+          scale(1);
+
+        border-radius:
+          58% 42% 61% 39% /
+          45% 59% 41% 55%;
+      }
+
+
+      50% {
+        transform:
+          translate3d(105px,75px,0)
+          rotate(9deg)
+          scale(1.08,.94);
+
+        border-radius:
+          44% 56% 47% 53% /
+          60% 40% 57% 43%;
+      }
+
+
+      100% {
+        transform:
+          translate3d(180px,130px,0)
+          rotate(18deg)
+          scale(.95,1.10);
+
+        border-radius:
+          61% 39% 55% 45% /
+          42% 61% 39% 58%;
+      }
+
+    }
+
+
+    @keyframes glassTwoDrift {
+
+      0% {
+        transform:
+          translate3d(20px,10px,0)
+          rotate(6deg)
+          scale(1);
+
+        border-radius:
+          39% 61% 46% 54% /
+          62% 38% 58% 42%;
+      }
+
+
+      50% {
+        transform:
+          translate3d(-95px,-45px,0)
+          rotate(-8deg)
+          scale(.96,1.07);
+
+        border-radius:
+          56% 44% 59% 41% /
+          43% 57% 46% 54%;
+      }
+
+
+      100% {
+        transform:
+          translate3d(-180px,-100px,0)
+          rotate(-17deg)
+          scale(1.08,.93);
+
+        border-radius:
+          62% 38% 53% 47% /
+          40% 60% 44% 56%;
+      }
+
+    }
+
+
+    @keyframes glassThreeDrift {
+
+      0% {
+        transform:
+          translate3d(0,20px,0)
+          rotate(-4deg)
+          scale(.96);
+      }
+
+
+      100% {
+        transform:
+          translate3d(-110px,-125px,0)
+          rotate(14deg)
+          scale(1.14,.92);
+      }
+
+    }
+
+
     @keyframes instagramFloat {
 
       from {
@@ -1000,6 +1509,7 @@
       }
 
     }
+
 
 
     /* =========================================================
@@ -1045,6 +1555,54 @@
         padding-bottom: .3em;
       }
 
+
+
+      /* Logo */
+
+      .brand-mark {
+        width: 43px;
+        height: 43px;
+
+        top:
+          max(
+            18px,
+            calc(env(safe-area-inset-top) + 10px)
+          );
+
+        left:
+          max(
+            18px,
+            calc(env(safe-area-inset-left) + 14px)
+          );
+      }
+
+
+
+      /* Scroll cue */
+
+      .scroll-cue {
+        bottom:
+          max(
+            28px,
+            calc(env(safe-area-inset-bottom) + 20px)
+          );
+
+        gap: 10px;
+      }
+
+
+      .scroll-label {
+        font-size: 12px;
+      }
+
+
+      .scroll-track {
+        height: 44px;
+      }
+
+
+
+      /* Background */
 
       .navy-light {
         width: 195vw;
@@ -1102,33 +1660,74 @@
       }
 
 
-      /*
-         Slightly less blur on mobile for performance,
-         while preserving the glass treatment.
-      */
+
+      /* Liquid glass */
+
+      .liquid-glass {
+        -webkit-backdrop-filter:
+          blur(9px)
+          saturate(118%);
+
+        backdrop-filter:
+          blur(9px)
+          saturate(118%);
+      }
+
+
+      .glass-one {
+        width: 390px;
+        height: 390px;
+
+        left: -250px;
+        top: 17%;
+      }
+
+
+      .glass-two {
+        width: 470px;
+        height: 470px;
+
+        right: -330px;
+        top: 48%;
+      }
+
+
+      .glass-three {
+        width: 220px;
+        height: 220px;
+
+        left: 35%;
+        bottom: -70px;
+
+        opacity: .52;
+      }
+
+
+
+      /* Main veil */
 
       .glass-veil {
         background:
-          rgba(248,245,239,.28);
+          rgba(248,245,239,.25);
 
         -webkit-backdrop-filter:
-          blur(21px)
-          saturate(112%);
+          blur(18px)
+          saturate(110%);
 
         backdrop-filter:
-          blur(21px)
-          saturate(112%);
+          blur(18px)
+          saturate(110%);
       }
 
 
       .midnight-glass {
         -webkit-backdrop-filter:
-          blur(18px)
-          saturate(112%);
+          blur(16px)
+          saturate(110%);
 
         backdrop-filter:
-          blur(18px)
-          saturate(112%);
+          blur(16px)
+          saturate(110%);
       }
 
 
@@ -1142,10 +1741,6 @@
         filter: blur(43px);
       }
 
-
-      /*
-         Stronger champagne presence on mobile too.
-      */
 
       .midnight::after {
         width: 175vw;
@@ -1201,6 +1796,7 @@
     }
 
 
+
     /* =========================================================
        SMALL MOBILE
     ========================================================= */
@@ -1217,12 +1813,31 @@
       }
 
 
+      .brand-mark {
+        width: 39px;
+        height: 39px;
+      }
+
+
+      .glass-one {
+        width: 340px;
+        height: 340px;
+      }
+
+
+      .glass-two {
+        width: 410px;
+        height: 410px;
+      }
+
+
       .social {
         width: 46px;
         height: 46px;
       }
 
     }
+
 
 
     /* =========================================================
@@ -1259,6 +1874,25 @@
       }
 
 
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+
+        top: 14px;
+        left: 16px;
+      }
+
+
+      .scroll-cue {
+        bottom: 12px;
+      }
+
+
+      .scroll-track {
+        height: 30px;
+      }
+
+
       .socials {
         bottom: 10px;
       }
@@ -1272,6 +1906,7 @@
     }
 
 
+
     /* =========================================================
        REDUCED MOTION
     ========================================================= */
@@ -1280,9 +1915,11 @@
     (prefers-reduced-motion: reduce) {
 
       .light,
+      .liquid-glass,
       .midnight::before,
       .midnight::after,
-      .social {
+      .social,
+      .scroll-energy {
         animation: none !important;
       }
 
@@ -1306,7 +1943,7 @@
 
 
   <!-- =======================================================
-       FROSTED ENVIRONMENT
+       BACKGROUND WORLD
   ======================================================== -->
 
   <div
@@ -1314,7 +1951,7 @@
     aria-hidden="true"
   >
 
-    <!-- Diffused color behind glass -->
+    <!-- Diffused color -->
 
     <div class="light navy-light"></div>
 
@@ -1325,6 +1962,23 @@
     <div class="light gold-light"></div>
 
 
+
+    <!-- Liquid glass forms -->
+
+    <div
+      class="liquid-glass glass-one"
+    ></div>
+
+    <div
+      class="liquid-glass glass-two"
+    ></div>
+
+    <div
+      class="liquid-glass glass-three"
+    ></div>
+
+
+
     <!-- Frosted surface -->
 
     <div class="glass-veil"></div>
@@ -1332,7 +1986,8 @@
     <div class="glass-sheen"></div>
 
 
-    <!-- Midnight environment -->
+
+    <!-- Midnight state -->
 
     <div
       class="midnight"
@@ -1343,6 +1998,7 @@
       class="midnight-glass"
       id="midnightGlass"
     ></div>
+
 
 
     <!-- Gold transition -->
@@ -1358,7 +2014,8 @@
     ></div>
 
 
-    <!-- Fine texture -->
+
+    <!-- Texture -->
 
     <div class="grain"></div>
 
@@ -1367,7 +2024,20 @@
 
 
   <!-- =======================================================
-       MAIN EXPERIENCE
+       AR LOGO
+  ======================================================== -->
+
+  <a
+    class="brand-mark"
+    id="brandMark"
+    href="#"
+    aria-label="Abdullah Rayees — Home"
+  ></a>
+
+
+
+  <!-- =======================================================
+       EXPERIENCE
   ======================================================== -->
 
   <main
@@ -1376,6 +2046,38 @@
   >
 
     <section class="stage">
+
+
+      <!-- ===================================================
+           SCROLL INDICATOR
+      ==================================================== -->
+
+      <div
+        class="scroll-cue"
+        id="scrollCue"
+        aria-hidden="true"
+      >
+
+        <span class="scroll-label">
+          Scroll
+        </span>
+
+        <span
+          class="scroll-track"
+          id="scrollTrack"
+        >
+
+          <span class="scroll-energy"></span>
+
+        </span>
+
+      </div>
+
+
+
+      <!-- ===================================================
+           NAME
+      ==================================================== -->
 
       <div
         class="name"
@@ -1444,6 +2146,7 @@
     </a>
 
 
+
     <!-- LinkedIn -->
 
     <a
@@ -1484,45 +2187,72 @@
           "experience"
         );
 
+
       const name =
         document.getElementById(
           "name"
         );
+
 
       const firstName =
         document.getElementById(
           "firstName"
         );
 
+
       const lastName =
         document.getElementById(
           "lastName"
         );
+
 
       const midnight =
         document.getElementById(
           "midnight"
         );
 
+
       const midnightGlass =
         document.getElementById(
           "midnightGlass"
         );
+
 
       const goldSweep =
         document.getElementById(
           "goldSweep"
         );
 
+
       const goldLine =
         document.getElementById(
           "goldLine"
         );
 
+
       const socials =
         document.getElementById(
           "socials"
         );
+
+
+      const scrollCue =
+        document.getElementById(
+          "scrollCue"
+        );
+
+
+      const scrollTrack =
+        document.getElementById(
+          "scrollTrack"
+        );
+
+
+      const brandMark =
+        document.getElementById(
+          "brandMark"
+        );
+
 
       const themeColor =
         document.querySelector(
@@ -1533,6 +2263,10 @@
       let ticking = false;
 
 
+
+      /* =====================================================
+         HELPERS
+      ====================================================== */
 
       function clamp(
         value,
@@ -1585,6 +2319,10 @@
 
 
 
+      /* =====================================================
+         RENDER
+      ====================================================== */
+
       function render() {
 
         ticking = false;
@@ -1621,9 +2359,60 @@
 
 
 
-        /* =====================================
+        /* =================================================
+           SCROLL CUE
+
+           It rises, blurs and dissolves as scrolling starts.
+           The line retracts at the same time.
+        ================================================= */
+
+        const cueProgress =
+          ease(
+
+            clamp(
+              progress / .10,
+              0,
+              1
+            )
+
+          );
+
+
+        scrollCue.style.opacity =
+          1 - cueProgress;
+
+
+        scrollCue.style.filter =
+          `blur(${
+            cueProgress * 5
+          }px)`;
+
+
+        scrollCue.style.transform =
+          `
+            translate3d(
+              -50%,
+              ${-16 * cueProgress}px,
+              0
+            )
+          `;
+
+
+        scrollTrack.style.transform =
+          `
+            scaleY(
+              ${
+                1 -
+                (.92 * cueProgress)
+              }
+            )
+          `;
+
+
+
+        /* =================================================
            ABDULLAH
-        ====================================== */
+        ================================================= */
 
         const firstProgress =
           ease(
@@ -1656,9 +2445,9 @@
 
 
 
-        /* =====================================
+        /* =================================================
            RAYEES
-        ====================================== */
+        ================================================= */
 
         const lastProgress =
           ease(
@@ -1692,9 +2481,9 @@
 
 
 
-        /* =====================================
+        /* =================================================
            SUBTLE NAME SEPARATION
-        ====================================== */
+        ================================================= */
 
         const separation =
           ease(
@@ -1766,9 +2555,9 @@
 
 
 
-        /* =====================================
+        /* =================================================
            CHAMPAGNE -> MIDNIGHT
-        ====================================== */
+        ================================================= */
 
         const darkProgress =
           ease(
@@ -1796,9 +2585,11 @@
 
 
 
-        /* =====================================
-           NAVY TEXT -> CHAMPAGNE TEXT
-        ====================================== */
+        /* =================================================
+           TEXT COLOR
+
+           Navy -> Champagne
+        ================================================= */
 
         const start = {
           r: 7,
@@ -1861,9 +2652,34 @@
 
 
 
-        /* =====================================
+        /* =================================================
+           LOGO COLOR
+
+           Uses the exact same transition as the typography.
+        ================================================= */
+
+        brandMark.style.setProperty(
+          "--logo-r",
+          red
+        );
+
+
+        brandMark.style.setProperty(
+          "--logo-g",
+          green
+        );
+
+
+        brandMark.style.setProperty(
+          "--logo-b",
+          blue
+        );
+
+
+
+        /* =================================================
            GOLD REFLECTION
-        ====================================== */
+        ================================================= */
 
         const reflection =
           clamp(
@@ -1920,11 +2736,11 @@
 
 
 
-        /* =====================================
-           FINAL NAME SETTLE
+        /* =================================================
+           NAME SETTLE
 
-           Maximum scale: 1.5%
-        ====================================== */
+           Maximum zoom is only 1.5%.
+        ================================================= */
 
         const settle =
           ease(
@@ -1964,9 +2780,9 @@
 
 
 
-        /* =====================================
+        /* =================================================
            SOCIAL REVEAL
-        ====================================== */
+        ================================================= */
 
         if (
           progress >
@@ -1989,9 +2805,9 @@
 
 
 
-        /* =====================================
-           MOBILE BROWSER COLOR
-        ====================================== */
+        /* =================================================
+           MOBILE BROWSER CHROME
+        ================================================= */
 
         if (
           darkProgress >
@@ -2017,6 +2833,10 @@
       }
 
 
+
+      /* =====================================================
+         RAF
+      ====================================================== */
 
       function requestRender() {
 
@@ -2052,6 +2872,21 @@
       window.addEventListener(
         "orientationchange",
         requestRender
+      );
+
+
+      brandMark.addEventListener(
+        "click",
+        event => {
+
+          event.preventDefault();
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+        }
       );
 
 
