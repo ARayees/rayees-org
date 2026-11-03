@@ -12,9 +12,71 @@
 
   <title>Abdullah Rayees</title>
 
-  <!-- FAVICON -->
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="AR_mark_navy_1024.png">
+  <!-- =========================================================
+       UPDATE LOG — VERSION 1.6
+
+       Added:
+       - Reliable favicon fallbacks
+       - Subtle movement and breathing scale for the champagne burst
+       - Restored social hover inversion and scale feedback
+       - Corrected Instagram icon geometry
+
+       Preservation rule:
+       Every other visual effect, interaction, link, animation,
+       responsive rule, and scroll behavior remains unchanged.
+  ========================================================== -->
+
+  <!-- =========================================================
+       FEATURE MAP
+
+       1. Design system / colors
+       2. Background atmosphere
+       3. Glass shapes and veil
+       4. Midnight transition
+       5. Champagne burst
+       6. Brand mark
+       7. Name animation
+       8. Scroll cue
+       9. Social links and hover feedback
+      10. Responsive rules
+      11. Reduced-motion accessibility
+      12. HTML structure
+      13. Scroll controller
+
+       Future edits should be limited to the relevant section.
+  ========================================================== -->
+
+  <!-- =========================================================
+       FAVICON AND APP ICONS
+       Keep these files beside index.html:
+       - favicon.ico
+       - AR_mark_navy.svg
+       - AR_mark_navy_1024.png
+  ========================================================== -->
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="./AR_mark_navy.svg?v=2"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="1024x1024"
+    href="./AR_mark_navy_1024.png?v=2"
+  >
+
+  <link
+    rel="shortcut icon"
+    href="./favicon.ico?v=2"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    sizes="1024x1024"
+    href="./AR_mark_navy_1024.png?v=2"
+  >
 
   <style>
 
@@ -584,6 +646,14 @@
     }
 
 
+    /* =========================================================
+       CHAMPAGNE BURST
+
+       Edit only these values when adjusting the lower-right
+       champagne glow. Its opacity still follows the midnight
+       scroll transition in the JavaScript section below.
+    ========================================================== */
+
     .midnight::after {
       content: "";
 
@@ -614,9 +684,9 @@
 
       animation:
         midnightGold
-        31s
+        24s
         ease-in-out
-        infinite alternate;
+        infinite;
     }
 
 
@@ -1170,21 +1240,49 @@
     }
 
 
+    /* =========================================================
+       SOCIAL FLOATING MOTION
+
+       The outer link owns ambient movement. Keep hover transforms
+       on .social-surface below so these two systems stay isolated.
+    ========================================================== */
+
     .social {
       width: 50px;
       height: 50px;
 
-      display: grid;
-
-      place-items: center;
+      display: block;
 
       flex: 0 0 auto;
 
       border-radius: 50%;
 
-      color: #eee5d5;
-
       text-decoration: none;
+
+      -webkit-tap-highlight-color: transparent;
+
+      will-change: transform;
+    }
+
+
+    /* =========================================================
+       SOCIAL SURFACE AND HOVER FEEDBACK
+
+       The inner surface owns color inversion, enlargement and
+       press feedback. Edit this section without touching motion.
+    ========================================================== */
+
+    .social-surface {
+      width: 100%;
+      height: 100%;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 50%;
+
+      color: #eee5d5;
 
       border:
         1px solid
@@ -1215,7 +1313,17 @@
         blur(16px)
         saturate(120%);
 
-      -webkit-tap-highlight-color: transparent;
+      transition:
+        transform .34s
+        cubic-bezier(.16,1,.3,1),
+
+        color .34s ease,
+
+        background .34s ease,
+
+        border-color .34s ease,
+
+        box-shadow .34s ease;
     }
 
 
@@ -1224,6 +1332,64 @@
       height: 20px;
 
       fill: currentColor;
+
+      transition:
+        transform .34s
+        cubic-bezier(.16,1,.3,1);
+    }
+
+
+    @media
+    (hover:hover)
+    and
+    (pointer:fine) {
+
+      .social:hover {
+        z-index: 2;
+      }
+
+
+      .social:hover .social-surface {
+        transform: scale(1.07);
+
+        color: var(--navy-deep);
+
+        background:
+          linear-gradient(
+            145deg,
+
+            rgba(248,243,233,.98),
+
+            rgba(238,228,210,.90)
+          );
+
+        border-color: rgba(255,255,255,.75);
+
+        box-shadow:
+          inset 0 1px 0
+          rgba(255,255,255,.95),
+
+          0 15px 44px
+          rgba(4,20,33,.18),
+
+          0 0 0 1px
+          rgba(184,149,88,.06);
+      }
+
+
+      .social:hover svg {
+        transform: scale(1.04);
+      }
+
+    }
+
+
+    .social:active .social-surface {
+      transform: scale(.96);
+
+      color: var(--navy-deep);
+
+      background: var(--champagne);
     }
 
 
@@ -1363,15 +1529,22 @@
 
     @keyframes midnightGold {
 
-      from {
+      0% {
         transform:
-          translate3d(3%,3%,0);
+          translate3d(3%,3%,0)
+          scale(.98);
       }
 
-      to {
+      50% {
         transform:
-          translate3d(-12%,-10%,0)
-          scale(1.08);
+          translate3d(-5%,-4%,0)
+          scale(1.04);
+      }
+
+      100% {
+        transform:
+          translate3d(-11%,-8%,0)
+          scale(1);
       }
 
     }
@@ -1785,7 +1958,9 @@
       .social {
         width: 48px;
         height: 48px;
+      }
 
+      .social-surface {
         -webkit-backdrop-filter:
           blur(10px);
 
@@ -2132,16 +2307,44 @@
       aria-label="Instagram"
     >
 
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
+      <span class="social-surface">
 
-        <path
-          d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2Zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5ZM17.5 5.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"
-        />
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
 
-      </svg>
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="5"
+            ry="5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+
+          <circle
+            cx="12"
+            cy="12"
+            r="4.25"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+
+          <circle
+            cx="17.5"
+            cy="6.5"
+            r="1.25"
+            fill="currentColor"
+          />
+
+        </svg>
+
+      </span>
 
     </a>
 
@@ -2157,16 +2360,20 @@
       aria-label="LinkedIn"
     >
 
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
+      <span class="social-surface">
 
-        <path
-          d="M5.34 3.5A2.34 2.34 0 1 1 5.34 8.18 2.34 2.34 0 0 1 5.34 3.5ZM3.32 9.75h4.04V21H3.32V9.75Zm6.55 0h3.87v1.54h.05c.54-1.02 1.86-2.1 3.83-2.1 4.1 0 4.86 2.7 4.86 6.21V21h-4.03v-4.96c0-1.18-.02-2.71-1.65-2.71-1.66 0-1.91 1.29-1.91 2.62V21h-4.02V9.75Z"
-        />
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
 
-      </svg>
+          <path
+            d="M5.34 3.5A2.34 2.34 0 1 1 5.34 8.18 2.34 2.34 0 1 1 5.34 3.5ZM3.32 9.75h4.04V21H3.32V9.75Zm6.55 0h3.87v1.54h.05c.54-1.02 1.86-2.1 3.83-2.1 4.1 0 4.86 2.7 4.86 6.21V21h-4.03v-4.96c0-1.18-.02-2.71-1.65-2.71-1.66 0-1.91 1.29-1.91 2.62V21h-4.02V9.75Z"
+          />
+
+        </svg>
+
+      </span>
 
     </a>
 
