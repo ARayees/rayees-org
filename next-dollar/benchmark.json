@@ -1,0 +1,440 @@
+{
+  "version": "0.1.0",
+  "title": "Next Dollar Benchmark v0.1",
+  "description": "Twenty anonymized Reddit-derived archetypes plus five synthetic edge cases. The benchmark evaluates hard constraints, dominant destination ranges, and unacceptable recommendations rather than one exact dollar split.",
+  "cases": [
+    {
+      "id": "R1",
+      "segment": "young_student",
+      "title": "Part-time student choosing between cash and Roth category",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "variable" },
+        "accounts": { "checking": 200, "savings": 2300, "reserveTarget": 1500 },
+        "cashEvent": { "amount": 425, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 425, "monthlyEssentials": 500, "incomeFloorMonthly": 350 },
+        "essentials": [{ "label": "Food and transport", "amount": 250, "dueInDays": 14, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["retirement_category", "flexible_spending", "liquidity"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "R2",
+      "segment": "young_student",
+      "title": "Unemployed student with savings and family support",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "none", "incomeStability": "one_time" },
+        "accounts": { "checking": 5000, "savings": 0, "reserveTarget": 5000 },
+        "cashEvent": { "amount": 200, "sourceType": "parent_support", "earnedIncome": false, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 60, "nextIncomeAmount": 0, "monthlyEssentials": 300, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Personal spending", "amount": 200, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity", "flexible_spending"], "noSurplus": true },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R3",
+      "segment": "young_student",
+      "title": "Student saving for future tuition while earning little",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "variable" },
+        "accounts": { "checking": 600, "savings": 4500, "reserveTarget": 2500 },
+        "cashEvent": { "amount": 300, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 300, "monthlyEssentials": 450, "incomeFloorMonthly": 200 },
+        "essentials": [{ "label": "Current expenses", "amount": 250, "dueInDays": 30, "required": true }],
+        "commitments": [{ "label": "Tuition reserve", "amount": 7000, "dueInDays": 120, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity"], "noSurplus": true },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R4",
+      "segment": "young_student",
+      "title": "Freelancer with an unreserved tax obligation",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "freelance", "incomeStability": "highly_variable" },
+        "accounts": { "checking": 100, "savings": 300, "reserveTarget": 600 },
+        "cashEvent": { "amount": 1000, "sourceType": "freelance", "earnedIncome": true, "taxWithheld": false, "taxReservePct": 0.25 },
+        "cashFlow": { "nextIncomeDays": 45, "nextIncomeAmount": 500, "monthlyEssentials": 550, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Living costs", "amount": 500, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["tax_reserve", "liquidity"], "requiredChecks": ["tax"] },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R5",
+      "segment": "young_student",
+      "title": "Low-income student trying to save half of earnings",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "variable" },
+        "accounts": { "checking": 100, "savings": 900, "reserveTarget": 750 },
+        "cashEvent": { "amount": 400, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 400, "monthlyEssentials": 300, "incomeFloorMonthly": 250 },
+        "essentials": [{ "label": "Food", "amount": 180, "dueInDays": 30, "required": true }],
+        "goals": [{ "id": "car", "name": "Future car fund", "target": 5000, "current": 500, "deadline": "2027-09-01", "priority": 3, "priceVolatility": 2, "delayCost": 2 }],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["goal:car", "liquidity"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "R6",
+      "segment": "young_student",
+      "title": "Student with substantial savings and tuition due",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "seasonal" },
+        "accounts": { "checking": 1000, "savings": 21000, "reserveTarget": 7000 },
+        "cashEvent": { "amount": 800, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 800, "monthlyEssentials": 700, "incomeFloorMonthly": 400 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 700, "dueInDays": 30, "required": true }],
+        "commitments": [{ "label": "Tuition", "amount": 7000, "dueInDays": 90, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["retirement_category", "liquidity"] },
+      "forbidden": []
+    },
+    {
+      "id": "R7",
+      "segment": "young_student",
+      "title": "Student with covered housing considering a side hustle",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "stable" },
+        "accounts": { "checking": 500, "savings": 24000, "reserveTarget": 3000 },
+        "cashEvent": { "amount": 700, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 700, "monthlyEssentials": 250, "incomeFloorMonthly": 600 },
+        "essentials": [{ "label": "Personal expenses", "amount": 200, "dueInDays": 14, "required": true }],
+        "goals": [{ "id": "side_hustle", "name": "Side hustle fund", "target": 2000, "current": 0, "deadline": "2027-03-01", "priority": 3, "priceVolatility": 1, "delayCost": 2 }],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["goal:side_hustle", "retirement_category"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "R8",
+      "segment": "young_student",
+      "title": "Student repaying family for a car",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "variable" },
+        "accounts": { "checking": 200, "savings": 600, "reserveTarget": 500 },
+        "cashEvent": { "amount": 700, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 700, "monthlyEssentials": 400, "incomeFloorMonthly": 500 },
+        "essentials": [{ "label": "Food and gas", "amount": 250, "dueInDays": 30, "required": true }],
+        "commitments": [{ "label": "Family car repayment", "amount": 4500, "dueInDays": 180, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity"], "noSurplus": true },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R9",
+      "segment": "young_student",
+      "title": "Student balancing gifts, travel, and cash preservation",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "campus_work", "incomeStability": "variable" },
+        "accounts": { "checking": 7000, "savings": 1000, "reserveTarget": 3000 },
+        "cashEvent": { "amount": 800, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 800, "monthlyEssentials": 500, "incomeFloorMonthly": 500 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 500, "dueInDays": 30, "required": true }],
+        "goals": [{ "id": "trip", "name": "Trip fund", "target": 800, "current": 0, "deadline": "2027-01-01", "priority": 4, "priceVolatility": 4, "delayCost": 3 }],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["goal:trip", "flexible_spending"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "R10",
+      "segment": "young_student",
+      "title": "Allowance-only student asking whether to invest",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "none", "incomeStability": "one_time" },
+        "accounts": { "checking": 300, "savings": 700, "reserveTarget": 700 },
+        "cashEvent": { "amount": 250, "sourceType": "parent_support", "earnedIncome": false, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 250, "monthlyEssentials": 250, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Personal essentials", "amount": 250, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["flexible_spending", "liquidity"] },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R11",
+      "segment": "young_student",
+      "title": "Medical student holding aid and family funds",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "none", "incomeStability": "aid_and_support" },
+        "accounts": { "checking": 6000, "savings": 0, "reserveTarget": 5000 },
+        "cashEvent": { "amount": 1000, "sourceType": "parent_support", "earnedIncome": false, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 90, "nextIncomeAmount": 0, "monthlyEssentials": 1200, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Living costs", "amount": 1200, "dueInDays": 30, "required": true }],
+        "commitments": [{ "label": "Future housing", "amount": 3000, "dueInDays": 90, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity"], "noSurplus": true },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R12",
+      "segment": "young_student",
+      "title": "Young worker saving for housing and retirement",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "hourly", "incomeStability": "stable" },
+        "accounts": { "checking": 1000, "savings": 5000, "reserveTarget": 4000 },
+        "cashEvent": { "amount": 2000, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 2000, "monthlyEssentials": 1000, "incomeFloorMonthly": 1800 },
+        "essentials": [{ "label": "Living costs", "amount": 1000, "dueInDays": 30, "required": true }],
+        "goals": [{ "id": "down_payment", "name": "Housing fund", "target": 20000, "current": 5000, "deadline": "2028-01-01", "priority": 4, "priceVolatility": 1, "delayCost": 2 }],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["goal:down_payment", "retirement_category"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "R13",
+      "segment": "young_student",
+      "title": "Student banker with cash, Roth, brokerage, and 401(k)",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "banker_part_time", "incomeStability": "stable" },
+        "accounts": { "checking": 3000, "savings": 7000, "reserveTarget": 3000 },
+        "cashEvent": { "amount": 1000, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 1000, "monthlyEssentials": 700, "incomeFloorMonthly": 900 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 700, "dueInDays": 30, "required": true }],
+        "employerMatch": { "remainingContribution": 500, "matchRatio": 1, "eligible": true },
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["employer_match", "retirement_category"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "R14",
+      "segment": "young_student",
+      "title": "Financial-aid refund delayed while rent is due",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": true, "employmentStatus": "none", "incomeStability": "aid_pending" },
+        "accounts": { "checking": 150, "savings": 0, "reserveTarget": 500 },
+        "cashEvent": { "amount": 500, "sourceType": "parent_support", "earnedIncome": false, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 4000, "monthlyEssentials": 1100, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Rent", "amount": 900, "dueInDays": 7, "required": true }, { "label": "Food", "amount": 200, "dueInDays": 14, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity"], "noSurplus": true },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R15",
+      "segment": "young_student",
+      "title": "New nurse choosing among loans, car, travel, and retirement",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "nurse", "incomeStability": "stable" },
+        "accounts": { "checking": 2000, "savings": 5000, "reserveTarget": 5000 },
+        "cashEvent": { "amount": 4000, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 4000, "monthlyEssentials": 2200, "incomeFloorMonthly": 3800 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 2200, "dueInDays": 30, "required": true }],
+        "goals": [{ "id": "car", "name": "Car fund", "target": 12000, "current": 2000, "deadline": "2027-06-01", "priority": 3, "priceVolatility": 2, "delayCost": 2 }],
+        "debt": { "balance": 15000, "apr": 6, "minimumDue": 450, "promoApr": null, "promoEndDate": null }
+      },
+      "expected": { "dominant": ["liquidity", "goal:car", "high_interest_debt", "retirement_category"] },
+      "forbidden": []
+    },
+    {
+      "id": "R16",
+      "segment": "adult",
+      "title": "Software engineer with match, HSA, and student loans",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "salary", "incomeStability": "stable" },
+        "accounts": { "checking": 4000, "savings": 20000, "reserveTarget": 8000 },
+        "cashEvent": { "amount": 5000, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 5000, "monthlyEssentials": 3000, "incomeFloorMonthly": 5000 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 3000, "dueInDays": 30, "required": true }],
+        "employerMatch": { "remainingContribution": 1200, "matchRatio": 1, "eligible": true },
+        "goals": [],
+        "debt": { "balance": 20000, "apr": 5, "minimumDue": 500, "promoApr": null, "promoEndDate": null }
+      },
+      "expected": { "dominant": ["employer_match", "retirement_category", "high_interest_debt"] },
+      "forbidden": []
+    },
+    {
+      "id": "R17",
+      "segment": "adult",
+      "title": "New graduate with high student debt and employer loan help",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "salary", "incomeStability": "stable" },
+        "accounts": { "checking": 3000, "savings": 7000, "reserveTarget": 6000 },
+        "cashEvent": { "amount": 4500, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 4500, "monthlyEssentials": 2600, "incomeFloorMonthly": 4500 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 2600, "dueInDays": 30, "required": true }],
+        "employerMatch": { "remainingContribution": 900, "matchRatio": 1, "eligible": true },
+        "goals": [],
+        "debt": { "balance": 160000, "apr": 8, "minimumDue": 1800, "promoApr": null, "promoEndDate": null }
+      },
+      "expected": { "dominant": ["high_interest_debt", "employer_match", "liquidity"] },
+      "forbidden": []
+    },
+    {
+      "id": "R18",
+      "segment": "adult",
+      "title": "Engineer weighing emergency fund, retirement, and low-rate loans",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "salary", "incomeStability": "stable" },
+        "accounts": { "checking": 2000, "savings": 6000, "reserveTarget": 7000 },
+        "cashEvent": { "amount": 2500, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 2500, "monthlyEssentials": 1800, "incomeFloorMonthly": 2500 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 1800, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 15000, "apr": 4, "minimumDue": 300, "promoApr": null, "promoEndDate": null }
+      },
+      "expected": { "dominant": ["liquidity", "retirement_category"] },
+      "forbidden": []
+    },
+    {
+      "id": "R19",
+      "segment": "adult",
+      "title": "Startup employee with uncertain bonus and no safety net",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "startup_salary", "incomeStability": "uncertain" },
+        "accounts": { "checking": 4500, "savings": 0, "reserveTarget": 12000 },
+        "cashEvent": { "amount": 4500, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 4500, "monthlyEssentials": 3500, "incomeFloorMonthly": 3000 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 3500, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 20000, "apr": 4.5, "minimumDue": 550, "promoApr": null, "promoEndDate": null }
+      },
+      "expected": { "dominant": ["liquidity"] },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "R20",
+      "segment": "adult",
+      "title": "Two self-employed partners smoothing uneven months",
+      "provenance": "Anonymized Reddit-derived archetype",
+      "input": {
+        "person": { "student": false, "employmentStatus": "self_employed", "incomeStability": "highly_variable" },
+        "accounts": { "checking": 1500, "savings": 2000, "reserveTarget": 12000 },
+        "cashEvent": { "amount": 3500, "sourceType": "freelance", "earnedIncome": true, "taxWithheld": false, "taxReservePct": 0.25 },
+        "cashFlow": { "nextIncomeDays": 60, "nextIncomeAmount": 0, "monthlyEssentials": 4000, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Household essentials", "amount": 4000, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity"], "noSurplus": true },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "S1",
+      "segment": "synthetic_edge",
+      "title": "Parent transfer with groceries, gas, and a concert",
+      "provenance": "Synthetic stress case",
+      "input": {
+        "person": { "student": true, "employmentStatus": "none", "incomeStability": "one_time" },
+        "accounts": { "checking": 42, "savings": 0, "reserveTarget": 100 },
+        "cashEvent": { "amount": 200, "sourceType": "parent_support", "earnedIncome": false, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 0, "monthlyEssentials": 250, "incomeFloorMonthly": 0 },
+        "essentials": [{ "label": "Groceries", "amount": 90, "dueInDays": 14, "required": true }, { "label": "Gas", "amount": 35, "dueInDays": 14, "required": true }],
+        "goals": [{ "id": "concert", "name": "Concert", "target": 90, "current": 0, "deadline": "2026-11-20", "priority": 4, "priceVolatility": 1, "delayCost": 3 }],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["liquidity", "goal:concert"], "requiredChecks": ["earned_income"] },
+      "forbidden": ["retirement_category"]
+    },
+    {
+      "id": "S5",
+      "segment": "synthetic_edge",
+      "title": "Flight home versus phone upgrade",
+      "provenance": "Synthetic stress case",
+      "input": {
+        "person": { "student": true, "employmentStatus": "part_time", "incomeStability": "variable" },
+        "accounts": { "checking": 600, "savings": 0, "reserveTarget": 300 },
+        "cashEvent": { "amount": 600, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 300, "monthlyEssentials": 200, "incomeFloorMonthly": 250 },
+        "essentials": [{ "label": "Personal essentials", "amount": 100, "dueInDays": 30, "required": true }],
+        "goals": [{ "id": "flight", "name": "Flight home", "target": 380, "current": 0, "deadline": "2026-12-18", "priority": 5, "priceVolatility": 5, "substitutability": 1, "delayCost": 5 }, { "id": "phone", "name": "Phone upgrade", "target": 700, "current": 0, "deadline": "2026-12-25", "priority": 2, "priceVolatility": 2, "substitutability": 5, "delayCost": 1 }],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["goal:flight", "liquidity"] },
+      "forbidden": []
+    },
+    {
+      "id": "S6",
+      "segment": "synthetic_edge",
+      "title": "Remaining employer match threshold",
+      "provenance": "Synthetic stress case",
+      "input": {
+        "person": { "student": false, "employmentStatus": "salary", "incomeStability": "stable" },
+        "accounts": { "checking": 2000, "savings": 5000, "reserveTarget": 2500 },
+        "cashEvent": { "amount": 500, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 2500, "monthlyEssentials": 1500, "incomeFloorMonthly": 2500 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 1500, "dueInDays": 30, "required": true }],
+        "employerMatch": { "remainingContribution": 350, "matchRatio": 1, "eligible": true },
+        "goals": [],
+        "debt": { "balance": 0, "apr": 0, "minimumDue": 0 }
+      },
+      "expected": { "dominant": ["employer_match"] },
+      "forbidden": ["high_interest_debt"]
+    },
+    {
+      "id": "S8",
+      "segment": "synthetic_edge",
+      "title": "Zero-percent debt with an approaching reset",
+      "provenance": "Synthetic stress case",
+      "input": {
+        "person": { "student": false, "employmentStatus": "salary", "incomeStability": "stable" },
+        "accounts": { "checking": 1000, "savings": 4000, "reserveTarget": 2500 },
+        "cashEvent": { "amount": 700, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 14, "nextIncomeAmount": 2200, "monthlyEssentials": 1500, "incomeFloorMonthly": 2200 },
+        "essentials": [{ "label": "Monthly essentials", "amount": 1500, "dueInDays": 30, "required": true }],
+        "goals": [],
+        "debt": { "balance": 3000, "apr": 0, "minimumDue": 40, "promoApr": 0, "promoEndDate": "2027-02-01" }
+      },
+      "expected": { "dominant": ["high_interest_debt", "liquidity"] },
+      "forbidden": []
+    },
+    {
+      "id": "S10",
+      "segment": "synthetic_edge",
+      "title": "No surplus after rent, minimums, and groceries",
+      "provenance": "Synthetic stress case",
+      "input": {
+        "person": { "student": false, "employmentStatus": "hourly", "incomeStability": "variable" },
+        "accounts": { "checking": 0, "savings": 0, "reserveTarget": 100 },
+        "cashEvent": { "amount": 200, "sourceType": "paycheck", "earnedIncome": true, "taxWithheld": true },
+        "cashFlow": { "nextIncomeDays": 30, "nextIncomeAmount": 200, "monthlyEssentials": 190, "incomeFloorMonthly": 200 },
+        "essentials": [{ "label": "Rent shortage", "amount": 120, "dueInDays": 3, "required": true }, { "label": "Groceries", "amount": 70, "dueInDays": 7, "required": true }],
+        "debt": { "balance": 500, "apr": 24, "minimumDue": 40 },
+        "goals": []
+      },
+      "expected": { "dominant": ["liquidity"], "noSurplus": true },
+      "forbidden": ["retirement_category", "flexible_spending"]
+    }
+  ]
+}

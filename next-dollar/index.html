@@ -1,14 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#06182A">
+  <meta name="description" content="Fundy Next Dollar mechanics laboratory.">
+  <title>Fundy · Next Dollar Mechanics</title>
+  <link rel="stylesheet" href="./styles.css?build=0600">
 </head>
 <body>
+  <div class="ambient ambient-left" aria-hidden="true"></div>
+  <div class="ambient ambient-right" aria-hidden="true"></div>
 
-    <h1>Hello, World!</h1>
-    <p>Welcome to my first web page.</p>
+  <header class="lab-header">
+    <div class="header-mark" aria-label="AR mark">AR</div>
+    <div class="header-identity"><span>FUNDY / NEXT DOLLAR</span><strong>Mechanics laboratory</strong></div>
+    <div class="header-meta"><span>DETERMINISTIC MODEL</span><i></i><span>LOCAL ONLY</span><button type="button" class="quiet-button" id="reset-model">Reset</button></div>
+  </header>
 
+  <main class="lab-shell">
+    <section class="lab-intro">
+      <div class="eyebrow">CAPITAL ALLOCATION ENGINE · GRAPH 0.2.0</div>
+      <h1>Where should the<br><em>next dollar</em> go?</h1>
+      <p>Inspect the mechanics directly. Enter the current balances, obligations, and cash event. The graph will expose the branches it evaluates before it publishes a priority.</p>
+    </section>
+
+    <section class="workspace" aria-label="Next Dollar mechanics workspace">
+      <aside class="input-rail" aria-label="Model inputs">
+        <div class="rail-heading"><div><span class="eyebrow">01 / INPUTS</span><h2>Model state</h2></div><span class="status-dot" title="Running locally"></span></div>
+
+        <section class="input-section event-section">
+          <div class="section-label"><span>Cash event</span><small>the dollar being routed now</small></div>
+          <label class="field large-field"><span>AMOUNT</span><div class="currency-field"><b>$</b><input id="event-amount" type="number" min="0" step="1" inputmode="decimal" value="100" aria-label="Cash event amount"></div></label>
+          <label class="field"><span>SOURCE</span><select id="event-source" aria-label="Cash event source"><option value="gift">Gift</option><option value="parent_support">Family support</option><option value="paycheck">Paycheck</option><option value="freelance">Freelance income</option><option value="tax_refund">Tax refund</option><option value="scholarship">Scholarship or refund</option><option value="other">Other</option></select></label>
+        </section>
+
+        <section class="input-section">
+          <div class="section-label"><span>Liquidity profile</span><small>reported balances · exact values</small></div>
+          <div id="account-inputs" class="account-inputs"></div>
+          <div class="field-grid">
+            <label class="field"><span>MONTHLY ESSENTIALS</span><div class="currency-field"><b>$</b><input id="monthly-essentials" type="number" min="0" step="1" value="500" aria-label="Monthly essential expenses"></div></label>
+            <label class="field"><span>CUSHION MONTHS</span><select id="emergency-months" aria-label="Emergency cushion months"><option value="3">3 months</option><option value="4">4 months</option><option value="5">5 months</option><option value="6">6 months</option></select></label>
+          </div>
+          <label class="field"><span>SOFT DIRECTION</span><select id="primary-direction" aria-label="Primary direction"><option value="investing">Long-term investing</option><option value="goal">Named goal</option><option value="cash_buffer">Flexible cash buffer</option></select></label>
+          <label class="field hidden-field" id="goal-name-field"><span>GOAL LABEL</span><input id="goal-name" type="text" placeholder="Tuition, travel, equipment" aria-label="Goal label"></label>
+        </section>
+
+        <section class="input-section">
+          <div class="section-label"><span>Liability branch</span><small>minimum versus extra payoff</small></div>
+          <div class="field-grid debt-grid">
+            <label class="field"><span>TYPE</span><select id="debt-kind" aria-label="Debt type"><option value="credit_card">Credit card</option><option value="loan">Loan</option><option value="student_loan">Student loan</option><option value="other_debt">Other debt</option></select></label>
+            <label class="field"><span>APR</span><div class="suffix-field"><input id="debt-apr" type="number" min="0" step=".1" value="24" aria-label="Debt APR"><b>%</b></div></label>
+          </div>
+          <div class="field-grid">
+            <label class="field"><span>BALANCE</span><div class="currency-field"><b>$</b><input id="debt-balance" type="number" min="0" step="1" value="0" aria-label="Debt balance"></div></label>
+            <label class="field"><span>MINIMUM</span><div class="currency-field"><b>$</b><input id="debt-minimum" type="number" min="0" step="1" value="0" aria-label="Debt minimum payment"></div></label>
+          </div>
+          <div class="field-grid">
+            <label class="field"><span>DUE DATE</span><input id="debt-due-date" type="date" aria-label="Debt due date"></label>
+            <label class="field"><span>PAY FROM</span><select id="debt-account" aria-label="Debt payment account"><option value="checking">Checking</option><option value="savings">Savings</option></select></label>
+          </div>
+        </section>
+
+        <section class="input-section obligations-section">
+          <div class="section-label"><span>Other obligations</span><small>hard deadlines inside the horizon</small></div>
+          <div id="obligation-inputs"></div>
+          <button type="button" class="line-button" id="add-obligation">+ Add obligation</button>
+        </section>
+
+        <div class="rail-footer"><span>Values stay in this browser.</span><span>Educational model.</span></div>
+      </aside>
+
+      <section class="analysis-stage" aria-label="Reasoning graph and model output">
+        <div class="stage-heading"><div><span class="eyebrow">02 / REASONING GRAPH</span><h2>Branch state</h2></div><div class="stage-status"><span class="status-dot"></span><span id="run-status">LIVE CALCULATION</span></div></div>
+        <div class="graph-frame"><div id="graph-mount"></div><div class="graph-key"><span><i class="key-line active"></i>active path</span><span><i class="key-line parallel"></i>parallel analysis</span><span><i class="key-dot"></i>selected output</span></div></div>
+
+        <div class="result-band">
+          <div class="result-main"><span class="eyebrow">03 / PRIORITY ROUTER</span><h2 id="priority-title">Waiting for inputs</h2><p id="priority-reason">The graph will publish its branch after the current mechanics are evaluated.</p></div>
+          <div class="result-number"><span>AVAILABLE SURPLUS</span><strong id="surplus-value">$0</strong><small>after required reserves</small></div>
+        </div>
+
+        <div class="metric-row" id="metric-row"></div>
+
+        <div class="output-grid">
+          <section class="trace-panel"><div class="panel-heading"><div><span class="eyebrow">04 / TRACE</span><h3>Path taken</h3></div><span id="trace-count" class="panel-meta">0 steps</span></div><div id="trace-list" class="trace-list"></div></section>
+          <section class="allocation-panel"><div class="panel-heading"><div><span class="eyebrow">05 / OUTPUT</span><h3>Allocation plan</h3></div><span class="panel-meta">editable model state</span></div><div id="allocation-list" class="allocation-list"></div><div class="allocation-total"><span>EVENT TOTAL</span><strong id="allocation-total">$0</strong></div></section>
+        </div>
+      </section>
+    </section>
+
+    <footer class="lab-footer"><span>FUNDY / NEXT DOLLAR</span><span>Restraint on the surface. Depth underneath.</span><span>GRAPH 0.2.0 · FRONTEND MECHANICS</span></footer>
+  </main>
+
+  <script type="module" src="./app.js?build=0600"></script>
 </body>
 </html>
