@@ -94,7 +94,7 @@
       line-height: 1;
     }
     .info:focus-visible { outline: 2px solid var(--champagne); outline-offset: 2px; }
-    .info .tip {
+    .info-wrap .tip {
       display: none;
       flex: 0 0 100%;
       width: 100%;
@@ -212,7 +212,7 @@
         <p>Choose the main operating and pricing inputs. Open Advanced when you want to inspect or edit the underlying values.</p>
 
         <div class="field">
-          <label for="structure">Operating structure <span class="info-wrap"><button type="button" class="info" aria-expanded="false" aria-label="Show information">i</button><span class="tip" role="tooltip">The legal and operating arrangement used to provide flights. Part 121 direct means First Jet operates the airline. ACMI means a partner supplies the aircraft, crew, maintenance, and insurance. Part 380 means First Jet organizes the public charter while a certified direct air carrier operates the flight.</span></span></label>
+          <label for="structure">Operating structure <span class="info-wrap"><button type="button" class="info" aria-expanded="false" aria-label="Show information">i</button><span class="tip" role="tooltip">The legal and operating arrangement used to provide flights. Part 121 direct means the airline operates flights itself. ACMI means a partner supplies the aircraft, crew, maintenance, and insurance. Part 380 means the airline organizes the public charter while a certified direct air carrier operates the flight.</span></span></label>
           <select id="structure"><option value="direct">Part 121 direct</option><option value="acmi">Part 121 ACMI / partner</option><option value="charter">Part 380 public charter</option></select>
         </div>
         <div class="field">
@@ -228,11 +228,11 @@
           <select id="demand"><option value="conservative">Conservative</option><option value="expected" selected>Expected</option><option value="strong">Strong</option></select>
         </div>
         <div class="field">
-          <div class="range-row"><label for="fare">Average one-way base fare <span class="info-wrap"><button type="button" class="info" aria-expanded="false" aria-label="Show information">i</button><span class="tip" role="tooltip">A scenario input for the average realized one-way base fare. The $75 display default is a starting point, not a First Jet promise or published fare.</span></span></label><span id="fareVal" class="value"></span></div>
+          <div class="range-row"><label for="fare">Average one-way base fare <span class="info-wrap"><button type="button" class="info" aria-expanded="false" aria-label="Show information">i</button><span class="tip" role="tooltip">A scenario input for the average realized one-way base fare. The $75 display default is a starting point, not a published fare or airline promise.</span></span></label><span id="fareVal" class="value"></span></div>
           <input id="fare" type="range" min="20" max="200" step="5" value="75">
         </div>
         <div class="field">
-          <div class="range-row"><label for="fee">Annual membership fee <span class="info-wrap"><button type="button" class="info" aria-expanded="false" aria-label="Show information">i</button><span class="tip" role="tooltip">The model uses a rounded $100 starting value informed by First Jet materials that discussed a $99 annual entry membership. Move the slider in $5 increments.</span></span></label><span id="feeVal" class="value"></span></div>
+          <div class="range-row"><label for="fee">Annual membership fee <span class="info-wrap"><button type="button" class="info" aria-expanded="false" aria-label="Show information">i</button><span class="tip" role="tooltip">The model uses a rounded $100 starting value informed by planning materials that discussed a $99 annual entry membership. Move the slider in $5 increments.</span></span></label><span id="feeVal" class="value"></span></div>
           <input id="fee" type="range" min="0" max="300" step="5" value="100">
         </div>
 
@@ -338,16 +338,16 @@
 
     function drawAdvanced() {
       $('advancedGrid').innerHTML =
-        field('seats', 'Aircraft seats', 'number', 'Default for the selected aircraft. Comparable low-cost carriers disclose aircraft configurations, but First Jet has not publicly confirmed its aircraft type.', { min: 1 }, 'Comparable benchmark / First Jet not confirmed') +
+        field('seats', 'Aircraft seats', 'number', 'Default for the selected aircraft. Comparable low-cost carriers disclose aircraft configurations, but the airline has not publicly confirmed its aircraft type.', { min: 1 }, 'Comparable benchmark / airline not confirmed') +
         field('fleet', 'Fleet size', 'number', 'Launch-scale project assumption. It sets how many aircraft are available to operate flights.', { min: 1 }, 'Project assumption') +
         field('flightLegsPerDay', 'Flight legs per aircraft / day', 'number', 'A flight leg is one departure from one airport to another. This is not a round-trip count. The 3 / 4 / 5 cases are project scenarios.', { min: .1, max: 20, step: .1 }, 'Project scenario') +
-        field('operatingDays', 'Operating days', 'number', 'Modeled number of calendar days the airline operates during the year. The 330-day value is a V1 convention, not a First Jet disclosure.', { min: 1, max: 366 }, 'V1 placeholder') +
-        field('blockHours', 'Average block hours / flight leg', 'number', 'Time from aircraft departure from the gate to arrival at the destination gate. V1 uses 2.0 hours because First Jet has not confirmed routes or stage length.', { min: .25, max: 12, step: .05 }, 'V1 placeholder / needs route data') +
+        field('operatingDays', 'Operating days', 'number', 'Modeled number of calendar days the airline operates during the year. The 330-day value is a V1 convention, not an airline disclosure.', { min: 1, max: 366 }, 'V1 placeholder') +
+        field('blockHours', 'Average block hours / flight leg', 'number', 'Time from aircraft departure from the gate to arrival at the destination gate. V1 uses 2.0 hours because the airline has not confirmed routes or stage length.', { min: .25, max: 12, step: .05 }, 'V1 placeholder / needs route data') +
         field('loadFactor', 'Load factor', 'range', 'Demand-case assumption informed by comparable airline load factors. The preset can be overridden in Advanced.', { min: .3, max: .98, step: .01 }, 'Comparable benchmark / project case') +
         field('investors', 'Investor / community pool', 'number', `Campaign snapshot: ${defaults.investors.toLocaleString()} investors as of ${defaults.investorSnapshot}. It is not automatically the same as paying members.`, { min: 0 }, 'Campaign snapshot') +
-        field('conversion', 'Investor-to-member conversion', 'range', 'Explicit project assumption: the percentage of the investor/community pool expected to become paying members.', { min: 0, max: 1, step: .01 }, 'Project assumption / needs First Jet input') +
+        field('conversion', 'Investor-to-member conversion', 'range', 'Explicit project assumption: the percentage of the investor/community pool expected to become paying members.', { min: 0, max: 1, step: .01 }, 'Project assumption / needs airline input') +
         field('ancillary', 'Ancillary revenue / passenger', 'number', 'Exact arithmetic mean of Frontier, Spirit, and Sun Country comparable observations: $66.56 per passenger. It remains editable.', { min: 0, max: 150, step: .01 }, 'Derived calculation') +
-        field('blockCost', 'Bundled variable cost / block hour', 'number', 'First-pass operating-structure proxy. This is not an ACMI quotation or First Jet disclosure.', { min: 0 }, 'V1 cost proxy') +
+        field('blockCost', 'Bundled variable cost / block hour', 'number', 'First-pass operating-structure proxy. This is not an ACMI quotation or an airline disclosure.', { min: 0 }, 'V1 cost proxy') +
         field('fixedAircraft', 'Fixed aircraft cost / aircraft', 'number', 'First-pass annual aircraft-related cost proxy. It remains editable until lease or ownership research is available.', { min: 0 }, 'V1 cost proxy') +
         field('support', 'Annual support cost', 'number', 'First-pass proxy for corporate, compliance, insurance, and other support costs.', { min: 0 }, 'V1 cost proxy');
 
