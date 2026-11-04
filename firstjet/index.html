@@ -1,133 +1,36 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Project FirstJet — Airline Economics Lab</title>
-  <style>
-    :root { --ink:#f5f7fb; --muted:#aab5c8; --line:rgba(255,255,255,.12); --panel:rgba(18,27,48,.72); --blue:#7ab8ff; --cyan:#63e6d7; --gold:#eecb7a; --bg:#07101f; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; color:var(--ink); background:radial-gradient(circle at 15% 10%, rgba(65,116,201,.22), transparent 30rem), radial-gradient(circle at 90% 20%, rgba(78,208,194,.13), transparent 28rem), var(--bg); font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.32; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:44px 44px; mask-image:linear-gradient(to bottom,black,transparent 75%); }
-    .shell { width:min(1180px, calc(100% - 36px)); margin:auto; position:relative; }
-    nav { display:flex; align-items:center; justify-content:space-between; padding:24px 0; color:var(--muted); font-size:13px; letter-spacing:.02em; }
-    .brand { color:var(--ink); font-weight:700; letter-spacing:-.03em; font-size:17px; }
-    .pill { border:1px solid var(--line); border-radius:999px; padding:9px 13px; background:rgba(255,255,255,.045); }
-    .hero { padding:72px 0 46px; max-width:780px; }
-    .eyebrow { color:var(--cyan); font-size:12px; text-transform:uppercase; letter-spacing:.17em; font-weight:700; }
-    h1 { font-size:clamp(44px,7vw,86px); line-height:.97; letter-spacing:-.075em; margin:18px 0 22px; max-width:850px; }
-    .hero p { color:var(--muted); font-size:18px; line-height:1.6; max-width:680px; margin:0; }
-    .hero-note { display:inline-flex; margin-top:28px; color:#d9e4f6; gap:9px; align-items:center; font-size:13px; }
-    .dot { width:8px; height:8px; background:var(--cyan); border-radius:50%; box-shadow:0 0 20px var(--cyan); }
-    .layout { display:grid; grid-template-columns:340px 1fr; gap:18px; align-items:start; }
-    .card { background:linear-gradient(145deg,rgba(29,43,73,.84),rgba(10,17,33,.72)); border:1px solid var(--line); border-radius:24px; box-shadow:0 20px 70px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.05); backdrop-filter:blur(20px); }
-    .controls { padding:22px; position:sticky; top:18px; }
-    .card h2 { font-size:14px; margin:0 0 5px; letter-spacing:-.02em; }
-    .sub { color:var(--muted); font-size:12px; line-height:1.5; margin:0 0 20px; }
-    .control { margin:18px 0; }
-    .control label { display:flex; justify-content:space-between; color:#dce7f8; font-size:12px; margin-bottom:9px; }
-    .value { color:var(--cyan); font-variant-numeric:tabular-nums; }
-    input[type=range] { width:100%; accent-color:var(--cyan); }
-    .results { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-    .metric { padding:20px; min-height:118px; }
-    .metric span { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.1em; }
-    .metric strong { display:block; font-size:27px; letter-spacing:-.06em; margin-top:13px; }
-    .metric small { color:var(--muted); display:block; margin-top:6px; font-size:11px; }
-    .wide { padding:25px; margin-top:18px; }
-    .wide-head { display:flex; justify-content:space-between; gap:20px; align-items:baseline; margin-bottom:20px; }
-    .wide-head p { margin:0; color:var(--muted); font-size:12px; }
-    .bar { height:11px; display:flex; border-radius:99px; overflow:hidden; background:#26324a; margin:20px 0 12px; }
-    .bar div { transition:width .35s ease; }
-    .bar-legend { display:flex; justify-content:space-between; color:var(--muted); font-size:11px; }
-    .heatmap { display:grid; grid-template-columns:70px repeat(5,1fr); gap:5px; font-size:11px; }
-    .heatmap div { min-height:37px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:#eff7ff; font-variant-numeric:tabular-nums; }
-    .heatmap .axis { color:var(--muted); background:transparent; font-size:10px; }
-    .explain { border-left:2px solid var(--cyan); padding:4px 0 4px 16px; color:#dbe8f6; line-height:1.65; font-size:14px; }
-    .terms { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .term { padding:18px; min-height:130px; }
-    .term b { color:var(--gold); font-size:13px; }
-    .term p { color:var(--muted); line-height:1.55; font-size:12px; margin-bottom:0; }
-    footer { color:var(--muted); font-size:11px; line-height:1.6; padding:55px 0 80px; max-width:780px; }
-    @media(max-width:900px){ .layout{grid-template-columns:1fr}.controls{position:relative;top:auto}.results{grid-template-columns:repeat(2,1fr)} }
-    @media(max-width:560px){ .shell{width:min(100% - 24px,1180px)} .hero{padding-top:45px}.results{grid-template-columns:1fr 1fr}.metric strong{font-size:23px}.terms{grid-template-columns:1fr} }
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <nav><div class="brand">Project FirstJet</div><div class="pill">Independent scenario laboratory</div></nav>
-    <section class="hero">
-      <div class="eyebrow">Airline economics / v0.1</div>
-      <h1>What has to be true for the airline to work?</h1>
-      <p>Explore how fare, load factor, aircraft activity, operating costs, and membership revenue interact in a First Jet-style low-cost airline scenario.</p>
-      <div class="hero-note"><i class="dot"></i> Adjust the assumptions. The model recalculates instantly.</div>
-    </section>
-
-    <main class="layout">
-      <aside class="card controls">
-        <h2>Scenario controls</h2>
-        <p class="sub">These are editable assumptions, not confidential First Jet guidance.</p>
-        <div class="control"><label>Seats per departure <span class="value" id="seatsVal"></span></label><input id="seats" type="range" min="100" max="260" step="1" value="186"></div>
-        <div class="control"><label>Flights per day <span class="value" id="flightsVal"></span></label><input id="flights" type="range" min="1" max="10" step=".5" value="4"></div>
-        <div class="control"><label>Load factor <span class="value" id="loadVal"></span></label><input id="load" type="range" min=".45" max=".95" step=".01" value=".80"></div>
-        <div class="control"><label>Average base fare <span class="value" id="fareVal"></span></label><input id="fare" type="range" min="35" max="180" step="5" value="75"></div>
-        <div class="control"><label>Ancillary revenue / passenger <span class="value" id="ancillaryVal"></span></label><input id="ancillary" type="range" min="0" max="100" step="1" value="35"></div>
-        <div class="control"><label>Members <span class="value" id="membersVal"></span></label><input id="members" type="range" min="0" max="500000" step="5000" value="100000"></div>
-        <div class="control"><label>Annual membership fee <span class="value" id="feeVal"></span></label><input id="fee" type="range" min="0" max="300" step="5" value="75"></div>
-        <div class="control"><label>Jet fuel price <span class="value" id="fuelVal"></span></label><input id="fuel" type="range" min="1" max="6" step=".1" value="3"></div>
-      </aside>
-
-      <section>
-        <div class="results">
-          <div class="card metric"><span>Operating contribution</span><strong id="contribution">—</strong><small>Revenue minus modeled costs</small></div>
-          <div class="card metric"><span>Operating margin</span><strong id="margin">—</strong><small>Contribution ÷ total revenue</small></div>
-          <div class="card metric"><span>Break-even load factor</span><strong id="breakEven">—</strong><small>Seats that must be filled</small></div>
-          <div class="card metric"><span>Annual passengers</span><strong id="passengers">—</strong><small>Modeled passenger volume</small></div>
-        </div>
-
-        <div class="card wide">
-          <div class="wide-head"><div><h2>Revenue composition</h2><p>Membership is modeled separately from ticket and ancillary revenue.</p></div><strong id="totalRevenue">—</strong></div>
-          <div class="bar"><div id="ticketBar" style="background:#7ab8ff"></div><div id="ancillaryBar" style="background:#63e6d7"></div><div id="membershipBar" style="background:#eecb7a"></div></div>
-          <div class="bar-legend"><span>Tickets</span><span>Ancillary</span><span>Membership</span></div>
-        </div>
-
-        <div class="card wide"><div class="wide-head"><div><h2>Fare / load-factor frontier</h2><p>Green cells represent positive modeled contribution.</p></div></div><div class="heatmap" id="heatmap"></div></div>
-
-        <div class="card wide"><div class="wide-head"><div><h2>Model interpretation</h2><p>A deterministic explanation generated from the numbers above.</p></div></div><div class="explain" id="explanation"></div></div>
-      </section>
-    </main>
-
-    <section class="wide card" style="margin-top:18px"><div class="wide-head"><div><h2>Terms you are learning</h2><p>The model is also a finance and aviation lesson.</p></div></div><div class="terms"><div class="card term"><b>Load factor</b><p>The percentage of available seats occupied by passengers. Higher load factor usually spreads fixed costs across more passengers.</p></div><div class="card term"><b>Ancillary revenue</b><p>Revenue beyond the base fare—bags, seats, onboard products, and other passenger fees.</p></div><div class="card term"><b>Contribution</b><p>The money left after the model subtracts operating costs. It is not the same as net income or cash flow.</p></div></div></section>
-
-    <footer>This is an independent educational model based on public information, comparable-airline benchmarks, and explicit assumptions. It is not First Jet Airways' internal model, financial advice, or a forecast of actual results.</footer>
-  </div>
-  <script>
-    const $ = id => document.getElementById(id);
-    const money = n => (n < 0 ? "−$" : "$") + Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:0});
-    const pct = n => (n * 100).toFixed(1) + "%";
-    function inputs(){ return { seats:+$('seats').value, flights:+$('flights').value, load:+$('load').value, fare:+$('fare').value, ancillary:+$('ancillary').value, members:+$('members').value, fee:+$('fee').value, fuel:+$('fuel').value }; }
-    function calc(x){
-      const departures=x.flights*330, seats=departures*x.seats, passengers=seats*x.load, block=departures*2;
-      const tickets=passengers*x.fare, ancillary=passengers*x.ancillary, membership=x.members*x.fee;
-      const fuel=block*900*x.fuel, crew=block*1050, maintenance=block*750, airport=departures*2000, other=passengers*8;
-      const totalRevenue=tickets+ancillary+membership, totalCost=fuel+crew+maintenance+airport+other+4500000+3000000;
-      const contribution=totalRevenue-totalCost, fixed=fuel+crew+maintenance+airport+4500000+3000000;
-      const passengerYield=x.fare+x.ancillary-8, bePassengers=Math.max(0,(fixed-membership)/passengerYield), beLoad=bePassengers/seats;
-      return {departures,seats,passengers,tickets,ancillary,membership,totalRevenue,totalCost,contribution,margin:contribution/totalRevenue,beLoad};
-    }
-    function render(){
-      const x=inputs(), r=calc(x); $('seatsVal').textContent=x.seats; $('flightsVal').textContent=x.flights.toFixed(1); $('loadVal').textContent=pct(x.load); $('fareVal').textContent=money(x.fare); $('ancillaryVal').textContent=money(x.ancillary); $('membersVal').textContent=x.members.toLocaleString(); $('feeVal').textContent=money(x.fee); $('fuelVal').textContent="$"+x.fuel.toFixed(1);
-      $('contribution').textContent=money(r.contribution); $('margin').textContent=pct(r.margin); $('breakEven').textContent=r.beLoad>1?">100%":pct(Math.max(0,r.beLoad)); $('passengers').textContent=Math.round(r.passengers).toLocaleString(); $('totalRevenue').textContent=money(r.totalRevenue);
-      const total=Math.max(r.totalRevenue,1); $('ticketBar').style.width=(r.tickets/total*100)+"%"; $('ancillaryBar').style.width=(r.ancillary/total*100)+"%"; $('membershipBar').style.width=(r.membership/total*100)+"%";
-      $('explanation').textContent = `This scenario produces ${r.contribution>=0?"a positive":"a negative"} operating contribution of ${money(r.contribution)}. The model generates ${money(r.totalRevenue)} of revenue and ${money(r.totalCost)} of modeled operating costs. The break-even load factor is ${r.beLoad>1?"above 100%":pct(Math.max(0,r.beLoad))}. Membership contributes ${money(r.membership)}, but the operation still depends on filling seats and controlling flight-level costs.`;
-      renderHeatmap(x);
-    }
-    function renderHeatmap(x){
-      const grid=$('heatmap'); grid.innerHTML=""; grid.append(Object.assign(document.createElement('div'),{className:'axis',textContent:'Load / Fare'}));
-      [50,75,100,125,150].forEach(f=>grid.append(Object.assign(document.createElement('div'),{className:'axis',textContent:'$'+f})));
-      [.55,.65,.75,.85,.95].forEach(l=>{ grid.append(Object.assign(document.createElement('div'),{className:'axis',textContent:pct(l)})); [50,75,100,125,150].forEach(f=>{const r=calc({...x,fare:f,load:l}); const cell=document.createElement('div'); cell.textContent=money(r.contribution); cell.style.background=r.contribution>=0?'rgba(48,187,153,.72)':'rgba(175,70,91,.62)'; grid.append(cell);}); });
-    }
-    document.querySelectorAll('input').forEach(i=>i.addEventListener('input',render)); render();
-  </script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#eee6d8"><title>First Jet Model</title>
+<style>
+:root{--champagne:#eee4d2;--ivory:#faf7f1;--navy:#07192b;--navy2:#12344f;--gold:#b89558;--muted:#657386;--line:rgba(7,25,43,.15);--green:#2f745e;--red:#a54d42}
+*{box-sizing:border-box}html{background:var(--champagne);scroll-behavior:smooth}body{margin:0;color:var(--navy);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:linear-gradient(145deg,#faf7f1,#eee5d6 48%,#dfd0b8);min-height:100vh}.world{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:-1}.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:drift 26s ease-in-out infinite alternate}.blob.one{width:70vw;height:70vw;left:-35vw;top:-35vw;background:radial-gradient(circle,rgba(7,25,43,.38),transparent 70%)}.blob.two{width:60vw;height:60vw;right:-30vw;bottom:-30vw;background:radial-gradient(circle,rgba(184,149,88,.43),transparent 70%);animation-duration:34s}@keyframes drift{to{transform:translate(5vw,4vh) scale(1.08)}}
+.shell{width:min(1120px,calc(100% - 36px));margin:auto}nav{display:flex;align-items:center;justify-content:space-between;padding:25px 0;color:var(--muted);font-size:13px}.brand{color:var(--navy);font-weight:700;font-size:18px;letter-spacing:-.04em}.nav-links{display:flex;gap:17px}.nav-links a{color:var(--navy2);text-decoration:none}.nav-links a:hover{text-decoration:underline}.layout{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start}.card{background:rgba(255,255,255,.42);border:1px solid var(--line);border-radius:21px;box-shadow:0 18px 55px rgba(7,25,43,.08),inset 0 1px rgba(255,255,255,.65);backdrop-filter:blur(16px)}.controls{padding:23px;position:sticky;top:16px}.controls h1{font-size:20px;letter-spacing:-.05em;margin:0 0 6px}.controls>p{font-size:12px;line-height:1.55;color:var(--muted);margin:0 0 20px}.field{margin:16px 0}.field label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--navy2);margin-bottom:7px}select,input[type=number]{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.55);color:var(--navy);outline:none}input[type=range]{width:100%;accent-color:var(--gold)}.range-row{display:flex;justify-content:space-between;align-items:center;gap:9px}.range-row label{margin:0}.value{color:var(--gold);font-weight:700;white-space:nowrap}.info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border:1px solid var(--gold);border-radius:50%;font-size:10px;font-weight:700;color:var(--gold);cursor:help;flex:0 0 auto}.info .tip{position:absolute;z-index:8;left:22px;top:-7px;width:250px;padding:11px;border-radius:10px;background:var(--navy);color:#f8f5ef;font-size:11px;line-height:1.45;font-weight:400;opacity:0;pointer-events:none;transition:opacity .15s}.info:hover .tip,.info:focus .tip,.info.open .tip{opacity:1;pointer-events:auto}.details-link{display:block;margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--navy2);text-decoration:none}.advanced{display:none;margin-top:18px;padding:18px}.advanced.open{display:block}.advanced h2{font-size:16px;letter-spacing:-.03em;margin:0 0 4px}.advanced>p{font-size:11px;line-height:1.5;color:var(--muted);margin:0 0 15px}.advanced-grid{display:grid;grid-template-columns:1fr;gap:9px}.advanced-field{padding:11px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.2)}.advanced-label{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--navy2);margin-bottom:4px}.field-status{display:block;color:var(--muted);font-size:9px;line-height:1.35;margin-bottom:7px}.advanced-field input[type=number],.advanced-field input[type=range]{margin-top:2px}.advanced-note{font-size:10px!important;line-height:1.5;color:var(--muted);margin:14px 0 0!important}.model-note{padding:13px 16px;margin-top:17px;color:var(--muted);font-size:11px;line-height:1.55}.results{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}.metric{padding:18px;min-height:118px}.metric span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.metric strong{display:block;margin-top:13px;font-size:25px;letter-spacing:-.06em}.metric small{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:7px}.metric.positive{background:linear-gradient(145deg,rgba(47,116,94,.24),rgba(255,255,255,.38));border-color:rgba(47,116,94,.35)}.metric.negative{background:linear-gradient(145deg,rgba(165,77,66,.25),rgba(255,255,255,.38));border-color:rgba(165,77,66,.35)}.metric.positive strong{color:var(--green)}.metric.negative strong{color:var(--red)}.wide{padding:23px;margin-top:17px}.wide-head{display:flex;align-items:baseline;justify-content:space-between;gap:15px;margin-bottom:17px}.wide-head h2{font-size:16px;letter-spacing:-.03em;margin:0 0 5px}.wide-head p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}.wide-head strong{font-size:19px;letter-spacing:-.04em}.revenue-key{display:flex;align-items:center;gap:13px;flex-wrap:wrap;color:var(--muted);font-size:11px}.key-item{display:inline-flex;align-items:center;gap:5px}.swatch{width:9px;height:9px;border-radius:50%;display:inline-block}.bar{display:flex;height:12px;border-radius:99px;overflow:hidden;background:rgba(7,25,43,.1);margin-top:17px}.bar div{transition:width .3s ease}.footer-note{padding:45px 0 72px;color:var(--muted);font-size:11px;line-height:1.6}@media(max-width:900px){.layout{grid-template-columns:1fr}.controls{position:relative;top:auto}.results{grid-template-columns:repeat(2,1fr)}.advanced{position:relative}}@media(max-width:560px){.shell{width:calc(100% - 24px)}nav{padding:18px 0}.nav-links{gap:10px;font-size:11px}.results{gap:8px}.metric{padding:15px}.metric strong{font-size:21px}.wide{padding:18px}.info .tip{left:-80px;top:21px}}
+</style></head>
+<body><div class="world"><div class="blob one"></div><div class="blob two"></div></div><div class="shell">
+<nav><div class="brand">First Jet Model</div><div class="nav-links"><a href="airline-lab.html">Model</a><a href="evidence.html">Evidence</a><a href="case-study.html">Case study</a></div></nav>
+<main class="layout"><aside class="card controls"><h1>Scenario build</h1><p>Choose the main operating and pricing inputs. Open Advanced when you want to inspect or edit the underlying values.</p>
+<div class="field"><label for="structure">Operating structure <span class="info" tabindex="0">i<span class="tip">The legal and operating arrangement used to provide flights. Part 121 direct means First Jet operates the airline. ACMI means a partner supplies the aircraft, crew, maintenance, and insurance. Part 380 means First Jet organizes the public charter while a certified direct air carrier operates the flight.</span></span></label><select id="structure"><option value="direct">Part 121 direct</option><option value="acmi">Part 121 ACMI / partner</option><option value="charter">Part 380 public charter</option></select></div>
+<div class="field"><label for="aircraft">Aircraft <span class="info" tabindex="0">i<span class="tip">A preset aircraft scenario. The candidates were selected because comparable low-cost carriers have used the A319, A320 family, or 737-800. Aircraft-specific seats remain editable in Advanced.</span></span></label><select id="aircraft"><option value="a319">Airbus A319</option><option value="a320ceo">Airbus A320ceo</option><option value="a320neo" selected>Airbus A320neo</option><option value="b738">Boeing 737-800</option></select></div>
+<div class="field"><label for="scale">Launch scale <span class="info" tabindex="0">i<span class="tip">A preset for the size of the launch operation. It sets fleet size, flight legs per aircraft, operating days, and the starting investor-to-member conversion assumption. A flight leg means one departure, not a round trip. Each value can be edited in Advanced.</span></span></label><select id="scale"><option value="small">Small launch</option><option value="base" selected>Base launch</option><option value="growth">Expansion launch</option></select></div>
+<div class="field"><label for="demand">Demand case <span class="info" tabindex="0">i<span class="tip">A preset load-factor case based on comparable airline performance and an explicit project assumption. Conservative, expected, and strong can be overridden in Advanced.</span></span></label><select id="demand"><option value="conservative">Conservative</option><option value="expected" selected>Expected</option><option value="strong">Strong</option></select></div>
+<div class="field"><div class="range-row"><label for="fare">Average one-way base fare <span class="info" tabindex="0">i<span class="tip">A user-controlled model input for the average realized one-way base fare. The $75 display default is a scenario starting point, not a First Jet promise or published fare.</span></span></label><span id="fareVal" class="value"></span></div><input id="fare" type="range" min="20" max="200" step="5" value="75"></div>
+<div class="field"><div class="range-row"><label for="fee">Annual membership fee <span class="info" tabindex="0">i<span class="tip">The model uses a rounded $100 starting value informed by First Jet materials that discussed a $99 annual entry membership. Move the slider in $5 increments.</span></span></label><span id="feeVal" class="value"></span></div><input id="fee" type="range" min="0" max="300" step="5" value="100"></div>
+<a class="details-link" href="#advanced" id="advancedLink">Open Advanced details ↓</a>
+<section class="card advanced" id="advanced"><h2>Advanced details</h2><p>Edit the underlying values. Hover over ⓘ to see the source or reasoning.</p><div class="advanced-grid" id="advancedGrid"></div><p class="advanced-note">Public disclosures, comparable-airline benchmarks, and project assumptions are labeled separately. The campaign pool is time-sensitive and should be updated when the reported number changes.</p></section>
+</aside>
+<section><div class="results"><div class="card metric" id="resultCard"><span>Annual operating result</span><strong id="result">—</strong><small>Revenue minus modeled operating costs</small></div><div class="card metric" id="marginCard"><span>Operating margin</span><strong id="margin">—</strong><small>Operating result ÷ revenue</small></div><div class="card metric"><span>Break-even load factor</span><strong id="breakEven">—</strong><small>Seats that need to be filled</small></div><div class="card metric"><span>Annual passengers</span><strong id="passengers">—</strong><small>Passengers carried</small></div></div>
+<div class="card wide"><div class="wide-head"><div><h2>Revenue mix</h2><p>Tickets, ancillary revenue, and memberships are kept separate.</p></div><div><strong id="revenue">—</strong><div class="revenue-key"><span class="key-item"><i class="swatch" style="background:#12344f"></i>Tickets</span><span class="key-item"><i class="swatch" style="background:#b89558"></i>Ancillary</span><span class="key-item"><i class="swatch" style="background:#ddc89f"></i>Membership</span></div></div></div><div class="bar"><div id="ticketBar" style="background:#12344f"></div><div id="ancillaryBar" style="background:#b89558"></div><div id="membershipBar" style="background:#ddc89f"></div></div></div><div class="card model-note">V1 result: an operating scenario, not a forecast. The model uses public information, comparable-airline benchmarks, explicit project assumptions, and clearly marked cost proxies. Unknowns remain visible in the Evidence Register.</div></section></main>
+<div class="footer-note">Independent testing model based on public information, comparable-airline benchmarks, and explicit assumptions. Not an official First Jet forecast or financial advice. Version 0.4. Investor pool snapshot: 11,160 as of November 3, 2026 at 8:33 PM PT.</div></div>
+<script src="model-core.js"></script><script>
+const $=id=>document.getElementById(id),money=n=>(n<0?'−$':'$')+Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:0}),money2=n=>(n<0?'−$':'$')+Math.abs(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),pct=n=>Number.isFinite(n)?(n*100).toFixed(1)+'%':'—',num=n=>Math.round(n).toLocaleString();
+const {aircraft,scale,demand,structure,defaults,calculateScenario}=FirstJetModel;let state={};
+function info(t){return `<span class="info" tabindex="0">i<span class="tip">${t}</span></span>`}
+function resetScale(){const s=scale[$('scale').value],a=aircraft[$('aircraft').value],o=structure[$('structure').value];state={seats:a.seats,fleet:s.fleet,flightLegsPerDay:s.flightLegsPerDay,operatingDays:s.days,loadFactor:demand[$('demand').value],investors:defaults.investors,conversion:s.conversion,ancillary:defaults.ancillary,blockHours:defaults.blockHoursPerFlightLeg,blockCost:o.blockCost,fixedAircraft:o.fixedAircraft,support:o.support};render()}
+function displayValue(key,value){if(key==='loadFactor'||key==='conversion')return pct(value);if(['ancillary','blockCost','fixedAircraft','support'].includes(key))return money2(value);return Number(value).toLocaleString(undefined,{maximumFractionDigits:2})}
+function field(key,label,type,tip,opts={},status='Project assumption'){const v=state[key];return `<div class="advanced-field"><div class="advanced-label"><span>${label}</span>${info(tip)}</div><span class="field-status">${status}</span><span class="value" id="${key}Val">${displayValue(key,v)}</span><input id="adv_${key}" data-key="${key}" type="${type}" min="${opts.min??0}" max="${opts.max??''}" step="${opts.step??1}" value="${v}"></div>`}
+function drawAdvanced(){$('advancedGrid').innerHTML=field('seats','Aircraft seats','number',`Default for the selected aircraft. Comparable low-cost carriers disclose aircraft configurations, but First Jet has not publicly confirmed its aircraft type.`,{min:1},'Comparable benchmark / First Jet not confirmed')+field('fleet','Fleet size','number','Launch-scale project assumption. It sets how many aircraft are available to operate flights.',{min:1},'Project assumption')+field('flightLegsPerDay','Flight legs per aircraft / day','number','A flight leg is one departure from one airport to another. This is not a round-trip count. The 3 / 4 / 5 cases are project scenarios and still need First Jet schedule validation.',{min:0.1,max:20,step:.1},'Project scenario / needs validation')+field('operatingDays','Operating days','number','Modeled number of calendar days the airline operates during the year. The 330-day value is a V1 convention, not a First Jet disclosure.',{min:1,max:366},'V1 placeholder')+field('blockHours','Average block hours / flight leg','number','Time from aircraft departure from the gate to arrival at the destination gate. V1 uses 2.0 hours because First Jet has not confirmed routes or stage length.',{min:.25,max:12,step:.05},'V1 placeholder / needs route data')+field('loadFactor','Load factor','range','Demand-case assumption informed by comparable airline load factors. You can override the preset here.',{min:.3,max:.98,step:.01},'Comparable benchmark / project case')+field('investors','Investor / community pool','number',`Manual campaign snapshot: ${defaults.investors.toLocaleString()} investors as of ${defaults.investorSnapshot}. It is not automatically the same as paying members.`,{min:0},'User-provided dated snapshot')+field('conversion','Investor-to-member conversion','range','Explicit project assumption: the percentage of the investor/community pool expected to become paying members.',{min:0,max:1,step:.01},'Project assumption / needs First Jet input')+field('ancillary','Ancillary revenue / passenger','number','Exact arithmetic mean of Frontier, Spirit, and Sun Country comparable observations: $66.56 per passenger. It remains editable.',{min:0,max:150,step:.01},'Derived calculation')+field('blockCost','Bundled variable cost / block hour','number','First-pass operating-structure proxy. This is not an ACMI quotation or First Jet disclosure.',{min:0},'V1 cost proxy / needs research')+field('fixedAircraft','Fixed aircraft cost / aircraft','number','First-pass annual aircraft-related cost proxy. It remains editable until lease or ownership research is available.',{min:0},'V1 cost proxy / needs research')+field('support','Annual support cost','number','First-pass proxy for corporate, compliance, insurance, and other support costs.',{min:0},'V1 cost proxy / needs research');document.querySelectorAll('[data-key]').forEach(el=>el.addEventListener('input',()=>{state[el.dataset.key]=+el.value;render(true)}))}
+function calc(){return calculateScenario({...state,averageFare:+$('fare').value,membershipFee:+$('fee').value})}
+function render(skipAdvanced){const r=calc();$('fareVal').textContent=money(+$('fare').value);$('feeVal').textContent=money(+$('fee').value);$('result').textContent=money(r.operatingResult);$('margin').textContent=pct(r.operatingMargin);$('breakEven').textContent=r.breakEvenLoadFactor>1?'>100%':pct(r.breakEvenLoadFactor);$('passengers').textContent=num(r.annualPassengers);$('revenue').textContent=money(r.totalRevenue);$('resultCard').classList.toggle('positive',r.operatingResult>=0);$('resultCard').classList.toggle('negative',r.operatingResult<0);$('marginCard').classList.toggle('positive',r.operatingResult>=0);$('marginCard').classList.toggle('negative',r.operatingResult<0);const total=r.totalRevenue||1;$('ticketBar').style.width=r.ticketRevenue/total*100+'%';$('ancillaryBar').style.width=r.ancillaryRevenue/total*100+'%';$('membershipBar').style.width=r.membershipRevenue/total*100+'%';if(!skipAdvanced)drawAdvanced();document.querySelectorAll('[data-key]').forEach(el=>{const k=el.dataset.key;el.value=state[k];const v=$(k+'Val');if(v)v.textContent=displayValue(k,state[k])})}
+['structure','aircraft','scale','demand'].forEach(id=>$(id).addEventListener('change',resetScale));['fare','fee'].forEach(id=>$(id).addEventListener('input',()=>render(true)));$('advancedLink').addEventListener('click',e=>{e.preventDefault();$('advanced').classList.toggle('open');$('advancedLink').textContent=$('advanced').classList.contains('open')?'Close Advanced details ↑':'Open Advanced details ↓'});document.addEventListener('click',e=>{const target=e.target.closest('.info');if(target){e.stopPropagation();target.classList.toggle('open')}else document.querySelectorAll('.info.open').forEach(el=>el.classList.remove('open'))});resetScale();
+</script></body></html>
