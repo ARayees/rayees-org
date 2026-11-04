@@ -13,13 +13,18 @@
   <title>Abdullah Rayees</title>
 
   <!-- =========================================================
-       UPDATE LOG — VERSION 1.6
+       UPDATE LOG — VERSION 2.1 SCROLL FIX
 
        Added:
        - Reliable favicon fallbacks
        - Subtle movement and breathing scale for the champagne burst
        - Restored social hover inversion and scale feedback
        - Corrected Instagram icon geometry
+       - Reduced expensive blur and backdrop-filter work
+       - Removed animated border-radius repaints
+       - Simplified scroll rendering for smoother mobile performance
+       - Removed moving background blobs
+       - Restored explicit vertical scrolling
 
        Preservation rule:
        Every other visual effect, interaction, link, animation,
@@ -112,6 +117,7 @@
       padding: 0;
 
       width: 100%;
+      min-height: 100%;
     }
 
 
@@ -124,6 +130,9 @@
 
     body {
       overflow-x: hidden;
+      overflow-y: auto;
+
+      touch-action: pan-y;
 
       color: var(--navy);
 
@@ -181,13 +190,8 @@
     ========================================================= */
 
     .light {
-      position: absolute;
-
-      border-radius: 50%;
-
-      opacity: .78;
-
-      will-change: transform;
+      /* The moving background blobs were removed for smooth scrolling. */
+      display: none;
     }
 
 
@@ -259,7 +263,7 @@
           transparent 74%
         );
 
-      filter: blur(72px);
+      filter: blur(48px);
 
       animation:
         blueDrift
@@ -347,49 +351,9 @@
     ========================================================= */
 
     .liquid-glass {
-      position: absolute;
-
-      z-index: 3;
-
-      border:
-        1px solid
-        rgba(255,255,255,.26);
-
-      background:
-        linear-gradient(
-          135deg,
-
-          rgba(255,255,255,.14),
-
-          rgba(255,255,255,.045) 38%,
-
-          rgba(221,200,159,.025) 65%,
-
-          rgba(255,255,255,.09)
-        );
-
-      box-shadow:
-
-        inset 30px 24px 70px
-        rgba(255,255,255,.12),
-
-        inset -28px -24px 70px
-        rgba(7,25,43,.035),
-
-        0 35px 90px
-        rgba(6,24,42,.035);
-
-      -webkit-backdrop-filter:
-        blur(17px)
-        saturate(125%);
-
-      backdrop-filter:
-        blur(17px)
-        saturate(125%);
-
-      will-change:
-        transform,
-        border-radius;
+      /* Decorative moving blobs removed. Keep the selectors so the
+         existing HTML structure remains stable for future edits. */
+      display: none;
     }
 
 
@@ -530,14 +494,6 @@
           rgba(255,255,255,.29)
         );
 
-      -webkit-backdrop-filter:
-        blur(29px)
-        saturate(116%);
-
-      backdrop-filter:
-        blur(29px)
-        saturate(116%);
-
       box-shadow:
         inset 0 0 160px
         rgba(255,255,255,.16);
@@ -638,11 +594,9 @@
 
       filter: blur(65px);
 
-      animation:
-        midnightBlue
-        27s
-        ease-in-out
-        infinite alternate;
+      /* Keep the blue atmosphere static; the champagne burst below
+         is the only remaining background motion. */
+      animation: none;
     }
 
 
@@ -680,7 +634,7 @@
           transparent 74%
         );
 
-      filter: blur(72px);
+      filter: blur(48px);
 
       animation:
         midnightGold
@@ -715,17 +669,7 @@
           rgba(221,200,159,.015)
         );
 
-      -webkit-backdrop-filter:
-        blur(27px)
-        saturate(118%);
-
-      backdrop-filter:
-        blur(27px)
-        saturate(118%);
-
       pointer-events: none;
-
-      will-change: opacity;
     }
 
 
@@ -764,7 +708,7 @@
           transparent 70%
         );
 
-      filter: blur(28px);
+      filter: blur(20px);
 
       transform:
         rotate(-9deg)
@@ -1024,7 +968,7 @@
     .first-name {
       opacity: .03;
 
-      filter: blur(18px);
+      filter: none;
 
       transform:
         translate3d(
@@ -1040,7 +984,7 @@
     .last-name {
       opacity: 0;
 
-      filter: blur(20px);
+      filter: none;
 
       transform:
         translate3d(
@@ -1086,8 +1030,7 @@
 
       will-change:
         opacity,
-        transform,
-        filter;
+        transform;
     }
 
 
@@ -1556,11 +1499,7 @@
         transform:
           translate3d(-20px,-15px,0)
           rotate(-7deg)
-          scale(1);
-
-        border-radius:
-          58% 42% 61% 39% /
-          45% 59% 41% 55%;
+        scale(1);
       }
 
 
@@ -1568,11 +1507,7 @@
         transform:
           translate3d(105px,75px,0)
           rotate(9deg)
-          scale(1.08,.94);
-
-        border-radius:
-          44% 56% 47% 53% /
-          60% 40% 57% 43%;
+        scale(1.08,.94);
       }
 
 
@@ -1580,11 +1515,7 @@
         transform:
           translate3d(180px,130px,0)
           rotate(18deg)
-          scale(.95,1.10);
-
-        border-radius:
-          61% 39% 55% 45% /
-          42% 61% 39% 58%;
+        scale(.95,1.10);
       }
 
     }
@@ -1596,11 +1527,7 @@
         transform:
           translate3d(20px,10px,0)
           rotate(6deg)
-          scale(1);
-
-        border-radius:
-          39% 61% 46% 54% /
-          62% 38% 58% 42%;
+        scale(1);
       }
 
 
@@ -1608,11 +1535,7 @@
         transform:
           translate3d(-95px,-45px,0)
           rotate(-8deg)
-          scale(.96,1.07);
-
-        border-radius:
-          56% 44% 59% 41% /
-          43% 57% 46% 54%;
+        scale(.96,1.07);
       }
 
 
@@ -1620,11 +1543,7 @@
         transform:
           translate3d(-180px,-100px,0)
           rotate(-17deg)
-          scale(1.08,.93);
-
-        border-radius:
-          62% 38% 53% 47% /
-          40% 60% 44% 56%;
+        scale(1.08,.93);
       }
 
     }
@@ -1787,7 +1706,7 @@
         left: -128vw;
         top: -65vw;
 
-        filter: blur(43px);
+        filter: blur(32px);
       }
 
 
@@ -1801,7 +1720,7 @@
         right: -120vw;
         top: 3vh;
 
-        filter: blur(48px);
+        display: none;
       }
 
 
@@ -1815,7 +1734,7 @@
         left: -45vw;
         bottom: -95vw;
 
-        filter: blur(48px);
+        filter: blur(32px);
       }
 
 
@@ -1829,7 +1748,7 @@
         right: -105vw;
         bottom: 0;
 
-        filter: blur(52px);
+        display: none;
       }
 
 
@@ -1837,13 +1756,13 @@
       /* Liquid glass */
 
       .liquid-glass {
-        -webkit-backdrop-filter:
-          blur(9px)
-          saturate(118%);
-
-        backdrop-filter:
-          blur(9px)
-          saturate(118%);
+        background:
+          linear-gradient(
+            135deg,
+            rgba(255,255,255,.17),
+            rgba(255,255,255,.045) 42%,
+            rgba(221,200,159,.04)
+          );
       }
 
 
@@ -1872,7 +1791,7 @@
         left: 35%;
         bottom: -70px;
 
-        opacity: .52;
+        display: none;
       }
 
 
@@ -1881,26 +1800,13 @@
 
       .glass-veil {
         background:
-          rgba(248,245,239,.25);
-
-        -webkit-backdrop-filter:
-          blur(18px)
-          saturate(110%);
-
-        backdrop-filter:
-          blur(18px)
-          saturate(110%);
+          rgba(248,245,239,.20);
       }
 
 
       .midnight-glass {
-        -webkit-backdrop-filter:
-          blur(16px)
-          saturate(110%);
-
-        backdrop-filter:
-          blur(16px)
-          saturate(110%);
+        background:
+          rgba(6,24,42,.035);
       }
 
 
@@ -1911,7 +1817,7 @@
         left: -125vw;
         top: -62vw;
 
-        filter: blur(43px);
+        filter: blur(32px);
       }
 
 
@@ -1922,7 +1828,7 @@
         right: -110vw;
         bottom: -62vw;
 
-        filter: blur(48px);
+        filter: blur(32px);
 
         background:
           radial-gradient(
@@ -2561,6 +2467,10 @@
           );
 
 
+        /* Always render the current scroll position. This keeps the
+           scroll controller reliable across browsers and touch devices. */
+
+
         const mobile =
           window.innerWidth <= 700;
 
@@ -2587,12 +2497,6 @@
 
         scrollCue.style.opacity =
           1 - cueProgress;
-
-
-        scrollCue.style.filter =
-          `blur(${
-            cueProgress * 5
-          }px)`;
 
 
         scrollCue.style.transform =
@@ -2641,17 +2545,6 @@
           );
 
 
-        firstName.style.filter =
-          `blur(${
-            18 *
-            (
-              1 -
-              firstProgress
-            )
-          }px)`;
-
-
-
         /* =================================================
            RAYEES
         ================================================= */
@@ -2675,17 +2568,6 @@
 
         lastName.style.opacity =
           lastProgress;
-
-
-        lastName.style.filter =
-          `blur(${
-            20 *
-            (
-              1 -
-              lastProgress
-            )
-          }px)`;
-
 
 
         /* =================================================
