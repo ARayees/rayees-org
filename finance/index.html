@@ -3,81 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#06182A">
-  <meta name="description" content="A calm, practical introduction to financial concepts through quizzes, simulations, and simple tools.">
-  <title>Finance, made clearer | Abdullah Rayees</title>
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="A different way to learn the money questions that shape your life.">
+  <title>A different way to learn about money</title>
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Abdullah Rayees Finance home">
-      <img src="./assets/ar-mark.svg" alt="" width="34" height="30">
-      <span>Abdullah Rayees <i>Finance</i></span>
-    </a>
-    <nav aria-label="Main navigation">
-      <a href="#home">Home</a><a href="#quiz">Quiz</a><a href="#play">Play</a><a href="#tools">Tools</a><a href="#about">About</a>
-    </nav>
-    <a class="header-cta" href="#quiz">Test your knowledge <span>↗</span></a>
-    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-  </header>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="wordmark" href="#home"><img src="./assets/ar-mark.svg" alt="" width="32" height="28"><span>Abdullah Rayees <em>Finance</em></span></a>
+    <div class="nav-links"><a href="#why-it-matters">Why it matters</a><a href="#coming-next">Coming next</a></div>
+  </nav>
 
   <main id="main">
-    <section class="hero section-dark" id="home">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Financial literacy, without the lecture</p>
-          <h1>Understand the money questions that shape your life.</h1>
-          <p class="hero-intro">Clear explanations, realistic decisions, and simple tools for the things most of us were expected to figure out on our own.</p>
-          <div class="hero-actions"><a class="button button-light" href="#quiz">Start with a quiz <span>↗</span></a><a class="text-link light-link" href="#play">Explore the simulations <span>→</span></a></div>
-        </div>
-        <div class="concept-card" aria-live="polite">
-          <div class="orbit-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span><span class="orbit-dot dot-three"></span><div class="orbit-core"><span>$$</span></div></div>
-          <span class="concept-kicker">A question worth asking</span>
-          <p class="concept-text" id="conceptText">What is an IRA?</p>
-          <div class="concept-rule"><span></span></div>
-          <p class="concept-note">One concept at a time.<br>At your own pace.</p>
-        </div>
-      </div>
-      <div class="hero-foot"><span>01 — Learn by doing</span><span>Scroll to begin ↓</span></div>
+    <section class="hero reveal" id="home">
+      <div class="hero-copy"><p class="kicker">A different way to learn about money.</p><h1>Finance should feel less like a test.</h1><p class="hero-description">A clear, visual starting point for the questions, choices, and tradeoffs that shape your financial life.</p><div class="actions"><a class="button primary" href="#why-it-matters">Explore the idea</a><a class="button" href="#coming-next">See what is coming</a></div></div>
+      <div class="scroll-cue">Scroll to explore</div>
+      <div class="hero-drawing" aria-hidden="true"><span class="coin coin-a">$</span><span class="coin coin-b">%</span><span class="orbit-line"></span><span class="orbit-line orbit-line-two"></span><span class="hero-dot"></span></div>
     </section>
 
-    <section class="problem section-light section-pad" id="about">
-      <div class="section-heading split-heading"><div><p class="eyebrow gold">The starting point</p><h2>Not everyone was taught the basics of finance.</h2></div><p class="lede">Money decisions are everywhere: credit, debt, saving, investing, taxes, and retirement. This site makes those ideas easier to explore—without judgment and without a login.</p></div>
-      <div class="stat-grid">
-        <article class="stat-card"><div class="stat-top"><strong>37<span>%</span></strong><span class="stat-label">Emergency resilience</span></div><div class="stat-meter"><span style="width:37%"></span></div><p>of U.S. adults said they could not cover a hypothetical $400 emergency entirely with cash or its equivalent.</p><a href="https://www.federalreserve.gov/publications/2025-economic-well-being-of-us-households-in-2024-savings-and-investments.htm" target="_blank" rel="noopener">Federal Reserve · 2024 data ↗</a></article>
-        <article class="stat-card featured"><div class="stat-top"><strong>4<span>%</span></strong><span class="stat-label">All seven correct</span></div><div class="stat-meter"><span style="width:4%"></span></div><p>of U.S. adults answered all seven FINRA Foundation financial-literacy questions correctly.</p><a href="https://www.finrafoundation.org/sites/finrafoundation/files/2025-07/NFCS-Report-Sixth-Edition-July-2025.pdf" target="_blank" rel="noopener">FINRA Foundation · 2024 study ↗</a></article>
-        <article class="stat-card"><div class="stat-top"><strong>$1.263<span>T</span></strong><span class="stat-label">Credit-card balances</span></div><div class="stat-spark" aria-hidden="true"><i style="height:35%"></i><i style="height:48%"></i><i style="height:42%"></i><i style="height:66%"></i><i style="height:58%"></i><i style="height:83%"></i><i style="height:100%"></i></div><p>U.S. credit-card balances reached in the second quarter of 2026.</p><a href="https://www.newyorkfed.org/newsevents/news/research/2026/20260811" target="_blank" rel="noopener">New York Fed · Q2 2026 ↗</a></article>
-      </div>
-      <p class="source-note">These statistics point to a public need for financial knowledge and resilience. They do not prove why any individual person is struggling.</p>
-    </section>
+    <section class="intro-section reveal" id="why-it-matters"><div class="intro-copy"><p class="kicker">The starting point</p><h2>What if learning finance felt more like discovering something?</h2><p>Many of us entered adulthood without a clear explanation of credit, debt, saving, investing, taxes, or retirement accounts.</p><p>This site is being built to make those ideas easier to approach: <strong>plain language, visible tradeoffs, and no assumption that you already know the vocabulary.</strong></p><div class="actions intro-actions"><a class="button primary" href="#evidence">Read the context</a><a class="button" href="#coming-next">View the roadmap</a></div><div class="scroll-cue intro-scroll">Keep scrolling</div></div></section>
 
-    <section class="quiz-section section-dark section-pad" id="quiz">
-      <div class="section-heading split-heading"><div><p class="eyebrow">01 / Check your instincts</p><h2>Think you know your finances?</h2></div><p class="lede">A short quiz that starts with the everyday and builds toward the decisions that need a little more judgment.</p></div>
-      <div class="quiz-shell" id="quizApp"></div>
-    </section>
+    <section class="evidence-section reveal" id="evidence"><div class="section-rule"></div><div class="evidence-copy"><p class="kicker">A little context</p><h2>Financial resilience is not just an abstract idea.</h2><p class="story-detail">These numbers do not explain every person’s situation. They do show why understanding the basics matters.</p></div><div class="evidence-list"><a class="evidence-row" href="https://www.federalreserve.gov/publications/2025-economic-well-being-of-us-households-in-2024-savings-and-investments.htm" target="_blank" rel="noopener"><span class="evidence-number">37%</span><span class="evidence-text">of U.S. adults could not cover a hypothetical $400 emergency entirely with cash or its equivalent.</span><span class="evidence-source">Federal Reserve · 2024 data ↗</span></a><a class="evidence-row" href="https://www.finrafoundation.org/sites/finrafoundation/files/2025-07/NFCS-Report-Sixth-Edition-July-2025.pdf" target="_blank" rel="noopener"><span class="evidence-number">4%</span><span class="evidence-text">answered all seven FINRA Foundation financial-literacy questions correctly.</span><span class="evidence-source">FINRA Foundation · 2024 study ↗</span></a><a class="evidence-row" href="https://www.newyorkfed.org/newsevents/news/research/2026/20260811" target="_blank" rel="noopener"><span class="evidence-number">$1.263T</span><span class="evidence-text">in U.S. credit-card balances in the second quarter of 2026.</span><span class="evidence-source">New York Fed · Q2 2026 ↗</span></a></div></section>
 
-    <section class="play-section section-light section-pad" id="play">
-      <div class="section-heading split-heading"><div><p class="eyebrow gold">02 / Learn by choosing</p><h2>Everyone loves games.</h2></div><p class="lede">Try a realistic scenario, see the tradeoff, and learn why the choice matters. No real accounts, no personal data, no perfect answers.</p></div>
-      <div class="game-grid">
-        <article class="game-card game-card-large"><div class="card-number">01</div><div class="game-visual life-visual" aria-hidden="true"><span class="visual-ring"></span><span class="visual-line line-a"></span><span class="visual-line line-b"></span><span class="visual-dot"></span><strong>$2,400</strong><small>available savings</small></div><div><p class="card-type">Life simulator · 8–10 min</p><h3>Your Money, Your Life</h3><p>Manage an unexpected repair, a raise, a rent increase, and the choices between them.</p><button class="button button-dark game-launch" data-game="life">Start simulation <span>↗</span></button></div></article>
-        <article class="game-card"><div class="card-number">02</div><div class="game-visual credit-visual" aria-hidden="true"><span class="credit-bar"><i></i></span><span class="credit-bar"><i></i></span><span class="credit-bar"><i></i></span><small>utilization</small><strong>32%</strong></div><p class="card-type">Credit simulation · 5 min</p><h3>Credit Card Challenge</h3><p>Watch utilization, interest, and repayment time respond to your choices.</p><button class="text-link launch-link game-launch" data-game="credit">Play challenge <span>→</span></button></article>
-        <article class="game-card"><div class="card-number">03</div><div class="game-visual moves-visual" aria-hidden="true"><span>NOW</span><b>↗</b><span>LATER</span></div><p class="card-type">Rapid scenarios · 4 min</p><h3>Money Moves</h3><p>Make the call when real life gives you two plausible options.</p><button class="text-link launch-link game-launch" data-game="moves">Make your move <span>→</span></button></article>
-        <article class="game-card"><div class="card-number">04</div><div class="game-visual risk-visual" aria-hidden="true"><span class="risk-axis"></span><span class="risk-point point-low"></span><span class="risk-point point-high"></span><small>stability</small><small>growth</small></div><p class="card-type">Risk simulation · 6 min</p><h3>Risk Radar</h3><p>Explore how goal, time horizon, and volatility change the picture.</p><button class="text-link launch-link game-launch" data-game="risk">Read the radar <span>→</span></button></article>
-      </div>
-      <p class="disclaimer">Educational simulations only—not individualized financial, tax, legal, or investment advice.</p>
-    </section>
+    <section class="roadmap-section reveal" id="coming-next"><div class="roadmap-copy"><p class="kicker">The next layer</p><h2>The website will grow from here.</h2><p class="story-detail">The first release is intentionally focused. The interactive experiences below are planned as separate destinations, so each one can be built properly.</p></div><div class="roadmap-list"><div class="roadmap-row"><span class="row-number">01</span><div><strong>Test your understanding.</strong><small>A short, progressively difficult quiz with category feedback.</small></div><span class="status">Planned</span></div><div class="roadmap-row"><span class="row-number">02</span><div><strong>Make a financial decision.</strong><small>Scenario-based simulations that show consequences and tradeoffs.</small></div><span class="status">Planned</span></div><div class="roadmap-row"><span class="row-number">03</span><div><strong>See the numbers move.</strong><small>Beginner-friendly calculators for growth, debt, and savings goals.</small></div><span class="status">Planned</span></div></div></section>
 
-    <section class="tools-section section-dark section-pad" id="tools">
-      <div class="section-heading split-heading"><div><p class="eyebrow">03 / See the numbers</p><h2>Take control of your finances.</h2></div><p class="lede">Simple calculators that show the moving parts—not just a final number.</p></div>
-      <div class="tools-grid"><article class="tool-card"><div class="tool-visual growth-visual" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div><p class="card-type">Growth over time</p><h3>Compound growth</h3><p>Separate what you contribute from what the estimate grows.</p><button class="button button-light tool-launch" data-tool="compound">Open calculator</button></article><article class="tool-card"><div class="tool-visual payoff-visual" aria-hidden="true"><span class="payoff-path"></span><b>0</b></div><p class="card-type">Debt payoff</p><h3>Credit card payoff</h3><p>Compare minimum payments with a fixed monthly plan.</p><button class="button button-light tool-launch" data-tool="payoff">Open calculator</button></article><article class="tool-card"><div class="tool-visual goal-visual" aria-hidden="true"><span>3</span><i></i><b>months</b></div><p class="card-type">A goal with a date</p><h3>Savings goal</h3><p>See whether your current plan is on track—and what would change it.</p><button class="button button-light tool-launch" data-tool="savings">Open calculator</button></article></div>
-    </section>
+    <section class="closing reveal"><div><p class="kicker">For now, start with the question.</p><h2>It is okay not to know yet.</h2><p class="story-detail closing-detail">The point of this project is to make the first step feel clear enough to take.</p><div class="actions"><a class="button primary" href="#home">Back to the beginning</a><a class="button" href="#evidence">Read the context</a></div></div></section>
   </main>
-
-  <footer class="site-footer"><div class="footer-brand"><img src="./assets/ar-mark.svg" alt="" width="42" height="36"><div><strong>Abdullah Rayees</strong><span>Finance</span></div></div><p>Financial concepts made easier to understand.</p><div><a href="#home">Back to top ↑</a></div></footer>
-
-  <div class="modal" id="modal" aria-hidden="true"><div class="modal-backdrop" data-close-modal></div><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" aria-label="Close">×</button><div id="modalContent"></div></div></div>
+  <footer><div>General education only. Not individualized financial, tax, legal, or investment advice.</div><span>Abdullah Rayees</span></footer>
   <script src="./script.js"></script>
 </body>
 </html>
