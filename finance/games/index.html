@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#06182A">
+  <title>Play — Financial Literacy</title>
+  <link rel="icon" href="../assets/favicon.ico"><link rel="stylesheet" href="../styles.css?v=22">
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner"><a class="top-logo" href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="../assets/AR_mark_navy.svg" alt=""></a><nav aria-label="Primary navigation"><a href="../learn/">Learn</a><a href="../#quiz">Quiz</a><a href="./">Play</a><a href="../tools/">Tools</a></nav></div></header>
+  <main class="page-main">
+    <section class="page-hero page-width"><div><h1>Decision lab</h1><p>Three events. Limited money. Every choice changes what comes next.</p></div></section>
+    <section class="subpage-section page-width">
+      <div class="simulator">
+        <aside class="sim-status">
+          <h2>Your position</h2>
+          <div class="meter"><div class="meter-head"><span>Cash</span><strong id="cash-value">65</strong></div><div class="meter-track"><span id="cash-meter" style="width:65%;background:var(--sage)"></span></div></div>
+          <div class="meter"><div class="meter-head"><span>Debt</span><strong id="debt-value">25</strong></div><div class="meter-track"><span id="debt-meter" style="width:25%;background:var(--oxblood)"></span></div></div>
+          <div class="meter"><div class="meter-head"><span>Stability</span><strong id="stability-value">55</strong></div><div class="meter-track"><span id="stability-meter" style="width:55%;background:var(--atlantic)"></span></div></div>
+          <a class="back-link" href="../">Return to the quiz</a>
+        </aside>
+        <div class="sim-stage" id="sim-stage">
+          <span class="round" id="round-label">Event 1 of 3</span>
+          <h2 id="scenario-title"></h2>
+          <p id="scenario-copy"></p>
+          <div class="sim-choices" id="sim-choices"></div>
+          <div class="sim-outcome hidden" id="sim-outcome" aria-live="polite"></div>
+          <button class="line-button hidden" id="sim-next">Next event</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><a href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="../assets/AR_mark_navy.svg" alt=""></a><p>Not financial advice. Educational content only.</p></footer>
+  <script src="games.js?v=4"></script>
+</body>
+</html>
