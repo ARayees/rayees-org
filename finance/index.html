@@ -3,35 +3,150 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07111f">
-  <meta name="description" content="A different way to learn the money questions that shape your life.">
-  <title>A different way to learn about money</title>
-  <link rel="icon" href="./assets/favicon.ico">
-  <link rel="stylesheet" href="./styles.css">
+  <meta name="theme-color" content="#06182A">
+  <meta name="description" content="Interactive financial literacy by Abdullah Rayees.">
+  <title>Financial Literacy — Abdullah Rayees</title>
+  <link rel="icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="styles.css?v=22">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <nav class="site-nav" aria-label="Primary navigation">
-    <a class="wordmark" href="#home"><img src="./assets/ar-mark.svg" alt="" width="32" height="28"><span>Abdullah Rayees <em>Finance</em></span></a>
-    <div class="nav-links"><a href="#why-it-matters">Why it matters</a><a href="#coming-next">Coming next</a></div>
-  </nav>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="top-logo" href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="assets/AR_mark_navy.svg" alt=""></a>
+      <nav aria-label="Primary navigation">
+        <a href="learn/">Learn</a>
+        <button class="nav-quiz" type="button" data-open-quiz>Quiz</button>
+        <a href="games/">Play</a>
+        <a href="tools/">Tools</a>
+      </nav>
+    </div>
+  </header>
 
-  <main id="main">
-    <section class="hero reveal" id="home">
-      <div class="hero-copy"><p class="kicker">A different way to learn about money.</p><h1>Finance should feel less like a test.</h1><p class="hero-description">A clear, visual starting point for the questions, choices, and tradeoffs that shape your financial life.</p><div class="actions"><a class="button primary" href="#why-it-matters">Explore the idea</a><a class="button" href="#coming-next">See what is coming</a></div></div>
-      <div class="scroll-cue">Scroll to explore</div>
-      <div class="hero-drawing" aria-hidden="true"><span class="coin coin-a">$</span><span class="coin coin-b">%</span><span class="orbit-line"></span><span class="orbit-line orbit-line-two"></span><span class="hero-dot"></span></div>
+  <main>
+    <section class="hero-home">
+      <div class="page-width hero-title">
+        <h1 class="editorial-title">
+          <span class="title-line"><span>Financial</span></span>
+          <span class="title-line title-line-two"><span>Literacy <em>101</em></span></span>
+        </h1>
+        <div class="hero-scroll-cue" aria-hidden="true"><span></span><small>Scroll</small></div>
+        <button class="hero-quiz-link" type="button" data-open-quiz>
+          <span>How well do you know your finances?</span>
+          <strong>Take the quiz</strong>
+          <i aria-hidden="true">↓</i>
+        </button>
+      </div>
     </section>
 
-    <section class="intro-section reveal" id="why-it-matters"><div class="intro-copy"><p class="kicker">The starting point</p><h2>What if learning finance felt more like discovering something?</h2><p>Many of us entered adulthood without a clear explanation of credit, debt, saving, investing, taxes, or retirement accounts.</p><p>This site is being built to make those ideas easier to approach: <strong>plain language, visible tradeoffs, and no assumption that you already know the vocabulary.</strong></p><div class="actions intro-actions"><a class="button primary" href="#evidence">Read the context</a><a class="button" href="#coming-next">View the roadmap</a></div><div class="scroll-cue intro-scroll">Keep scrolling</div></div></section>
+    <section class="stats-section page-width reveal" aria-label="Financial literacy statistics">
+      <div class="stats-grid">
+        <a class="stat stat-atlantic" href="https://www.federalreserve.gov/publications/2025-economic-well-being-of-us-households-in-2024-savings-and-investments.htm" target="_blank" rel="noreferrer">
+          <span class="stat-shape shape-circle" aria-hidden="true"></span>
+          <span class="stat-qualifier">A STAGGERING</span>
+          <span class="stat-value">37%</span>
+          <strong>of U.S. adults would not cover a $400 expense entirely with cash or its equivalent.</strong>
+          <small>Federal Reserve · 2025</small>
+        </a>
+        <a class="stat stat-sage" href="https://www.finrafoundation.org/sites/finrafoundation/files/2025-07/NFCS-Report-Sixth-Edition-July-2025.pdf" target="_blank" rel="noreferrer">
+          <span class="stat-shape shape-square" aria-hidden="true"></span>
+          <span class="stat-qualifier">ONLY</span>
+          <span class="stat-value">4%</span>
+          <strong>answered all seven financial-literacy questions correctly.</strong>
+          <small>FINRA Foundation · 2025</small>
+        </a>
+        <a class="stat stat-rose" href="https://www.newyorkfed.org/newsevents/news/research/2026/20260811" target="_blank" rel="noreferrer">
+          <span class="stat-shape shape-triangle" aria-hidden="true"></span>
+          <span class="stat-qualifier">MORE THAN</span>
+          <span class="stat-value">$1.26T</span>
+          <strong>in U.S. credit-card balances in the second quarter of 2026.</strong>
+          <small>New York Fed · 2026</small>
+        </a>
+      </div>
+    </section>
 
-    <section class="evidence-section reveal" id="evidence"><div class="section-rule"></div><div class="evidence-copy"><p class="kicker">A little context</p><h2>Financial resilience is not just an abstract idea.</h2><p class="story-detail">These numbers do not explain every person’s situation. They do show why understanding the basics matters.</p></div><div class="evidence-list"><a class="evidence-row" href="https://www.federalreserve.gov/publications/2025-economic-well-being-of-us-households-in-2024-savings-and-investments.htm" target="_blank" rel="noopener"><span class="evidence-number">37%</span><span class="evidence-text">of U.S. adults could not cover a hypothetical $400 emergency entirely with cash or its equivalent.</span><span class="evidence-source">Federal Reserve · 2024 data ↗</span></a><a class="evidence-row" href="https://www.finrafoundation.org/sites/finrafoundation/files/2025-07/NFCS-Report-Sixth-Edition-July-2025.pdf" target="_blank" rel="noopener"><span class="evidence-number">4%</span><span class="evidence-text">answered all seven FINRA Foundation financial-literacy questions correctly.</span><span class="evidence-source">FINRA Foundation · 2024 study ↗</span></a><a class="evidence-row" href="https://www.newyorkfed.org/newsevents/news/research/2026/20260811" target="_blank" rel="noopener"><span class="evidence-number">$1.263T</span><span class="evidence-text">in U.S. credit-card balances in the second quarter of 2026.</span><span class="evidence-source">New York Fed · Q2 2026 ↗</span></a></div></section>
+    <section class="learn-section" id="learn">
+      <div class="page-width learn-inner">
+        <div class="learn-line">
+          <h2>Learn about</h2>
+          <div class="topic-window">
+            <a id="learning-topic" href="learn/#compound-growth">compound growth</a>
+          </div>
+        </div>
+        <nav class="learn-routes" aria-label="Explore financial literacy">
+          <a class="learn-route route-concepts" href="learn/">
+            <span class="route-label">Learn the concepts</span>
+            <span class="route-motifs" aria-hidden="true">
+              <svg class="motif-one" viewBox="0 0 24 24"><path d="M3 5.5C6 4.5 9 5 12 7v12c-3-2-6-2.5-9-1.5Zm18 0c-3-1-6-.5-9 1.5v12c3-2 6-2.5 9-1.5Z"/></svg>
+              <svg class="motif-two" viewBox="0 0 24 24"><path d="m5 18 1.2-4.3L16.8 3.1l4.1 4.1L10.3 17.8Zm10-13 4 4M5 18l5-1"/></svg>
+              <svg class="motif-three" viewBox="0 0 24 24"><path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3Zm3 0v16M10 8h7M10 12h7"/></svg>
+            </span>
+          </a>
+          <a class="learn-route route-tools" href="tools/">
+            <span class="route-label">Explore the tools</span>
+            <span class="route-motifs" aria-hidden="true">
+              <svg class="motif-one" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="1"/><path d="M8 6h8v4H8Zm0 8h2m4 0h2m-8 3h2m4 0h2"/></svg>
+              <svg class="motif-two" viewBox="0 0 24 24"><path d="M14 6a5 5 0 0 0-6.6 6.6L3 17l4 4 4.4-4.4A5 5 0 0 0 18 10l-3 3-4-4Z"/></svg>
+              <svg class="motif-three" viewBox="0 0 24 24"><path d="M4 19h16M6 16l3-4 3 2 5-7 2 2M6 5h4"/></svg>
+            </span>
+          </a>
+          <a class="learn-route route-games" href="games/">
+            <span class="route-label">Play the games</span>
+            <span class="route-motifs" aria-hidden="true">
+              <svg class="motif-one" viewBox="0 0 24 24"><path d="M7 8h10l4 8-3 3-4-3h-4l-4 3-3-3Zm0 4h4m-2-2v4m7-2h.01m2 2h.01"/></svg>
+              <svg class="motif-two" viewBox="0 0 24 24"><path d="M12 15v6M7 21h10M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM12 7V3"/></svg>
+              <svg class="motif-three" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h.01M16 9h.01M12 12h.01M8 16h.01M16 16h.01"/></svg>
+            </span>
+          </a>
+        </nav>
+      </div>
+    </section>
 
-    <section class="roadmap-section reveal" id="coming-next"><div class="roadmap-copy"><p class="kicker">The next layer</p><h2>The website will grow from here.</h2><p class="story-detail">The first release is intentionally focused. The interactive experiences below are planned as separate destinations, so each one can be built properly.</p></div><div class="roadmap-list"><div class="roadmap-row"><span class="row-number">01</span><div><strong>Test your understanding.</strong><small>A short, progressively difficult quiz with category feedback.</small></div><span class="status">Planned</span></div><div class="roadmap-row"><span class="row-number">02</span><div><strong>Make a financial decision.</strong><small>Scenario-based simulations that show consequences and tradeoffs.</small></div><span class="status">Planned</span></div><div class="roadmap-row"><span class="row-number">03</span><div><strong>See the numbers move.</strong><small>Beginner-friendly calculators for growth, debt, and savings goals.</small></div><span class="status">Planned</span></div></div></section>
-
-    <section class="closing reveal"><div><p class="kicker">For now, start with the question.</p><h2>It is okay not to know yet.</h2><p class="story-detail closing-detail">The point of this project is to make the first step feel clear enough to take.</p><div class="actions"><a class="button primary" href="#home">Back to the beginning</a><a class="button" href="#evidence">Read the context</a></div></div></section>
+    <section class="quiz-invite reveal" id="quiz">
+      <div class="page-width quiz-invite-inner">
+        <h2>How well do you know your finances?</h2>
+        <button class="quiz-launch-button" type="button" data-open-quiz>Take the quiz</button>
+      </div>
+    </section>
   </main>
-  <footer><div>General education only. Not individualized financial, tax, legal, or investment advice.</div><span>Abdullah Rayees</span></footer>
-  <script src="./script.js"></script>
+
+  <div class="quiz-modal" id="quiz-modal" aria-hidden="true">
+    <button class="quiz-backdrop" type="button" aria-label="Close quiz" data-close-quiz></button>
+    <section class="quiz-dialog" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title" tabindex="-1">
+      <header class="quiz-dialog-header">
+        <h2 id="quiz-modal-title">How well do you know your finances?</h2>
+        <button class="quiz-close" type="button" aria-label="Close quiz" data-close-quiz>×</button>
+      </header>
+      <div class="quiz-dialog-body">
+        <div class="quiz-panel" id="quiz-panel">
+          <div class="quiz-meta"><span id="quiz-count">1 / 15</span><span id="quiz-score">0 correct</span></div>
+          <div class="progress"><span id="quiz-progress"></span></div>
+          <h3 id="quiz-question"></h3>
+          <div class="answers" id="quiz-answers"></div>
+          <div class="quiz-action-row"><p id="quiz-feedback" aria-live="polite"></p><button class="next-button hidden" id="quiz-next">Next question</button></div>
+        </div>
+        <div class="quiz-result hidden" id="quiz-result">
+          <p class="result-label">You got</p>
+          <span class="result-score" id="result-score"></span>
+          <h3 id="result-title"></h3>
+          <p id="result-copy"></p>
+          <div class="result-routes">
+            <a href="learn/"><span>Explore topics</span></a>
+            <a href="tools/"><span>Use the tools</span></a>
+            <a href="games/"><span>Play the games</span></a>
+          </div>
+          <button class="line-button" id="quiz-restart">Retake quiz</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <footer class="site-footer">
+    <a href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="assets/AR_mark_navy.svg" alt=""></a>
+    <p>Not financial advice. Educational content only.</p>
+  </footer>
+
+  <script src="script.js?v=22"></script>
 </body>
 </html>
