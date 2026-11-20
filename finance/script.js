@@ -1,50 +1,291 @@
-(() => {
-  'use strict';
-  const $ = (s, root = document) => root.querySelector(s);
-  const $$ = (s, root = document) => [...root.querySelectorAll(s)];
-  const modal = $('#modal'), modalContent = $('#modalContent');
-  const money = n => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.round(n));
-  const pct = n => `${Math.round(n)}%`;
-  const openModal = html => { modalContent.innerHTML = html; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; $('.modal-close').focus(); };
-  const closeModal = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
-  $('.modal-close').addEventListener('click', closeModal); $('[data-close-modal]').addEventListener('click', closeModal); document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
-  $('.menu-toggle').addEventListener('click', e => { const nav=$('.site-header nav'); const open=nav.classList.toggle('open'); e.currentTarget.setAttribute('aria-expanded',open); });
-  $$('.site-header nav a').forEach(a => a.addEventListener('click',()=>$('.site-header nav').classList.remove('open')));
+document.documentElement.classList.add('motion-ready');
 
-  const concepts=['What is an IRA?','What is a Roth IRA?','What is a 401(k)?','What is a 529 plan?','What is an HSA?','What is an FSA?','What is compound growth?','What is credit utilization?','What is APR?','What is an index fund?','What is diversification?','What is inflation?','What is an emergency fund?','What is your net worth?'];
-  let conceptIndex=0; const conceptEl=$('#conceptText');
-  setInterval(()=>{ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return; conceptEl.style.opacity='0'; setTimeout(()=>{conceptIndex=(conceptIndex+1)%concepts.length;conceptEl.textContent=concepts[conceptIndex];conceptEl.style.opacity='1';},250); },3500);
-  conceptEl.style.transition='opacity .25s ease';
+const hero = document.querySelector('.hero-home');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const questions=[
-    ['What is a budget primarily used for?',['Planning how income will be used.','Tracking only investments.','Avoiding all spending.','Calculating taxes.'],0,'Decision-Making'],
-    ['What is the difference between saving and investing?',['Saving prioritizes accessibility and stability; investing seeks growth with risk.','They are exactly the same.','Saving is always riskier.','Investing guarantees growth.'],0,'Saving'],
-    ['What is an emergency fund?',['Money set aside for unexpected expenses.','Money for entertainment.','A retirement account.','A loan from a bank.'],0,'Saving'],
-    ['What does APR describe on a credit card?',['The annualized cost of borrowing, including interest and certain fees.','Your credit score.','Your annual income.','The amount of cash in your account.'],0,'Credit'],
-    ['What happens to credit utilization when a balance rises while the limit stays the same?',['Utilization increases.','Utilization decreases.','The limit doubles.','Nothing changes.'],0,'Credit'],
-    ['What usually happens if someone pays only the minimum on a credit-card balance?',['Repayment can take longer and cost more interest.','The balance disappears immediately.','Their APR becomes zero.','Their credit limit is guaranteed to rise.'],0,'Credit'],
-    ['What is compound growth?',['Growth earned on the original amount and previous growth.','A fee charged by a bank.','A fixed paycheck increase.','A way to avoid all investment risk.'],0,'Investing'],
-    ['What is diversification?',['Spreading investments across different assets or investments.','Putting all money into one company.','Only holding cash.','Borrowing from several lenders.'],0,'Investing'],
-    ['Which generally has more diversification: one company stock or a broad index fund?',['A broad index fund.','One company stock.','They are always identical.','Neither can be diversified.'],0,'Investing'],
-    ['What is inflation?',['A general rise in prices that reduces purchasing power.','A drop in every price.','A type of retirement plan.','A credit-card reward.'],0,'Decision-Making'],
-    ['What is a Roth IRA?',['A retirement account generally funded with after-tax contributions, subject to applicable rules.','A checking account for businesses.','A guaranteed investment.','A loan repayment plan.'],0,'Retirement/Benefits'],
-    ['What is a 401(k)?',['An employer-sponsored retirement plan with contribution and tax rules.','A type of credit score.','A college savings account.','A federal tax form.'],0,'Retirement/Benefits'],
-    ['What is a 529 plan generally used for?',['Qualified education expenses, subject to plan and tax rules.','Buying a home.','Paying a credit-card bill.','Covering a car repair.'],0,'Retirement/Benefits'],
-    ['Why can a high salary still lead to financial stress?',['Expenses, debt, and spending can rise faster than income.','High salaries remove all financial risk.','Taxes disappear.','Credit utilization no longer matters.'],0,'Decision-Making'],
-    ['Which statement is most accurate about investment risk?',['Risk depends on the investment, goal, time horizon, and diversification.','All investments have the same risk.','Risk can always be eliminated.','A high return is guaranteed.'],0,'Investing']
-  ];
-  const resultLevels=[[4,'Finance Beginner','You are just getting started. Begin with the basic concepts and try one simulation.'],[8,'Money Explorer','You understand some key ideas and have room to build confidence.'],[11,'Financial Builder','You have a solid foundation. Use the tools to practice applying it.'],[13,'Finance Strategist','You understand most of the basics and can explore more advanced scenarios.'],[15,'Finance Wizard','You have a strong foundation. Keep testing your judgment in the simulations.']];
-  let qi=0, score=0, answered=false, categoryScores={Saving:[],Credit:[],Investing:[], 'Retirement/Benefits':[], 'Decision-Making':[]};
-  const renderQuiz=()=>{ const app=$('#quizApp'); if(qi>=questions.length){const level=resultLevels.find(x=>score<=x[0])||resultLevels.at(-1); const cats=Object.entries(categoryScores).map(([k,v])=>[k,Math.round(v.reduce((a,b)=>a+b,0)/v.length*100)]);app.innerHTML=`<div class="score-wrap"><div><p class="eyebrow">Your result</p><div class="score-big">${score}/15</div><p class="score-label">${level[1]}</p><p>${level[2]}</p><button class="button button-light" id="resetQuiz">Retake quiz</button></div><div><p class="eyebrow">Category performance</p>${cats.map(([k,v])=>`<div class="category-row"><span>${k}</span><span class="category-bar"><span style="width:${v}%"></span></span><strong>${v}%</strong></div>`).join('')}<div class="result-box"><strong>Next step</strong><br>Try <em>${cats.sort((a,b)=>a[1]-b[1])[0][0]}</em> in the simulations below.</div></div></div>`;$('#resetQuiz').onclick=()=>{qi=0;score=0;categoryScores={Saving:[],Credit:[],Investing:[], 'Retirement/Benefits':[], 'Decision-Making':[]};renderQuiz()};return;}const q=questions[qi];app.innerHTML=`<div class="quiz-top"><span>Question ${qi+1} of ${questions.length}</span><span>${q[3]}</span></div><div class="progress"><span style="width:${qi/questions.length*100}%"></span></div><div class="quiz-question">${q[0]}</div><div class="answer-grid">${q[1].map((a,i)=>`<button class="answer" data-answer="${i}"><span class="letter">${String.fromCharCode(65+i)}</span><span>${a}</span></button>`).join('')}</div><p class="quiz-feedback" id="quizFeedback"></p><button class="button button-light quiz-next" id="quizNext">${qi===questions.length-1?'See my result':'Next question'} <span>→</span></button>`;$$('.answer',app).forEach(btn=>btn.onclick=()=>{if(answered)return;answered=true;const chosen=+btn.dataset.answer;const correct=chosen===q[2];if(correct)score++;categoryScores[q[3]].push(correct?1:0);btn.classList.add(correct?'correct':'wrong');if(!correct)$$('.answer',app)[q[2]].classList.add('correct');$('#quizFeedback').textContent=correct?'Correct. Nice instinct.':`Not quite. The clearest answer is: ${q[1][q[2]]}`;$('#quizNext').classList.add('visible');});$('#quizNext').onclick=()=>{qi++;answered=false;renderQuiz()};};
-  renderQuiz();
+if (!reducedMotion) {
+  let scrollFrame = 0;
+  const updateHeroMotion = () => {
+    const progress = Math.min(1, Math.max(0, window.scrollY / (hero.offsetHeight * .72)));
+    const reveal = Math.min(1, Math.max(0, (progress - .08) / .22));
+    hero.style.setProperty('--quiz-shift', `${(1 - reveal) * 28}px`);
+    hero.style.setProperty('--quiz-opacity', reveal.toFixed(3));
+    hero.style.setProperty('--title-shift', `${progress * -34}px`);
+    scrollFrame = 0;
+  };
+  window.addEventListener('scroll', () => {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateHeroMotion);
+  }, { passive: true });
+  window.addEventListener('resize', updateHeroMotion, { passive: true });
+  updateHeroMotion();
+}
 
-  const gameTemplates={life:{title:'Your Money, Your Life',intro:'Your profile is fictional. Your choices are the lesson.',body:`<p>You earn <strong>$4,200/month</strong>, have <strong>$2,400</strong> in savings, and a goal of building a three-month emergency fund.</p><p>Your car needs a $900 repair this week. What do you do?</p><div class="modal-actions"><button class="button button-dark game-choice" data-choice="save">Pay from savings</button><button class="button button-dark game-choice" data-choice="credit">Put it on a credit card</button><button class="button button-dark game-choice" data-choice="delay">Delay the repair</button></div>`},credit:{title:'Credit Card Challenge',intro:'See the cost of a balance that rolls forward.',body:`<div class="form-grid"><div class="field"><label for="creditBalance">Starting balance</label><input id="creditBalance" type="number" value="1800" min="0"></div><div class="field"><label for="creditApr">APR</label><input id="creditApr" type="number" value="24" min="0" step=".1"></div></div><p class="muted">At 24% APR, paying only $60/month can take years. Compare it with a larger fixed payment.</p><div class="modal-actions"><button class="button button-dark" id="runCredit">Compare payments</button></div><div id="creditResult"></div>`},moves:{title:'Money Moves',intro:'There is rarely one perfect move—only tradeoffs you can understand.',body:`<p><strong>You receive a $500 gift while carrying $1,200 in high-interest credit-card debt.</strong></p><div class="modal-actions"><button class="button button-dark move-choice" data-move="debt">Put it toward the debt</button><button class="button button-dark move-choice" data-move="split">Split it between debt and savings</button><button class="button button-dark move-choice" data-move="fun">Spend it all</button></div><div id="moveResult"></div>`},risk:{title:'Risk Radar',intro:'No investment is right for every goal. Match the risk to the job your money needs to do.',body:`<div class="form-grid"><div class="field"><label for="riskGoal">Goal</label><select id="riskGoal"><option>Emergency cushion</option><option>Home purchase in 5 years</option><option>Long-term retirement</option></select></div><div class="field"><label for="riskHorizon">Time horizon</label><select id="riskHorizon"><option>Under 3 years</option><option>3–7 years</option><option>10+ years</option></select></div></div><div class="modal-actions"><button class="button button-dark" id="runRisk">Scan my scenario</button></div><div id="riskResult"></div>`}};
-  const launchGame=type=>{const g=gameTemplates[type];openModal(`<p class="eyebrow">Simulation</p><h2 id="modalTitle">${g.title}</h2><p>${g.intro}</p>${g.body}`);if(type==='life')$$('.game-choice').forEach(b=>b.onclick=()=>{const msg={save:'You preserve your credit, but your emergency cushion falls. Rebuild it next.',credit:'You keep cash today, but utilization and interest make the repair more expensive.',delay:'A delay can be risky when the repair affects safety or income.'}[b.dataset.choice];$('.modal-panel').insertAdjacentHTML('beforeend',`<div class="result-box"><strong>Tradeoff:</strong> ${msg}<br><button class="text-link" onclick="location.reload()">Replay with a new decision →</button></div>`);$$('.game-choice').forEach(x=>x.disabled=true)});if(type==='moves')$$('.move-choice').forEach(b=>b.onclick=()=>{$('#moveResult').innerHTML=`<div class="result-box"><strong>What this teaches:</strong> ${{debt:'Paying high-interest debt is a guaranteed saving on future interest, but keeping no cash buffer can leave you exposed.',split:'A split protects some liquidity while reducing expensive debt—often a useful compromise.',fun:'Enjoying money is part of life, but the debt continues to cost you while the gift is gone.'}[b.dataset.move]}</div>`;$$('.move-choice').forEach(x=>x.disabled=true)});if(type==='credit')$('#runCredit').onclick=()=>{const bal=+$('#creditBalance').value||0,apr=+$('#creditApr').value||0;const calc=p=>{let b=bal,m=0;while(b>1&&m<600){b=b*(1+apr/100/12)-p;m++}return[m,b]};const min=Math.max(35,bal*.03), fixed=Math.max(100,bal*.1), a=calc(min), c=calc(fixed);$('#creditResult').innerHTML=`<div class="result-box"><strong>Minimum-style payment:</strong> about ${a[0]} months<br><strong>Fixed ${money(fixed)}/month:</strong> about ${c[0]} months<br><small>This estimate ignores changing issuer formulas and new purchases.</small></div>`};if(type==='risk')$('#runRisk').onclick=()=>{$('#riskResult').innerHTML=`<div class="result-box"><strong>Radar reading:</strong> ${$('#riskHorizon').value==='Under 3 years'?'Stability matters more than chasing growth for a near-term goal.':'A longer horizon may give you more room to tolerate volatility, but diversification and goal fit still matter.'}</div>`};};
-  $$('.game-launch').forEach(b=>b.onclick=()=>launchGame(b.dataset.game));
+const quizModal = document.querySelector('#quiz-modal');
+const quizDialog = document.querySelector('.quiz-dialog');
+const quizDialogBody = document.querySelector('.quiz-dialog-body');
+const quizCloseButton = document.querySelector('.quiz-close');
+let quizReturnFocus = null;
 
-  const compoundTool=()=>openModal(`<p class="eyebrow">Tool / Compound growth</p><h2 id="modalTitle">See what time can do.</h2><div class="form-grid"><div class="field"><label for="start">Starting amount</label><input id="start" type="number" value="1000" min="0"></div><div class="field"><label for="contribution">Monthly contribution</label><input id="contribution" type="number" value="150" min="0"></div><div class="field"><label for="returnRate">Estimated annual return (%)</label><input id="returnRate" type="number" value="7" min="0" step=".1"></div><div class="field"><label for="years">Time period (years)</label><input id="years" type="number" value="20" min="1" max="60"></div></div><div class="modal-actions"><button class="button button-dark" id="runCompound">Calculate growth</button></div><div id="compoundResult"></div>`);
-  const payoffTool=()=>openModal(`<p class="eyebrow">Tool / Credit card payoff</p><h2 id="modalTitle">Make the payoff visible.</h2><div class="form-grid"><div class="field"><label for="pBalance">Current balance</label><input id="pBalance" type="number" value="2500" min="0"></div><div class="field"><label for="pApr">APR (%)</label><input id="pApr" type="number" value="24" min="0" step=".1"></div><div class="field full"><label for="pPayment">Fixed monthly payment</label><input id="pPayment" type="number" value="150" min="1"></div></div><div class="modal-actions"><button class="button button-dark" id="runPayoff">Calculate payoff</button></div><div id="payoffResult"></div>`);
-  const savingsTool=()=>openModal(`<p class="eyebrow">Tool / Savings goal</p><h2 id="modalTitle">Give the goal a date.</h2><div class="form-grid"><div class="field"><label for="goal">Savings goal</label><input id="goal" type="number" value="3000" min="1"></div><div class="field"><label for="current">Current savings</label><input id="current" type="number" value="500" min="0"></div><div class="field"><label for="monthly">Monthly contribution</label><input id="monthly" type="number" value="200" min="0"></div><div class="field"><label for="months">Months until target</label><input id="months" type="number" value="12" min="1"></div></div><div class="modal-actions"><button class="button button-dark" id="runSavings">Check my plan</button></div><div id="savingsResult"></div>`);
-  $$('.tool-launch').forEach(b=>b.onclick=()=>{if(b.dataset.tool==='compound')compoundTool();if(b.dataset.tool==='payoff')payoffTool();if(b.dataset.tool==='savings')savingsTool();});
-  document.addEventListener('click',e=>{if(e.target.id==='runCompound'){const s=+$('#start').value,c=+$('#contribution').value,r=+$('#returnRate').value/100/12,y=+$('#years').value,n=y*12;const total=s*Math.pow(1+r,n)+c*((Math.pow(1+r,n)-1)/r||n),contrib=s+c*n,growth=Math.max(0,total-contrib);$('#compoundResult').innerHTML=`<div class="result-box"><strong>Estimated ending balance: ${money(total)}</strong><br>${money(contrib)} from contributions · ${money(growth)} estimated growth<br><small>Estimate only. Returns are not guaranteed.</small></div>`}if(e.target.id==='runPayoff'){const b0=+$('#pBalance').value,a=+$('#pApr').value/100/12,p=+$('#pPayment').value;let b=b0,m=0,int=0;while(b>1&&m<600){const i=b*a;if(p<=i){b=Infinity;break}int+=i;b=b+i-p;m++}$('#payoffResult').innerHTML=`<div class="result-box"><strong>${Number.isFinite(b)?`About ${m} months to pay off.`:'Payment is too low to cover interest.'}</strong><br>Estimated interest: ${money(int)}<br><small>Issuer formulas and new purchases vary.</small></div>`}if(e.target.id==='runSavings'){const needed=+$('#goal').value-(+$('#current').value), monthly=+$('#monthly').value, months=+$('#months').value, projected=+$('#current').value+monthly*months, on=projected>=+$('#goal').value;$('#savingsResult').innerHTML=`<div class="result-box"><strong>${on?'You are on track.':'You are not quite on track yet.'}</strong><br>Projected savings: ${money(projected)} · Target: ${money(+$('#goal').value)}<br>${on?'Your cushion above the target would be '+money(projected-+$('#goal').value)+'.':'You would need about '+money(Math.max(0,needed/months))+' more per month.'}</div>`}});
-})();
+function openQuiz() {
+  quizReturnFocus = document.activeElement;
+  quizModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  requestAnimationFrame(() => quizCloseButton.focus());
+}
+
+function closeQuiz() {
+  quizModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  clearConfetti();
+  quizReturnFocus?.focus();
+}
+
+document.querySelectorAll('[data-open-quiz]').forEach(button => button.addEventListener('click', openQuiz));
+document.querySelectorAll('[data-close-quiz]').forEach(button => button.addEventListener('click', closeQuiz));
+
+document.addEventListener('keydown', event => {
+  if (quizModal.getAttribute('aria-hidden') === 'true') return;
+  if (event.key === 'Escape') {
+    closeQuiz();
+    return;
+  }
+  if (event.key !== 'Tab') return;
+  const focusable = [...quizDialog.querySelectorAll('a[href], button:not([disabled])')]
+    .filter(element => element.offsetParent !== null);
+  const first = focusable[0];
+  const last = focusable.at(-1);
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+
+const topics = [
+  { label: 'compound growth', href: 'learn/#compound-growth' },
+  { label: 'credit utilization', href: 'learn/#credit-utilization' },
+  { label: 'diversification', href: 'learn/#diversification' },
+  { label: 'inflation', href: 'learn/#inflation' },
+  { label: 'emergency funds', href: 'learn/#emergency-fund' },
+  { label: 'Roth IRAs', href: 'learn/#roth-ira' },
+  { label: '401(k)s', href: 'learn/#401k' },
+  { label: '529 plans', href: 'learn/#529-plan' },
+  { label: 'net worth', href: 'learn/#net-worth' }
+];
+const learningTopic = document.querySelector('#learning-topic');
+let topicIndex = 0;
+
+function setTopic() {
+  learningTopic.textContent = topics[topicIndex].label;
+  learningTopic.href = topics[topicIndex].href;
+}
+
+if (!reducedMotion) {
+  setInterval(async () => {
+    const out = learningTopic.animate(
+      [{ transform: 'translateY(0)', opacity: 1 }, { transform: 'translateY(-32%)', opacity: 0 }],
+      { duration: 300, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }
+    );
+    await out.finished.catch(() => {});
+    out.cancel();
+    topicIndex = (topicIndex + 1) % topics.length;
+    setTopic();
+    const incoming = learningTopic.animate(
+      [{ transform: 'translateY(32%)', opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }],
+      { duration: 380, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }
+    );
+    await incoming.finished.catch(() => {});
+    incoming.cancel();
+  }, 3200);
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: .16 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const questions = [
+  { q: 'What is a budget primarily used for?', correct: 'Planning how income will be used.', options: ['Planning how income will be used.', 'Predicting the stock market.', 'Avoiding every purchase.', 'Calculating a credit score.'] },
+  { q: 'What is the difference between saving and investing?', correct: 'Saving prioritizes access; investing seeks growth with risk.', options: ['Saving prioritizes access; investing seeks growth with risk.', 'They are exactly the same.', 'Investing is always risk-free.', 'Saving always earns more.'] },
+  { q: 'What is an emergency fund?', correct: 'Money set aside for unexpected expenses.', options: ['Money set aside for unexpected expenses.', 'A retirement account.', 'A credit-card limit.', 'A type of insurance.'] },
+  { q: 'What does APR describe on a credit card?', correct: 'The annualized cost of borrowing.', options: ['The annualized cost of borrowing.', 'A monthly spending limit.', 'A credit score.', 'A cash-back percentage.'] },
+  { q: 'What happens when a card balance rises but its limit stays the same?', correct: 'Credit utilization increases.', options: ['Credit utilization increases.', 'Credit utilization decreases.', 'Nothing changes.', 'The limit doubles.'] },
+  { q: 'What usually happens when only the minimum card payment is made?', correct: 'Repayment takes longer and can cost more interest.', options: ['Repayment takes longer and can cost more interest.', 'The balance disappears.', 'The APR becomes zero.', 'The limit falls to zero.'] },
+  { q: 'What is compound growth?', correct: 'Growth earned on the original amount and prior growth.', options: ['Growth earned on the original amount and prior growth.', 'A bank fee.', 'A fixed payment schedule.', 'A tax.'] },
+  { q: 'What is diversification?', correct: 'Spreading investments across different assets.', options: ['Spreading investments across different assets.', 'Buying one company stock.', 'Eliminating all risk.', 'Keeping everything in cash.'] },
+  { q: 'Which is generally more diversified?', correct: 'A broad index fund.', options: ['A broad index fund.', 'One company stock.', 'They are always identical.', 'Neither can diversify.'] },
+  { q: 'What is inflation?', correct: 'A general rise in prices that reduces purchasing power.', options: ['A general rise in prices that reduces purchasing power.', 'A drop in all prices.', 'A savings account.', 'A credit-score factor.'] },
+  { q: 'What is a Roth IRA?', correct: 'A retirement account generally funded with after-tax contributions.', options: ['A retirement account generally funded with after-tax contributions.', 'A mortgage product.', 'A checking account.', 'A corporate bond.'] },
+  { q: 'What is a 401(k)?', correct: 'An employer-sponsored retirement plan.', options: ['An employer-sponsored retirement plan.', 'A credit-score range.', 'An index fund.', 'An emergency loan.'] },
+  { q: 'What is a 529 plan generally used for?', correct: 'Qualified education expenses.', options: ['Qualified education expenses.', 'Home repairs only.', 'Credit-card rewards.', 'Car insurance.'] },
+  { q: 'Why can a high salary still lead to financial stress?', correct: 'Expenses and debt can rise faster than income.', options: ['Expenses and debt can rise faster than income.', 'High salaries cannot create stress.', 'Taxes disappear.', 'Credit limits always increase.'] },
+  { q: 'Which statement about investment risk is most accurate?', correct: 'Risk depends on the investment, goal, time, and diversification.', options: ['Risk depends on the investment, goal, time, and diversification.', 'All investments have the same risk.', 'Risk only matters for retirees.', 'Diversification guarantees profit.'] }
+];
+
+function shuffle(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+let quizOrder = shuffle(questions);
+let questionIndex = 0;
+let score = 0;
+const questionEl = document.querySelector('#quiz-question');
+const answersEl = document.querySelector('#quiz-answers');
+const feedbackEl = document.querySelector('#quiz-feedback');
+const nextButton = document.querySelector('#quiz-next');
+
+function renderQuestion() {
+  const item = quizOrder[questionIndex];
+  document.querySelector('#quiz-count').textContent = `${questionIndex + 1} / ${quizOrder.length}`;
+  document.querySelector('#quiz-score').textContent = `${score} correct`;
+  document.querySelector('#quiz-progress').style.width = `${((questionIndex + 1) / quizOrder.length) * 100}%`;
+  questionEl.textContent = item.q;
+  answersEl.innerHTML = '';
+  feedbackEl.textContent = '';
+  nextButton.classList.add('hidden');
+
+  shuffle(item.options).forEach(option => {
+    const button = document.createElement('button');
+    button.className = 'answer';
+    button.textContent = option;
+    button.addEventListener('click', () => {
+      [...answersEl.children].forEach(answer => { answer.disabled = true; });
+      const isCorrect = option === item.correct;
+      if (isCorrect) {
+        score += 1;
+        button.classList.add('correct');
+        feedbackEl.textContent = 'Correct.';
+      } else {
+        button.classList.add('incorrect');
+        [...answersEl.children].find(answer => answer.textContent === item.correct)?.classList.add('correct');
+        feedbackEl.textContent = item.correct;
+      }
+      document.querySelector('#quiz-score').textContent = `${score} correct`;
+      nextButton.classList.remove('hidden');
+    });
+    answersEl.appendChild(button);
+  });
+}
+
+function showResult() {
+  document.querySelector('#quiz-panel').classList.add('hidden');
+  const resultPanel = document.querySelector('#quiz-result');
+  resultPanel.classList.remove('hidden');
+  document.querySelector('#result-score').textContent = `${score}/15`;
+  const results = score <= 4
+    ? 'Start with the foundation.'
+    : score <= 8
+      ? 'You know the essentials.'
+      : score <= 12
+        ? 'Your foundation is strong.'
+        : 'You know your way around the basics.';
+  document.querySelector('#result-title').textContent = results;
+  document.querySelector('#result-copy').textContent = 'Continue with a topic, tool, or game.';
+  quizDialogBody.scrollTop = 0;
+  launchConfetti();
+}
+
+const confettiLayer = document.querySelector('#confetti');
+let confettiFrame = 0;
+
+function clearConfetti() {
+  if (confettiFrame) cancelAnimationFrame(confettiFrame);
+  confettiFrame = 0;
+  confettiLayer.replaceChildren();
+}
+
+function launchConfetti() {
+  if (reducedMotion) return;
+  clearConfetti();
+  const colors = ['#B89558', '#32658A', '#66806A', '#A87578', '#EEE4D2'];
+  const originX = window.innerWidth / 2;
+  const originY = Math.min(window.innerHeight * .28, 230);
+  const particles = Array.from({ length: 84 }, (_, index) => {
+    const piece = document.createElement('i');
+    const size = 6 + Math.random() * 8;
+    piece.style.width = `${size}px`;
+    piece.style.height = `${size * (.38 + Math.random() * .36)}px`;
+    piece.style.background = colors[index % colors.length];
+    piece.style.borderRadius = Math.random() > .76 ? '50%' : '1px';
+    confettiLayer.appendChild(piece);
+    return {
+      piece,
+      x: originX,
+      y: originY,
+      vx: (Math.random() - .5) * 760,
+      vy: -(590 + Math.random() * 430),
+      gravity: 980 + Math.random() * 520,
+      drag: .08 + Math.random() * .12,
+      rotation: Math.random() * 360,
+      spin: (Math.random() - .5) * 780,
+      phase: Math.random() * Math.PI * 2,
+      flutter: 7 + Math.random() * 7,
+      age: 0,
+      life: 2.9 + Math.random() * 1.1
+    };
+  });
+
+  let previousTime = performance.now();
+  const animateConfetti = currentTime => {
+    const elapsed = Math.min((currentTime - previousTime) / 1000, .034);
+    previousTime = currentTime;
+    let activeParticles = 0;
+
+    particles.forEach(particle => {
+      if (particle.age >= particle.life || particle.y > window.innerHeight + 70) {
+        particle.piece.style.opacity = '0';
+        return;
+      }
+      activeParticles += 1;
+      particle.age += elapsed;
+      particle.vy += particle.gravity * elapsed;
+      particle.vx *= Math.exp(-particle.drag * elapsed);
+      particle.x += particle.vx * elapsed;
+      particle.y += particle.vy * elapsed;
+      particle.rotation += particle.spin * elapsed;
+      particle.phase += particle.flutter * elapsed;
+      const sway = Math.sin(particle.phase) * 5;
+      const fadeStart = particle.life - .55;
+      particle.piece.style.opacity = particle.age > fadeStart
+        ? String(Math.max(0, (particle.life - particle.age) / .55))
+        : '1';
+      particle.piece.style.transform = `translate3d(${particle.x + sway}px, ${particle.y}px, 0) rotate(${particle.rotation}deg)`;
+    });
+
+    if (activeParticles) confettiFrame = requestAnimationFrame(animateConfetti);
+    else clearConfetti();
+  };
+
+  confettiFrame = requestAnimationFrame(animateConfetti);
+}
+
+nextButton.addEventListener('click', () => {
+  questionIndex += 1;
+  if (questionIndex < quizOrder.length) renderQuestion();
+  else showResult();
+});
+
+document.querySelector('#quiz-restart').addEventListener('click', () => {
+  clearConfetti();
+  quizOrder = shuffle(questions);
+  questionIndex = 0;
+  score = 0;
+  document.querySelector('#quiz-panel').classList.remove('hidden');
+  document.querySelector('#quiz-result').classList.add('hidden');
+  quizDialogBody.scrollTop = 0;
+  renderQuestion();
+});
+
+renderQuestion();
