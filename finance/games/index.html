@@ -1,35 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#06182A">
-  <title>Play — Financial Literacy</title>
-  <link rel="icon" href="../assets/favicon.ico"><link rel="stylesheet" href="../styles.css?v=22">
-</head>
-<body>
-  <header class="topbar"><div class="topbar-inner"><a class="top-logo" href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="../assets/AR_mark_navy.svg" alt=""></a><nav aria-label="Primary navigation"><a href="../learn/">Learn</a><a href="../#quiz">Quiz</a><a href="./">Play</a><a href="../tools/">Tools</a></nav></div></header>
-  <main class="page-main">
-    <section class="page-hero page-width"><div><h1>Decision lab</h1><p>Three events. Limited money. Every choice changes what comes next.</p></div></section>
-    <section class="subpage-section page-width">
-      <div class="simulator">
-        <aside class="sim-status">
-          <h2>Your position</h2>
-          <div class="meter"><div class="meter-head"><span>Cash</span><strong id="cash-value">65</strong></div><div class="meter-track"><span id="cash-meter" style="width:65%;background:var(--sage)"></span></div></div>
-          <div class="meter"><div class="meter-head"><span>Debt</span><strong id="debt-value">25</strong></div><div class="meter-track"><span id="debt-meter" style="width:25%;background:var(--oxblood)"></span></div></div>
-          <div class="meter"><div class="meter-head"><span>Stability</span><strong id="stability-value">55</strong></div><div class="meter-track"><span id="stability-meter" style="width:55%;background:var(--atlantic)"></span></div></div>
-          <a class="back-link" href="../">Return to the quiz</a>
-        </aside>
-        <div class="sim-stage" id="sim-stage">
-          <span class="round" id="round-label">Event 1 of 3</span>
-          <h2 id="scenario-title"></h2>
-          <p id="scenario-copy"></p>
-          <div class="sim-choices" id="sim-choices"></div>
-          <div class="sim-outcome hidden" id="sim-outcome" aria-live="polite"></div>
-          <button class="line-button hidden" id="sim-next">Next event</button>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer"><a href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="../assets/AR_mark_navy.svg" alt=""></a><p>Not financial advice. Educational content only.</p></footer>
-  <script src="games.js?v=4"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#06182A"><title>Play — Financial Literacy</title><link rel="icon" href="../assets/favicon.ico"><link rel="stylesheet" href="../styles.css?v=23"></head>
+<body><header class="topbar"><div class="topbar-inner"><a class="top-logo" href="../" aria-label="Financial Literacy home"><img src="../assets/AR_mark_navy_1024.png" alt=""></a><nav aria-label="Primary navigation"><a href="../learn/">Learn</a><a href="../#quiz">Quiz</a><a href="./">Play</a><a href="../tools/">Tools</a></nav></div></header>
+<main class="page-main game-main"><section class="page-hero page-width game-hero"><div><span class="page-kicker">Seven decisions. One position.</span><h1>Decision lab</h1><p>Every choice changes the next one. Debt grows between rounds; cash and stability keep you in the game.</p></div></section>
+<section class="subpage-section page-width"><div class="game-onboarding" id="game-onboarding"><span class="onboarding-mark">01</span><div><h2>Your decisions compound.</h2><p>You will receive seven events selected from a bank of fifteen. Debt accrues between events. The run ends if cash or stability reaches zero, or debt reaches 100.</p><div class="game-rules"><span>Cash absorbs shocks</span><span>Debt grows over time</span><span>Stability rewards balance</span></div><button class="game-start" id="game-start">Start a new run</button></div></div>
+<div class="simulator hidden" id="simulator"><aside class="sim-status"><div class="score-block"><span>Decision score</span><strong id="score-value">95</strong></div><div class="meter"><div class="meter-head"><span>Cash</span><strong id="cash-value">65</strong></div><div class="meter-track"><span id="cash-meter"></span></div></div><div class="meter"><div class="meter-head"><span>Debt</span><strong id="debt-value">25</strong></div><div class="meter-track debt-track"><span id="debt-meter"></span></div></div><div class="meter"><div class="meter-head"><span>Stability</span><strong id="stability-value">55</strong></div><div class="meter-track stability-track"><span id="stability-meter"></span></div></div><p class="interest-status" id="interest-status">Debt compounds 3 points before each new event.</p><a class="back-link" href="../">Return home</a></aside>
+<div class="sim-stage" id="sim-stage"><div class="event-topline"><span class="round" id="round-label">Event 1 of 7</span><span class="event-category" id="event-category"></span></div><div class="event-visual" id="event-visual" aria-hidden="true"></div><h2 id="scenario-title"></h2><p id="scenario-copy"></p><div class="sim-choices" id="sim-choices"></div><div class="sim-outcome hidden" id="sim-outcome" aria-live="polite"></div><button class="next-button hidden" id="sim-next">Next event</button></div></div></section></main>
+<footer class="site-footer"><a href="https://abdullah.rayees.org" aria-label="Visit Abdullah Rayees"><img src="../assets/AR_mark_navy_1024.png" alt=""></a><p>Not financial advice. Educational content only.</p></footer><script src="games.js?v=5"></script></body></html>

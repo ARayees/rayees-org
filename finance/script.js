@@ -112,22 +112,35 @@ const observer = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 const questions = [
-  { q: 'What is a budget primarily used for?', correct: 'Planning how income will be used.', options: ['Planning how income will be used.', 'Predicting the stock market.', 'Avoiding every purchase.', 'Calculating a credit score.'] },
-  { q: 'What is the difference between saving and investing?', correct: 'Saving prioritizes access; investing seeks growth with risk.', options: ['Saving prioritizes access; investing seeks growth with risk.', 'They are exactly the same.', 'Investing is always risk-free.', 'Saving always earns more.'] },
-  { q: 'What is an emergency fund?', correct: 'Money set aside for unexpected expenses.', options: ['Money set aside for unexpected expenses.', 'A retirement account.', 'A credit-card limit.', 'A type of insurance.'] },
-  { q: 'What does APR describe on a credit card?', correct: 'The annualized cost of borrowing.', options: ['The annualized cost of borrowing.', 'A monthly spending limit.', 'A credit score.', 'A cash-back percentage.'] },
-  { q: 'What happens when a card balance rises but its limit stays the same?', correct: 'Credit utilization increases.', options: ['Credit utilization increases.', 'Credit utilization decreases.', 'Nothing changes.', 'The limit doubles.'] },
-  { q: 'What usually happens when only the minimum card payment is made?', correct: 'Repayment takes longer and can cost more interest.', options: ['Repayment takes longer and can cost more interest.', 'The balance disappears.', 'The APR becomes zero.', 'The limit falls to zero.'] },
-  { q: 'What is compound growth?', correct: 'Growth earned on the original amount and prior growth.', options: ['Growth earned on the original amount and prior growth.', 'A bank fee.', 'A fixed payment schedule.', 'A tax.'] },
-  { q: 'What is diversification?', correct: 'Spreading investments across different assets.', options: ['Spreading investments across different assets.', 'Buying one company stock.', 'Eliminating all risk.', 'Keeping everything in cash.'] },
-  { q: 'Which is generally more diversified?', correct: 'A broad index fund.', options: ['A broad index fund.', 'One company stock.', 'They are always identical.', 'Neither can diversify.'] },
-  { q: 'What is inflation?', correct: 'A general rise in prices that reduces purchasing power.', options: ['A general rise in prices that reduces purchasing power.', 'A drop in all prices.', 'A savings account.', 'A credit-score factor.'] },
-  { q: 'What is a Roth IRA?', correct: 'A retirement account generally funded with after-tax contributions.', options: ['A retirement account generally funded with after-tax contributions.', 'A mortgage product.', 'A checking account.', 'A corporate bond.'] },
-  { q: 'What is a 401(k)?', correct: 'An employer-sponsored retirement plan.', options: ['An employer-sponsored retirement plan.', 'A credit-score range.', 'An index fund.', 'An emergency loan.'] },
-  { q: 'What is a 529 plan generally used for?', correct: 'Qualified education expenses.', options: ['Qualified education expenses.', 'Home repairs only.', 'Credit-card rewards.', 'Car insurance.'] },
-  { q: 'Why can a high salary still lead to financial stress?', correct: 'Expenses and debt can rise faster than income.', options: ['Expenses and debt can rise faster than income.', 'High salaries cannot create stress.', 'Taxes disappear.', 'Credit limits always increase.'] },
-  { q: 'Which statement about investment risk is most accurate?', correct: 'Risk depends on the investment, goal, time, and diversification.', options: ['Risk depends on the investment, goal, time, and diversification.', 'All investments have the same risk.', 'Risk only matters for retirees.', 'Diversification guarantees profit.'] }
-];
+  ['emergency-fund','What is an emergency fund?','Money set aside for unexpected expenses.',['Money set aside for unexpected expenses.','A retirement account.','A credit-card limit.','A type of insurance.']],
+  ['emergency-fund','Which expense belongs in an emergency-fund target?','Essential monthly expenses.',['Essential monthly expenses.','A luxury vacation.','Expected investment returns.','Credit limits.']],
+  ['apr','What does APR describe on a credit card?','The annualized cost of borrowing.',['The annualized cost of borrowing.','A spending limit.','A credit score.','A reward rate.']],
+  ['apr','Why can minimum payments be expensive?','They can extend repayment and increase total interest.',['They can extend repayment and increase total interest.','They erase interest.','They close the account.','They reduce the APR to zero.']],
+  ['credit-utilization','A balance rises while the limit stays fixed. What changes?','Credit utilization increases.',['Credit utilization increases.','Utilization decreases.','The limit doubles.','Nothing changes.']],
+  ['credit-utilization','A $500 balance on a $2,000 limit equals what utilization?','25%.',['25%.','10%.','40%.','75%.']],
+  ['compound-growth','What is compound growth?','Growth on the original amount and prior growth.',['Growth on the original amount and prior growth.','A bank fee.','A fixed payment.','A tax.']],
+  ['compound-growth','Which input most directly gives compounding more time?','Starting earlier.',['Starting earlier.','Checking daily.','Using one stock.','Ignoring fees.']],
+  ['diversification','What is diversification?','Spreading exposure across different assets.',['Spreading exposure across different assets.','Owning one stock.','Eliminating all risk.','Keeping everything in cash.']],
+  ['diversification','What risk does diversification address most directly?','Dependence on one investment outcome.',['Dependence on one investment outcome.','All market losses.','Inflation entirely.','Every possible fee.']],
+  ['index-fund','Which is generally more diversified?','A broad index fund.',['A broad index fund.','One company stock.','They are identical.','A single bond.']],
+  ['index-fund','What should you check before buying an index fund?','Its index, holdings, and fees.',['Its index, holdings, and fees.','Only its name.','Yesterday’s price only.','The logo color.']],
+  ['inflation','What does inflation reduce over time?','Purchasing power.',['Purchasing power.','The number of dollars in every account.','All debt balances.','Every interest rate.']],
+  ['inflation','Why use today’s dollars in a long plan?','To compare future money with current purchasing power.',['To compare future money with current purchasing power.','To guarantee a return.','To remove taxes.','To raise a credit limit.']],
+  ['roth-ira','How is a Roth IRA generally funded?','With after-tax contributions.',['With after-tax contributions.','Only employer money.','With a mortgage.','With pre-tax payroll tax.']],
+  ['roth-ira','What still must be selected inside an IRA?','Investments.',['Investments.','A credit limit.','A rent payment.','An insurance deductible.']],
+  ['401k','What is a 401(k)?','An employer-sponsored retirement plan.',['An employer-sponsored retirement plan.','A credit score.','An emergency loan.','A bank fee.']],
+  ['401k','Why does an employer match matter?','It can add employer contributions when requirements are met.',['It can add employer contributions when requirements are met.','It guarantees profits.','It removes every fee.','It replaces a salary.']],
+  ['529-plan','What is a 529 plan generally used for?','Qualified education expenses.',['Qualified education expenses.','Home repairs only.','Card rewards.','Auto insurance.']],
+  ['529-plan','What varies among 529 plans?','Fees, investments, and potential state incentives.',['Fees, investments, and potential state incentives.','The definition of money.','Federal currency.','Credit-card APR.']],
+  ['net-worth','How is net worth calculated?','Assets minus debts.',['Assets minus debts.','Income minus taxes.','Credit limit minus balance.','Savings plus salary.']],
+  ['net-worth','What is net worth best understood as?','A financial snapshot, not personal worth.',['A financial snapshot, not personal worth.','A permanent score.','Annual income.','A credit report.']],
+  ['budget','What is a budget primarily used for?','Planning how income will be used.',['Planning how income will be used.','Predicting markets.','Avoiding every purchase.','Calculating a credit score.']],
+  ['budget','Why can a high salary still feel tight?','Expenses and debt can rise faster than income.',['Expenses and debt can rise faster than income.','Taxes disappear.','Limits always rise.','High salaries prevent stress.']],
+  ['saving','What distinguishes saving from investing?','Saving prioritizes access; investing accepts risk for potential growth.',['Saving prioritizes access; investing accepts risk for potential growth.','They are identical.','Investing is risk-free.','Saving always earns more.']],
+  ['saving','Which goal often fits cash savings better than volatile investments?','A near-term emergency reserve.',['A near-term emergency reserve.','A 40-year retirement goal only.','Speculation.','A credit limit increase.']],
+  ['diversification','Which statement about risk is accurate?','Risk depends on the investment, goal, time, and diversification.',['Risk depends on the investment, goal, time, and diversification.','All investments share one risk.','Risk only matters in retirement.','Diversification guarantees profit.']],
+  ['apr','What makes recurring new card charges dangerous during payoff?','They can offset payments and extend the debt.',['They can offset payments and extend the debt.','They reduce APR.','They increase savings.','They erase prior interest.']]
+].map(([concept,q,correct,options])=>({concept,q,correct,options}));
 
 function shuffle(items) {
   const copy = [...items];
@@ -138,9 +151,20 @@ function shuffle(items) {
   return copy;
 }
 
-let quizOrder = shuffle(questions);
+function buildQuizOrder() {
+  const counts = {};
+  return shuffle(questions).filter(item => {
+    counts[item.concept] = counts[item.concept] || 0;
+    if (counts[item.concept] >= 2) return false;
+    counts[item.concept] += 1;
+    return true;
+  }).slice(0, 15);
+}
+
+let quizOrder = buildQuizOrder();
 let questionIndex = 0;
 let score = 0;
+let missedConcepts = {};
 const questionEl = document.querySelector('#quiz-question');
 const answersEl = document.querySelector('#quiz-answers');
 const feedbackEl = document.querySelector('#quiz-feedback');
@@ -168,6 +192,7 @@ function renderQuestion() {
         button.classList.add('correct');
         feedbackEl.textContent = 'Correct.';
       } else {
+        missedConcepts[item.concept] = (missedConcepts[item.concept] || 0) + 1;
         button.classList.add('incorrect');
         [...answersEl.children].find(answer => answer.textContent === item.correct)?.classList.add('correct');
         feedbackEl.textContent = item.correct;
@@ -183,7 +208,7 @@ function showResult() {
   document.querySelector('#quiz-panel').classList.add('hidden');
   const resultPanel = document.querySelector('#quiz-result');
   resultPanel.classList.remove('hidden');
-  document.querySelector('#result-score').textContent = `${score}/15`;
+  document.querySelector('#result-score').textContent = `${score}/${quizOrder.length}`;
   const results = score <= 4
     ? 'Start with the foundation.'
     : score <= 8
@@ -193,6 +218,14 @@ function showResult() {
         : 'You know your way around the basics.';
   document.querySelector('#result-title').textContent = results;
   document.querySelector('#result-copy').textContent = 'Continue with a topic, tool, or game.';
+  const recommendations = Object.entries(missedConcepts).sort((a,b) => b[1]-a[1]).slice(0,3);
+  const learning = document.querySelector('#result-learning');
+  const recommendationEl = document.querySelector('#result-recommendations');
+  if (recommendations.length) {
+    const labels = {'emergency-fund':'Emergency fund','credit-utilization':'Credit utilization','apr':'APR','compound-growth':'Compound growth','diversification':'Diversification','index-fund':'Index funds','inflation':'Inflation','roth-ira':'Roth IRA','401k':'401(k)','529-plan':'529 plans','net-worth':'Net worth','budget':'Cash flow','saving':'Saving vs. investing'};
+    recommendationEl.innerHTML = recommendations.map(([concept,count]) => `<a href="learn/#${concept}"><span>${count} missed</span><strong>Learn about ${labels[concept]}</strong></a>`).join('');
+    learning.classList.remove('hidden');
+  } else learning.classList.add('hidden');
   quizDialogBody.scrollTop = 0;
   launchConfetti();
 }
@@ -279,9 +312,10 @@ nextButton.addEventListener('click', () => {
 
 document.querySelector('#quiz-restart').addEventListener('click', () => {
   clearConfetti();
-  quizOrder = shuffle(questions);
+  quizOrder = buildQuizOrder();
   questionIndex = 0;
   score = 0;
+  missedConcepts = {};
   document.querySelector('#quiz-panel').classList.remove('hidden');
   document.querySelector('#quiz-result').classList.add('hidden');
   quizDialogBody.scrollTop = 0;

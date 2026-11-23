@@ -1,88 +1,31 @@
-const events = [
-  {
-    title: 'The car needs a $900 repair.',
-    copy: 'You need it for work. You have $1,800 in savings and a credit card at 24.99% APR.',
-    choices: [
-      { label: 'Pay from savings', impact: { cash: -30, debt: 0, stability: 8 }, outcome: 'No interest is added, but your emergency cushion is cut in half.' },
-      { label: 'Put it on the card', impact: { cash: 0, debt: 28, stability: -8 }, outcome: 'Cash stays available today. The repair now costs more and needs a repayment plan.' },
-      { label: 'Pay $450 cash and $450 credit', impact: { cash: -15, debt: 14, stability: 1 }, outcome: 'You preserve part of the cushion while limiting the amount exposed to interest.' }
-    ]
-  },
-  {
-    title: 'Your rent increases by $180 a month.',
-    copy: 'Your income has not changed. The new lease begins in six weeks.',
-    choices: [
-      { label: 'Reduce flexible spending by $180', impact: { cash: 3, debt: 0, stability: 8 }, outcome: 'The monthly budget stays balanced, but your discretionary room gets smaller.' },
-      { label: 'Use credit for the difference', impact: { cash: 0, debt: 24, stability: -14 }, outcome: 'The gap becomes recurring debt. A monthly mismatch can compound quickly.' },
-      { label: 'Search for a lower-cost place', impact: { cash: -5, debt: 0, stability: 4 }, outcome: 'Moving has near-term cost and effort, but may improve the longer-term monthly picture.' }
-    ]
-  },
-  {
-    title: 'A $1,200 tax refund arrives.',
-    copy: 'You still have card debt and your emergency fund is below one month of expenses.',
-    choices: [
-      { label: 'Pay down the card', impact: { cash: 0, debt: -26, stability: 8 }, outcome: 'Interest exposure falls. Your cash buffer remains thin.' },
-      { label: 'Add it to emergency savings', impact: { cash: 24, debt: 0, stability: 10 }, outcome: 'Your ability to absorb the next shock improves, while existing debt remains.' },
-      { label: 'Split it between debt and savings', impact: { cash: 12, debt: -13, stability: 12 }, outcome: 'Both priorities move forward, though neither is solved completely.' }
-    ]
-  }
-];
+const events=[
+['Car repair','Transport','🚘','Your car needs a $900 repair and you need it for work.',[['Pay from savings',-28,0,7,'No interest, but a smaller cushion.'],['Use the credit card',0,27,-9,'Cash survives; expensive debt grows.'],['Split cash and credit',-14,13,2,'A middle path limits both risks.']]],
+['Rent increase','Housing','🏠','Your rent increases by $180 a month in six weeks.',[['Cut flexible spending',4,0,8,'The budget remains balanced.'],['Use credit for the gap',0,24,-15,'A recurring gap becomes compounding debt.'],['Plan a move',-7,0,5,'Near-term cost may improve long-term cash flow.']]],
+['Tax refund','Windfall','✦','A $1,200 tax refund arrives while your emergency fund is thin.',[['Pay down debt',0,-25,7,'Interest exposure falls.'],['Build emergency savings',23,0,9,'Your next shock is easier to absorb.'],['Split debt and savings',12,-12,12,'Both priorities improve.']]],
+['Medical bill','Health','✚','An unexpected medical bill totals $650 after insurance.',[['Use savings',-20,0,6,'The bill is resolved without interest.'],['Request a payment plan',-5,7,4,'Cash flow improves if the plan is low-cost.'],['Put it on a card',0,21,-10,'Fast today, expensive over time.']]],
+['Employer match','Retirement','↗','Your employer offers a full match on the first 4% of pay.',[['Contribute 4%',-5,0,14,'You capture the full match and build long-term assets.'],['Contribute 2%',-2,0,5,'You capture only part of the match.'],['Do not enroll',3,0,-8,'More cash today, but the match is lost.']]],
+['Phone replacement','Technology','▣','Your phone breaks. A new flagship is $1,100; a reliable refurbished model is $420.',[['Buy refurbished with cash',-12,0,8,'Function restored at lower cost.'],['Finance the flagship',0,18,-7,'The upgrade adds another required payment.'],['Wait and repair it',-4,0,4,'A temporary fix preserves flexibility.']]],
+['Insurance renewal','Protection','◇','Your car insurance rises 22% at renewal.',[['Compare three quotes',2,0,9,'Shopping around lowers the increase.'],['Accept the renewal',-5,0,-2,'Convenient, but the higher cost stays.'],['Lower coverage sharply',4,0,-12,'Premium falls, but exposure rises.']]],
+['Side-income offer','Income','＋','A weekend project can earn $700, but requires 18 hours.',[['Take it and save the income',14,0,7,'Cash improves with a time tradeoff.'],['Take it and pay debt',2,-14,10,'You reduce future interest.'],['Decline to protect your time',0,0,3,'No financial gain, but capacity matters too.']]],
+['Subscription audit','Spending','◎','You find $95 a month in subscriptions you rarely use.',[['Cancel all unused services',8,0,8,'The monthly margin improves immediately.'],['Keep half',4,0,3,'You preserve favorites and recover some cash flow.'],['Keep everything',0,0,-5,'Convenience wins, but the leak remains.']]],
+['Laptop for work','Career','▱','A $1,400 laptop could support a higher-paying certification.',[['Save for it first',-4,0,7,'Slower start, no financing cost.'],['Use a 0% plan with payoff schedule',0,9,6,'Manageable if paid before the offer ends.'],['Use a high-APR card',0,24,-11,'The investment becomes materially more expensive.']]],
+['Family request','Family','♡','A relative asks to borrow $600. Your own emergency fund is below target.',[['Offer $150 you can afford to gift',-5,0,7,'Clear limits protect the relationship and budget.'],['Lend the full amount',-20,0,-7,'Your reserve becomes vulnerable.'],['Decline and help find resources',0,0,4,'You preserve cash while still helping.']]],
+['Annual bonus','Windfall','✦','A $2,000 annual bonus arrives.',[['Use half for debt and half for savings',18,-18,14,'A balanced allocation improves resilience.'],['Spend it all',0,0,-8,'Enjoyment today, no lasting financial change.'],['Invest all of it',-4,0,8,'Long-term assets rise while near-term needs remain.']]],
+['Utility spike','Home','⌁','A severe weather month adds $280 to your utility bill.',[['Pay from a sinking fund',-7,0,9,'Planning absorbs the seasonal spike.'],['Use savings',-10,0,3,'No debt, but the reserve falls.'],['Carry it on a card',0,11,-7,'The temporary spike gains interest.']]],
+['Job uncertainty','Income','△','Your employer announces possible layoffs in 90 days.',[['Increase cash reserves now',12,0,12,'Flexibility rises before uncertainty arrives.'],['Pay extra toward low-rate debt',-8,-7,2,'Debt falls, but liquid cash is tighter.'],['Make no changes',0,0,-9,'You retain routine but lose preparation time.']]],
+['Travel invitation','Lifestyle','✈','Friends invite you on a $1,600 trip next month.',[['Decline and plan a later trip',4,0,6,'You protect current goals.'],['Set a $650 local alternative',-12,0,4,'You participate without the full cost.'],['Finance the full trip',0,28,-14,'The experience continues charging interest afterward.']]]
+].map(([title,category,symbol,copy,choices])=>({title,category,symbol,copy,choices:choices.map(([label,cash,debt,stability,outcome])=>({label,impact:{cash,debt,stability},outcome}))}));
 
-let index = 0;
-let state = { cash: 65, debt: 25, stability: 55 };
-const clamp = value => Math.max(0, Math.min(100, value));
-
-function updateStatus() {
-  ['cash', 'debt', 'stability'].forEach(key => {
-    state[key] = clamp(state[key]);
-    document.querySelector(`#${key}-value`).textContent = state[key];
-    document.querySelector(`#${key}-meter`).style.width = `${state[key]}%`;
-  });
-}
-
-function renderEvent() {
-  const event = events[index];
-  document.querySelector('#round-label').textContent = `Event ${index + 1} of ${events.length}`;
-  document.querySelector('#scenario-title').textContent = event.title;
-  document.querySelector('#scenario-copy').textContent = event.copy;
-  const choices = document.querySelector('#sim-choices');
-  choices.innerHTML = '';
-  document.querySelector('#sim-outcome').classList.add('hidden');
-  document.querySelector('#sim-next').classList.add('hidden');
-
-  event.choices.forEach(choice => {
-    const button = document.createElement('button');
-    button.className = 'sim-choice';
-    button.textContent = choice.label;
-    button.addEventListener('click', () => {
-      [...choices.children].forEach(item => { item.disabled = true; });
-      Object.entries(choice.impact).forEach(([key, value]) => { state[key] += value; });
-      updateStatus();
-      const outcome = document.querySelector('#sim-outcome');
-      outcome.textContent = choice.outcome;
-      outcome.classList.remove('hidden');
-      const next = document.querySelector('#sim-next');
-      next.textContent = index === events.length - 1 ? 'See result' : 'Next event';
-      next.classList.remove('hidden');
-    });
-    choices.appendChild(button);
-  });
-}
-
-document.querySelector('#sim-next').addEventListener('click', () => {
-  index += 1;
-  if (index < events.length) {
-    renderEvent();
-    return;
-  }
-  const stage = document.querySelector('#sim-stage');
-  const summary = state.stability >= 70 && state.debt <= 30
-    ? 'You protected flexibility.'
-    : state.debt >= 55
-      ? 'Debt absorbed too many shocks.'
-      : 'You balanced competing priorities.';
-  stage.innerHTML = `<span class="round">Result</span><h2>${summary}</h2><p>Cash ${state.cash} · Debt ${state.debt} · Stability ${state.stability}</p><div class="sim-outcome">There is no perfect score. The useful question is which tradeoff you made deliberately.</div><button class="line-button" id="sim-restart">Play again</button>`;
-  document.querySelector('#sim-restart').addEventListener('click', () => window.location.reload());
-});
-
-renderEvent();
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+const clamp=n=>Math.max(0,Math.min(100,Math.round(n)));let run=[],index=0,state={cash:65,debt:25,stability:55},chosen=false;
+const $=s=>document.querySelector(s);
+function score(){return clamp(state.cash+state.stability-state.debt/2);}
+function updateStatus(){['cash','debt','stability'].forEach(k=>{state[k]=clamp(state[k]);$(`#${k}-value`).textContent=state[k];$(`#${k}-meter`).style.width=`${state[k]}%`;});$('#score-value').textContent=score();}
+function impacts(choice){return Object.entries(choice.impact).map(([k,v])=>`<span class="impact-${k}">${k} ${v>0?'+':''}${v}</span>`).join('');}
+function renderEvent(){chosen=false;const event=run[index];$('#round-label').textContent=`Event ${index+1} of ${run.length}`;$('#event-category').textContent=event.category;$('#event-visual').textContent=event.symbol;$('#scenario-title').textContent=event.title;$('#scenario-copy').textContent=event.copy;$('#sim-outcome').classList.add('hidden');$('#sim-next').classList.add('hidden');const choices=$('#sim-choices');choices.innerHTML='';shuffle(event.choices).forEach(choice=>{const b=document.createElement('button');b.className='sim-choice';b.innerHTML=`<strong>${choice.label}</strong><span>${impacts(choice)}</span>`;b.addEventListener('click',()=>choose(choice,b));choices.appendChild(b);});$('#sim-stage').classList.remove('event-enter');requestAnimationFrame(()=>$('#sim-stage').classList.add('event-enter'));}
+function choose(choice,button){if(chosen)return;chosen=true;[...$('#sim-choices').children].forEach(b=>b.disabled=true);button.classList.add('selected');Object.entries(choice.impact).forEach(([k,v])=>state[k]+=v);updateStatus();const outcome=$('#sim-outcome');outcome.innerHTML=`<strong>What changed</strong><p>${choice.outcome}</p><div class="impact-row">${impacts(choice)}</div>`;outcome.classList.remove('hidden');const next=$('#sim-next');next.textContent=index===run.length-1?'See result':'Continue';next.classList.remove('hidden');}
+function gameOver(){return state.cash<=0||state.stability<=0||state.debt>=100;}
+function finish(ended=false){const headline=ended?'Your position became unstable.':score()>=75?'You preserved strong flexibility.':score()>=48?'You balanced difficult tradeoffs.':'Your choices left little room for the next shock.';$('#sim-stage').innerHTML=`<span class="round">${ended?'Run ended':'Final position'}</span><h2>${headline}</h2><div class="final-score">${score()}</div><p>Cash ${state.cash} · Debt ${state.debt} · Stability ${state.stability}</p><div class="sim-outcome"><strong>What the score means</strong><p>Higher cash and stability help; persistent debt reduces flexibility because it grows between decisions.</p></div><div class="result-actions"><button class="game-start" id="sim-restart">Play a new run</button><a href="../learn/#credit-utilization">Learn about debt</a></div>`;$('#sim-restart').addEventListener('click',start);}
+function next(){if(index>=run.length-1){finish(false);return;}index++;const interest=state.debt>0?Math.max(1,Math.ceil(state.debt*.04)):0;state.debt+=interest;if(state.debt>70)state.stability-=4;else if(state.debt>0)state.stability-=1;$('#interest-status').textContent=interest?`Debt increased by ${interest} before event ${index+1}.`:`No debt interest was added before event ${index+1}.`;updateStatus();if(gameOver())finish(true);else renderEvent();}
+function start(){run=shuffle(events).slice(0,7);index=0;state={cash:65,debt:25,stability:55};$('#game-onboarding').classList.add('hidden');$('#simulator').classList.remove('hidden');$('#sim-stage').innerHTML=`<div class="event-topline"><span class="round" id="round-label"></span><span class="event-category" id="event-category"></span></div><div class="event-visual" id="event-visual" aria-hidden="true"></div><h2 id="scenario-title"></h2><p id="scenario-copy"></p><div class="sim-choices" id="sim-choices"></div><div class="sim-outcome hidden" id="sim-outcome" aria-live="polite"></div><button class="next-button hidden" id="sim-next">Next event</button>`;$('#sim-next').addEventListener('click',next);$('#interest-status').textContent='Debt compounds before each new event.';updateStatus();renderEvent();}
+$('#game-start').addEventListener('click',start);

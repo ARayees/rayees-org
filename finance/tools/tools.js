@@ -1,63 +1,32 @@
+const money = n => `$${Math.round(Math.max(0, n || 0)).toLocaleString()}`;
+const percent = n => `${(n || 0).toFixed(1)}%`;
+const field = (id, label, value, width='medium', step='any', suffix='') => ({ id, label, value, width, step, suffix });
+
+function growthSeries(v) {
+  const years = Math.max(1, Math.round(v.years)); const monthlyRate = (v.rate - v.fees) / 100 / 12; const inflation = v.inflation / 100;
+  let balance = v.start, contributed = v.start, monthly = v.monthly; const nominal = [balance], deposits = [contributed], real = [balance];
+  for (let year=1; year<=years; year++) { for (let m=0;m<12;m++){ balance = balance * (1 + monthlyRate) + monthly; contributed += monthly; } monthly *= 1 + v.increase/100; nominal.push(balance); deposits.push(contributed); real.push(balance / ((1 + inflation) ** year)); }
+  return { years, balance, contributed, nominal, deposits, real };
+}
+
 const tools = {
-  growth: {
-    title: 'Compound growth',
-    fields: [['start','Starting amount','1000'],['monthly','Monthly contribution','200'],['rate','Annual return (%)','6'],['years','Years','10']],
-    calculate(v) { const r = v.rate / 100 / 12; const n = v.years * 12; return r === 0 ? v.start + v.monthly * n : v.start * (1 + r) ** n + v.monthly * (((1 + r) ** n - 1) / r); },
-    format(n) { return `$${Math.round(n).toLocaleString()}`; },
-    note(v,n) { const contributed = v.start + v.monthly * v.years * 12; return `$${Math.round(contributed).toLocaleString()} contributed · $${Math.round(n-contributed).toLocaleString()} estimated growth`; }
-  },
-  payoff: {
-    title: 'Credit payoff',
-    fields: [['balance','Current balance','2500'],['apr','APR (%)','24.99'],['payment','Monthly payment','150']],
-    calculate(v) { const r=v.apr/100/12; let b=v.balance,m=0,interest=0; while(b>0&&m<600){interest+=b*r;b=b*(1+r)-v.payment;m++;} return { months:m, interest }; },
-    format(n) { return `${n.months} months`; },
-    note(v,n) { return `$${Math.round(n.interest).toLocaleString()} estimated interest with no new purchases`; }
-  },
-  savings: {
-    title: 'Savings goal',
-    fields: [['goal','Savings goal','5000'],['saved','Current savings','1000'],['monthly','Monthly contribution','250']],
-    calculate(v) { return v.monthly <= 0 ? null : Math.max(0,Math.ceil((v.goal-v.saved)/v.monthly)); },
-    format(n) { return n === null ? 'Add a contribution' : `${n} months`; },
-    note(v,n) { return n === null ? 'Monthly contribution must be greater than zero' : n === 0 ? 'Goal already reached' : `$${v.monthly.toLocaleString()} per month to close the gap`; }
-  }
+  growth: { title:'Compound growth', eyebrow:'Investing', description:'Model contributions, fees, inflation, and annual contribution increases.', fields:[field('start','Starting amount',1000,'wide'),field('monthly','Monthly contribution',200,'wide'),field('rate','Annual return',6,'short','.1','%'),field('years','Years',10,'short','1'),field('increase','Annual contribution increase',2,'short','.1','%'),field('fees','Annual fees',0.25,'short','.05','%'),field('inflation','Inflation assumption',2.5,'short','.1','%')], calculate(v){const d=growthSeries(v);return { value:money(d.balance), note:`Estimated balance after ${d.years} years`, stats:[['Total contributed',money(d.contributed)],['Estimated growth',money(d.balance-d.contributed)],['Inflation-adjusted',money(d.real.at(-1))],['Effective return',percent(v.rate-v.fees)]], series:[['Balance','#6e9da8',d.nominal],['Contributions','#b89558',d.deposits],['Today’s dollars','#a87578',d.real]], unit:'year', maxX:d.years };}},
+  payoff: { title:'Credit payoff', eyebrow:'Debt', description:'See how APR, payment size, extra payments, and new charges change the payoff.', fields:[field('balance','Current balance',2500,'wide'),field('apr','APR',24.99,'short','.01','%'),field('payment','Monthly payment',150,'medium'),field('extra','Extra monthly payment',25,'medium'),field('charges','New monthly charges',0,'medium')], calculate(v){let b=v.balance,m=0,interest=0;const vals=[b],paid=[0];const pay=v.payment+v.extra;while(b>0&&m<600&&pay>v.charges){const i=b*v.apr/1200;interest+=i;b=Math.max(0,b+i+v.charges-pay);m++;if(m%3===0||b===0){vals.push(b);paid.push(Math.min(v.balance+interest+v.charges*m,pay*m));}}const impossible=b>0;return {value:impossible?'Payment too low':`${m} months`,note:impossible?'Payment does not outpace interest and new charges.':`${money(interest)} estimated interest`,stats:[['Total paid',impossible?'—':money(v.balance+interest+v.charges*m)],['Monthly outflow',money(pay)],['Interest cost',money(interest)],['Payoff date',impossible?'Not reached':new Date(Date.now()+m*2629800000).toLocaleDateString(undefined,{month:'short',year:'numeric'})]],series:[['Remaining balance','#a87578',vals],['Cumulative paid','#66806a',paid]],unit:'quarter',maxX:Math.ceil(m/3)};}},
+  savings: { title:'Savings goal', eyebrow:'Saving', description:'Test the timeline with interest, current savings, and recurring contributions.', fields:[field('goal','Savings goal',5000,'wide'),field('saved','Current savings',1000,'wide'),field('monthly','Monthly contribution',250,'medium'),field('rate','Savings APY',4,'short','.1','%')], calculate(v){let b=v.saved,m=0;const vals=[b],target=[v.goal];while(b<v.goal&&m<600&&v.monthly>0){b=b*(1+v.rate/1200)+v.monthly;m++;if(m%3===0||b>=v.goal){vals.push(b);target.push(v.goal);}}return {value:v.monthly<=0?'Add a contribution':`${m} months`,note:b>=v.goal?`Goal reached around ${new Date(Date.now()+m*2629800000).toLocaleDateString(undefined,{month:'long',year:'numeric'})}`:'Goal not reached within 50 years',stats:[['Remaining gap',money(Math.max(0,v.goal-v.saved))],['Projected savings',money(b)],['Deposits made',money(v.monthly*m)],['Interest earned',money(b-v.saved-v.monthly*m)]],series:[['Savings','#66806a',vals],['Goal','#b89558',target]],unit:'quarter',maxX:Math.ceil(m/3)};}},
+  emergency: { title:'Emergency fund', eyebrow:'Resilience', description:'Turn monthly essentials and personal risk factors into a practical reserve range.', fields:[field('housing','Housing',1800,'wide'),field('utilities','Utilities',250,'medium'),field('food','Essential food',500,'medium'),field('transport','Transport',350,'medium'),field('insurance','Insurance & care',400,'medium'),field('current','Current emergency savings',3000,'wide'),field('months','Target months',4,'short','1')], calculate(v){const essentials=v.housing+v.utilities+v.food+v.transport+v.insurance;const goal=essentials*v.months;const vals=Array.from({length:v.months+1},(_,i)=>essentials*i);return {value:money(goal),note:`A ${v.months}-month reserve based on ${money(essentials)} of monthly essentials`,stats:[['Current reserve',money(v.current)],['Funding gap',money(Math.max(0,goal-v.current))],['Months covered',`${essentials? (v.current/essentials).toFixed(1):0}`],['Monthly essentials',money(essentials)]],series:[['Reserve target','#32658a',vals],['Current savings','#b89558',vals.map(()=>v.current)]],unit:'month',maxX:v.months};}},
+  retirement: { title:'Retirement runway', eyebrow:'Retirement', description:'Estimate a future balance and a rough first-year withdrawal range.', fields:[field('age','Current age',30,'short','1'),field('retire','Retirement age',67,'short','1'),field('balance','Current balance',25000,'wide'),field('annual','Annual contribution',8000,'wide'),field('rate','Annual return',6,'short','.1','%'),field('inflation','Inflation',2.5,'short','.1','%'),field('withdrawal','Withdrawal rate',4,'short','.1','%')], calculate(v){const years=Math.max(1,v.retire-v.age);let b=v.balance;const vals=[b],real=[b];for(let y=1;y<=years;y++){b=b*(1+v.rate/100)+v.annual;vals.push(b);real.push(b/((1+v.inflation/100)**y));}return {value:money(b),note:`Projected at age ${v.retire}`,stats:[['Today’s dollars',money(real.at(-1))],['First-year withdrawal',money(b*v.withdrawal/100)],['Years invested',`${years}`],['Total contributions',money(v.balance+v.annual*years)]],series:[['Projected balance','#6e9da8',vals],['Today’s dollars','#b89558',real]],unit:'year',maxX:years};}},
+  dti: { title:'Debt-to-income', eyebrow:'Cash flow', description:'Compare required monthly debt payments with gross monthly income.', fields:[field('income','Gross monthly income',6500,'wide'),field('housing','Housing payment',1800,'wide'),field('cards','Card minimums',150,'medium'),field('auto','Auto loans',425,'medium'),field('student','Student loans',250,'medium'),field('other','Other required debt',0,'medium')], calculate(v){const debts=v.housing+v.cards+v.auto+v.student+v.other;const ratio=v.income?debts/v.income*100:0;const vals=[v.housing,v.cards,v.auto,v.student,v.other];return {value:percent(ratio),note:ratio<=36?'A commonly manageable range, though context matters.':ratio<=43?'A high share of income is committed to debt.':'Very little gross income remains after required debt payments.',stats:[['Required debt',money(debts)],['Gross income',money(v.income)],['Income remaining',money(v.income-debts)],['Non-housing DTI',percent(v.income?(debts-v.housing)/v.income*100:0)]],series:[['Monthly payments','#a87578',vals]],labels:['Housing','Cards','Auto','Student','Other'],unit:'category',maxX:4};}}
 };
 
-function renderChart(key, values, result) {
-  const chart = document.querySelector('#mini-chart');
-  chart.innerHTML = '';
-  const count = 18;
-  for (let i=1;i<=count;i++) {
-    const bar = document.createElement('i');
-    let height;
-    if (key === 'growth') height = 12 + 88 * Math.pow(i/count, 1.7);
-    else if (key === 'payoff') height = 100 - 88 * (i/count);
-    else height = 12 + 88 * (i/count);
-    bar.style.height = `${height}%`;
-    chart.appendChild(bar);
-  }
+function chartSvg(result){const series=result.series;const all=series.flatMap(s=>s[2]);const max=Math.max(...all,1);const n=Math.max(...series.map(s=>s[2].length));const W=760,H=310,p={l:62,r:22,t:24,b:48};const x=i=>p.l+(n<=1?0:i/(n-1))*(W-p.l-p.r);const y=v=>p.t+(1-v/max)*(H-p.t-p.b);let svg=`<svg class="detail-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Projection chart">`;
+for(let i=0;i<5;i++){const val=max*(1-i/4),yy=y(val);svg+=`<line x1="${p.l}" y1="${yy}" x2="${W-p.r}" y2="${yy}" class="chart-grid"/><text x="${p.l-10}" y="${yy+4}" text-anchor="end" class="chart-label">${max>1000?`$${Math.round(val/1000)}k`:Math.round(val)}</text>`;}
+series.forEach(([label,color,values])=>{const points=values.map((v,i)=>`${x(i)},${y(v)}`).join(' ');svg+=`<polyline points="${points}" fill="none" stroke="${color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;values.forEach((v,i)=>{if(i===0||i===values.length-1||i%Math.max(1,Math.floor(values.length/5))===0)svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="5" fill="${color}" tabindex="0"><title>${label}: ${money(v)} at ${result.unit} ${i}</title></circle>`;});});
+const labels=result.labels||Array.from({length:n},(_,i)=>i);labels.forEach((lab,i)=>{if(n<9||i===0||i===n-1||i%Math.ceil(n/6)===0)svg+=`<text x="${x(i)}" y="${H-15}" text-anchor="middle" class="chart-label">${lab}</text>`;});return svg+'</svg>';}
+
+function renderTool(key='growth'){
+  const tool=tools[key], workspace=document.querySelector('#tool-workspace');
+  workspace.innerHTML=`<div class="tool-heading"><div><span>${tool.eyebrow}</span><h2>${tool.title}</h2><p>${tool.description}</p></div></div><div class="tool-form detailed-form">${tool.fields.map(f=>`<label class="field-${f.width}"><span>${f.label}</span><span class="input-shell"><input type="number" step="${f.step}" data-field="${f.id}" value="${f.value}">${f.suffix?`<b>${f.suffix}</b>`:''}</span></label>`).join('')}</div><div class="tool-result"><span class="result-label">Result</span><strong id="tool-value"></strong><p id="tool-note"></p><div class="tool-stats" id="tool-stats"></div><div class="chart-head"><h3>Projection detail</h3><div class="chart-legend" id="chart-legend"></div></div><div id="detail-chart"></div></div>`;
+  const update=()=>{const v={};workspace.querySelectorAll('input').forEach(i=>v[i.dataset.field]=Number(i.value));const result=tool.calculate(v);workspace.querySelector('#tool-value').textContent=result.value;workspace.querySelector('#tool-note').textContent=result.note;workspace.querySelector('#tool-stats').innerHTML=result.stats.map(([a,b])=>`<div><span>${a}</span><strong>${b}</strong></div>`).join('');workspace.querySelector('#chart-legend').innerHTML=result.series.map(([l,c])=>`<span><i style="background:${c}"></i>${l}</span>`).join('');workspace.querySelector('#detail-chart').innerHTML=chartSvg(result);};
+  workspace.querySelectorAll('input').forEach(i=>i.addEventListener('input',update));update();
 }
-
-function renderTool(key='growth') {
-  const tool = tools[key];
-  const workspace = document.querySelector('#tool-workspace');
-  workspace.innerHTML = `<h2>${tool.title}</h2><div class="tool-form">${tool.fields.map(([id,label,value])=>`<label>${label}<input type="number" min="0" step="any" data-field="${id}" value="${value}"></label>`).join('')}</div><div class="tool-result"><strong id="tool-value"></strong><p id="tool-note"></p><div class="mini-chart" id="mini-chart" aria-hidden="true"></div></div>`;
-
-  const update = () => {
-    const values = {};
-    workspace.querySelectorAll('input').forEach(input => { values[input.dataset.field] = Number(input.value); });
-    const result = tool.calculate(values);
-    document.querySelector('#tool-value').textContent = tool.format(result);
-    document.querySelector('#tool-note').textContent = tool.note(values,result);
-    renderChart(key,values,result);
-  };
-  workspace.querySelectorAll('input').forEach(input => input.addEventListener('input',update));
-  update();
-}
-
-document.querySelectorAll('.tool-tabs button').forEach(button => button.addEventListener('click',()=>{
-  document.querySelectorAll('.tool-tabs button').forEach(item=>item.classList.remove('active'));
-  button.classList.add('active');
-  renderTool(button.dataset.tool);
-}));
-
-renderTool();
+document.querySelectorAll('.tool-tabs button').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.tool-tabs button').forEach(b=>b.classList.remove('active'));button.classList.add('active');renderTool(button.dataset.tool);}));renderTool();
